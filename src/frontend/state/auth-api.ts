@@ -27,6 +27,14 @@ export const login = ({
     })
     .then((res) => res.data)
 }
+export const logout = () => {
+  return axios
+    .request<Auth>({
+      method: 'POST',
+      url: '/logout',
+    })
+    .then((res) => res.data)
+}
 // export const keepLogin = (): Promise<Auth> => {
 //   return axios
 //     .request<Auth>({

@@ -7,8 +7,10 @@ import { LogoIcon } from '@frontend/framework/icons/LogoIcon'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { useState } from 'react'
 import { useLogin } from '@frontend/state/auth-mutation'
+import { useToast } from '@frontend/framework/Toast'
 export const LoginPage = () => {
   const { login } = useLogin()
+  const { openToast } = useToast()
   const {
     isSubmitting,
     touched,
@@ -17,6 +19,7 @@ export const LoginPage = () => {
     handleChange,
     handleSubmit,
     handleBlur,
+    setSubmitting,
   } = useFormik({
     initialValues: {
       username: '',
@@ -24,11 +27,14 @@ export const LoginPage = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: () => {
-      login({ username: values.username, password: values.password }).then(
-        () => {
+      login({ username: values.username, password: values.password })
+        .then(() => {
           router.push('/')
-        }
-      )
+        })
+        .catch(() => openToast('Username or password is incorrect'))
+        .finally(() => {
+          setSubmitting(false)
+        })
     },
   })
   const [showPass, setShowPass] = useState(false)

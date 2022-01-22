@@ -2,12 +2,13 @@ import { ButtonWithPopover } from '@frontend/framework/ButtonWithPopover'
 import { useCurrentUser } from '@frontend/state/auth-queries'
 import { Avatar, Button, IconButton } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-// import { useLogout } from '@frontend/state/auth-mutations'
+
 import { useRouter } from 'next/router'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { TextInput } from '@frontend/framework/TextInput'
 import { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
+import { useLogout } from '@frontend/state/auth-mutation'
 
 type AppBarContentProps = {
   renderHeader?: () => JSX.Element
@@ -16,7 +17,7 @@ export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
   const router = useRouter()
 
   const { currentUser } = useCurrentUser()
-  // const { logout } = useLogout()
+  const { logout } = useLogout()
   const [searchInput, setSearchInput] = useState('')
   if (!currentUser?.user) return null
   return (
@@ -88,16 +89,17 @@ export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
                   horizontal: 'center',
                 }}
               >
-                <div className="w-32">
+                <div className="w-28">
                   <Button
                     fullWidth
+                    color="inherit"
                     classes={{
-                      root: 'h-10 text-sm normal-case justify-start pl-4 font-nunito text-secondary',
+                      root: 'h-10 text-sm normal-case justify-start pl-4 font-nunito',
                     }}
                     onClick={() => {
-                      // logout().finally(() => {
-                      router.push('/login')
-                      // })
+                      logout().finally(() => {
+                        router.push('/login')
+                      })
                     }}
                   >
                     <LogoutIcon className="h-5 w-5" />
