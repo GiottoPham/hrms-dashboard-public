@@ -10,7 +10,6 @@ import axios from 'axios'
 
 function MyApp({ Component, pageProps }: AppProps) {
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_BACKEND_API_URL
-  axios.defaults.withCredentials = true
   const [queryClient] = useState(
     () =>
       new QueryClient({

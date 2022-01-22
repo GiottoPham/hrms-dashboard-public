@@ -3,8 +3,11 @@ export type Auth = {
 }
 
 export type CurrentUser = {
-  id: number
-  username: string
-  name: string
-  email: string
+  user: {
+    id: number
+    username: string
+    name: string
+    email: string
+    fullName: string
+  }
 }

@@ -30,6 +30,9 @@
       "@frontend/*": [
         "src/frontend/*"
       ],
+      "@state/*": [
+        "src/frontend/state/*"
+      ],
     },
     "incremental": true
   },

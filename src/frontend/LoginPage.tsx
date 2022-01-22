@@ -6,7 +6,9 @@ import { useFormik } from 'formik'
 import { LogoIcon } from '@frontend/framework/icons/LogoIcon'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { useState } from 'react'
+import { useLogin } from '@frontend/state/auth-mutation'
 export const LoginPage = () => {
+  const { login } = useLogin()
   const {
     isSubmitting,
     touched,
@@ -17,18 +19,22 @@ export const LoginPage = () => {
     handleBlur,
   } = useFormik({
     initialValues: {
-      email: '',
+      username: '',
       password: '',
     },
     validationSchema: loginValidationSchema,
     onSubmit: () => {
-      router.push('/')
+      login({ username: values.username, password: values.password }).then(
+        () => {
+          router.push('/')
+        }
+      )
     },
   })
   const [showPass, setShowPass] = useState(false)
   return (
-    <div className="min-h-screen w-full min-w-[1366px] grid place-items-center bg-gray-500">
-      <div className="flex flex-col items-center rounded-lg p-10 bg-white">
+    <div className="min-h-screen w-full min-w-[1366px] grid place-items-center bg-primary-100">
+      <div className="flex flex-col items-center rounded-lg p-10 bg-white border-2 border-primary">
         <header className="flex flex-col items-center">
           <LogoIcon className="w-60 h-60" />
         </header>
@@ -37,12 +43,11 @@ export const LoginPage = () => {
           <TextInput
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={values.email}
-            error={!!errors.email && touched.email}
+            id="username"
+            label="Username"
+            name="username"
+            value={values.username}
+            error={!!errors.username && touched.username}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -94,12 +99,7 @@ export const LoginPage = () => {
   )
 }
 
-const emailSchema = string()
-  .email('Invalid email')
-  .max(255, 'Email is too long')
-  .required('Email is required')
-
 const loginValidationSchema = object().shape({
-  email: emailSchema,
+  username: string().required('Username is required'),
   password: string().required('Password is required'),
 })

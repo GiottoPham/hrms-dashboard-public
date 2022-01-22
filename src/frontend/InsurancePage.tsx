@@ -1,15 +1,15 @@
 import { Layout } from '@components/Layout/Layout'
 import { AuthGuard } from '@frontend/framework/AuthGuard'
 
-export const HomePage = () => {
+export const InsurancePage = () => {
   return (
     <AuthGuard>
       <Layout
         renderHeader={() => (
-          <h1 className="font-bold text-2xl uppercase">Dashboard</h1>
+          <h1 className="font-bold text-2xl uppercase">Insurance</h1>
         )}
       >
-        Dashboard
+        Insurance
       </Layout>
     </AuthGuard>
   )

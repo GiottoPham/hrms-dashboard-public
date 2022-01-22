@@ -1,17 +1,18 @@
-import { fetchUser } from '@frontend/state/auth-api'
-import { CURRENT_USER } from '@frontend/state/query-keys'
-import { useQuery } from 'react-query'
+import { Auth, fetchUser } from '@frontend/state/auth-api'
+import { AUTH, CURRENT_USER } from '@frontend/state/query-keys'
+import axios from 'axios'
+import { useEffect } from 'react'
+import { useQuery, useQueryClient } from 'react-query'
 
 export const useCurrentUser = () => {
-  // const { auth, isFetched: isAuthFetched } = useAuth()
-
+  const queryClient = useQueryClient()
+  const auth = queryClient.getQueryData<Auth>(AUTH)
+  console.log(auth)
   const {
     data: currentUser,
     isLoading: isLoadingUser,
     ...rest
-  } = useQuery({
-    queryKey: [CURRENT_USER],
-    queryFn: () => fetchUser(),
+  } = useQuery([CURRENT_USER, auth?.userId], fetchUser(auth?.userId), {
     enabled: true,
   })
   return {
@@ -19,4 +20,40 @@ export const useCurrentUser = () => {
     isLoading: isLoadingUser,
     ...rest,
   }
+}
+export const useAuth = () => {
+  const queryClient = useQueryClient()
+  const auth = queryClient.getQueryData<Auth>(AUTH)
+
+  // const queryFn =
+  //   auth?.hasTriedKeepLogin === 'true'
+  //     ? () => {
+  //         throw new Error('Keep Login fail')
+  //       }
+  //     : keepLogin
+
+  // const { data, ...rest } = useQuery<Auth>({
+  //   queryKey: AUTH,
+  //   queryFn,
+  //   retry: false,
+  //   refetchInterval: 10 * 60 * 1000,
+  //   refetchIntervalInBackground: true,
+  //   onError: () => {
+  //     if (auth?.accessToken) {
+  //       location.href = '/'
+  //     } else {
+  //       queryClient.setQueryData<Auth>(AUTH, { hasTriedKeepLogin: 'true' })
+  //     }
+  //   },
+  // })
+
+  const accessToken = auth?.accessToken
+
+  useEffect(() => {
+    if (accessToken) {
+      axios.defaults.headers.Authorization = `Bearer ${accessToken}`
+    }
+  }, [accessToken])
+
+  return { auth: auth }
 }

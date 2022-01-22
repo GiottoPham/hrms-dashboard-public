@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     colors: {
       'primary': '#FFAC2F',
-      'primary-100': '#FFCE85',
+      'primary-100': '#FCECCE',
       'primary-200': '#FFC670',
       'primary-300': '#FFBE5C',
       'primary-400': '#FFB647',
@@ -22,7 +22,7 @@ module.exports = {
       'secondary-300': '#FFC5A1',
       'secondary-400': '#FFA778',
       'secondary-500': '#00639B',
-      'secondary-600': '#E95D24',
+      'secondary-600': '#212936',
       'gray-100': '#F5F5F5',
       'gray-200': '#EEEEEE',
       'gray-300': '#DADADA',
