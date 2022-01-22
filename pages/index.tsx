@@ -1,4 +1,4 @@
-import { HomePage } from '@components/HomePage'
+import { HomePage } from 'src/frontend/HomePage'
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
