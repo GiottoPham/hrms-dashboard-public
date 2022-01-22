@@ -1,5 +1,5 @@
-import { Auth, login } from '@frontend/state/auth-api'
-import { AUTH } from '@frontend/state/query-keys'
+import { Auth, login, logout } from '@frontend/state/auth-api'
+import { AUTH, CURRENT_USER } from '@frontend/state/query-keys'
 import { useMutation, useQueryClient } from 'react-query'
 
 export const useLogin = () => {
@@ -14,6 +14,26 @@ export const useLogin = () => {
 
   return {
     login: mutateAsync,
+    ...rest,
+  }
+}
+export const useLogout = () => {
+  const queryClient = useQueryClient()
+
+  const { mutateAsync, ...rest } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.setQueryData(AUTH, undefined)
+      queryClient.setQueryData(CURRENT_USER, undefined)
+    },
+    onError: () => {
+      queryClient.setQueryData(AUTH, undefined)
+      queryClient.setQueryData(CURRENT_USER, undefined)
+    },
+  })
+
+  return {
+    logout: mutateAsync,
     ...rest,
   }
 }
