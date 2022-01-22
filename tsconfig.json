@@ -25,7 +25,10 @@
         "src/assets/styles/*"
       ],
       "@components/*": [
-        "src/components/*"
+        "src/frontend/components/*"
+      ],
+      "@frontend/*": [
+        "src/frontend/*"
       ],
     },
     "incremental": true
