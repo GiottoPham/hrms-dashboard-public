@@ -2,8 +2,6 @@ import { ButtonWithPopover } from '@frontend/framework/ButtonWithPopover'
 import { useCurrentUser } from '@frontend/state/auth-queries'
 import { Avatar, Button, IconButton } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-
-import { useRouter } from 'next/router'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { TextInput } from '@frontend/framework/TextInput'
 import { useState } from 'react'
@@ -14,8 +12,6 @@ type AppBarContentProps = {
   renderHeader?: () => JSX.Element
 }
 export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
-  const router = useRouter()
-
   const { currentUser } = useCurrentUser()
   const { logout } = useLogout()
   const [searchInput, setSearchInput] = useState('')
@@ -97,9 +93,7 @@ export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
                       root: 'h-10 text-sm normal-case justify-start pl-4 font-nunito',
                     }}
                     onClick={() => {
-                      logout().finally(() => {
-                        router.push('/login')
-                      })
+                      logout()
                     }}
                   >
                     <LogoutIcon className="h-5 w-5" />

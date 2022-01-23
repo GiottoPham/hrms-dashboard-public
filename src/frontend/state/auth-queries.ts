@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from 'react-query'
 export const useCurrentUser = () => {
   const queryClient = useQueryClient()
   const auth = queryClient.getQueryData<Auth>(AUTH)
-  console.log(auth)
+
   const {
     data: currentUser,
     isLoading: isLoadingUser,

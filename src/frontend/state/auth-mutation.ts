@@ -1,6 +1,7 @@
 import { Auth, login, logout } from '@frontend/state/auth-api'
 import { AUTH, CURRENT_USER } from '@frontend/state/query-keys'
 import { useMutation, useQueryClient } from 'react-query'
+import { useRouter } from 'next/router'
 
 export const useLogin = () => {
   const queryClient = useQueryClient()
@@ -19,12 +20,14 @@ export const useLogin = () => {
 }
 export const useLogout = () => {
   const queryClient = useQueryClient()
-
+  const router = useRouter()
   const { mutateAsync, ...rest } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      queryClient.setQueryData(AUTH, undefined)
-      queryClient.setQueryData(CURRENT_USER, undefined)
+      router.push('/login').then(() => {
+        queryClient.setQueryData(AUTH, undefined)
+        queryClient.setQueryData(CURRENT_USER, undefined)
+      })
     },
     onError: () => {
       queryClient.setQueryData(AUTH, undefined)
