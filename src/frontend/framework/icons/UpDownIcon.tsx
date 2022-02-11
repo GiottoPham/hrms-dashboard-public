@@ -9,13 +9,13 @@ export const UpDownIcon = ({ isUp }: { isUp?: boolean }) => {
       <KeyboardArrowUpIcon
         className={cx('w-5 h-5', {
           'text-white': isUp,
-          'text-black': !isUp,
+          'text-primary': !isUp,
         })}
       />
       <KeyboardArrowDownIcon
         className={cx('w-5 h-5 -mt-2', {
           'text-white': isDown,
-          'text-black': !isDown,
+          'text-primary': !isDown,
         })}
       />
     </div>

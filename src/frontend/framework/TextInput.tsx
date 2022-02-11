@@ -49,7 +49,7 @@ export const TextInput = ({
       className={cx('flex flex-col', { 'w-full': fullWidth })}
     >
       {label && (
-        <span className="text-sm font-nunito font-bold text-black pl-[1px]">
+        <span className="text-sm font-nunito font-bold text-black pl-[1px] mb-1">
           {label}
         </span>
       )}

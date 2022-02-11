@@ -30,7 +30,7 @@ export const Layout = ({ children, renderHeader }: LayoutProps) => {
           paddingTop: APP_HEADER_HEIGHT,
           paddingLeft: SIDEBAR_WIDTH,
         }}
-        className="min-h-screen w-full bg-primary-100 relative"
+        className="min-h-screen w-full bg-primary-200 relative"
       >
         {children}
       </main>

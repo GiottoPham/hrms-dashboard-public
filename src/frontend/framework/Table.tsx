@@ -40,7 +40,7 @@ export const Table = <T extends Record<string, unknown>>({
                 // eslint-disable-next-line react/jsx-key
                 <tr
                   {...headerGroup.getHeaderGroupProps()}
-                  className="sticky top-0 bg-primary z-10"
+                  className="sticky top-0 bg-secondary-600 z-10"
                 >
                   {headerGroup.headers.map((col) => (
                     // eslint-disable-next-line react/jsx-key
@@ -48,7 +48,7 @@ export const Table = <T extends Record<string, unknown>>({
                       {...col.getHeaderProps()}
                       scope="col"
                       className={cx(
-                        'px-3 text-left text-sm font-inter font-semibold text-black',
+                        'px-3 text-left text-sm font-inter font-semibold text-primary',
                         col.width
                       )}
                     >
@@ -68,7 +68,7 @@ export const Table = <T extends Record<string, unknown>>({
                   // eslint-disable-next-line react/jsx-key
                   <tr
                     {...row.getRowProps()}
-                    className={cx('border-b border-b-blue-400', {
+                    className={cx({
                       'bg-blue-100': checkedRowIndices.includes(row.index),
                       'border-r-4 border-r-primary':
                         selectedRowIndex === row.index,

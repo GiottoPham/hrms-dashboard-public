@@ -11,10 +11,10 @@ module.exports = {
   theme: {
     colors: {
       'primary': '#FFAC2F',
-      'primary-100': '#FCECCE',
-      'primary-200': '#FFC670',
+      'primary-100': '#fef6e7',
+      'primary-200': '#FCECCE',
       'primary-300': '#FFBE5C',
-      'primary-400': '#FFB647',
+      'primary-400': '#ffc56d',
       'primary-500': '#FFAC2F',
       'secondary': '#00639B',
       'secondary-100': '#33658A',
