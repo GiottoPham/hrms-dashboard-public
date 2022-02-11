@@ -48,7 +48,7 @@ export const AddJobButton = ({
                 <div className="border-b border-gray-500 text-gray-500 text-xl">
                   Add New Job
                 </div>
-                <div className="border-b border-gray-500 mt-2 pb-5">
+                <div className="border-b border-gray-500 py-4 flex-grow">
                   <div className="w-full">
                     <TextInput
                       required
