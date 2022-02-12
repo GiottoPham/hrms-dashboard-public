@@ -5,7 +5,7 @@ import {
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
 import { UserInputParams, UserStatus } from '@frontend/types/user'
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
 import { object, string } from 'yup'
 import { UserInput } from './UserInput'
@@ -16,7 +16,7 @@ const DEFAULT_USER: UserInputParams = {
   password: '',
   userStatus: UserStatus.Enable,
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const newUserValidationSchema = object().shape({
   name: string().required(),
   username: string().required(),
@@ -32,11 +32,23 @@ export const AddUserButton = ({
   return (
     <Formik<UserInputParams>
       initialValues={DEFAULT_USER}
-      onSubmit={() => {
-        //
+      onSubmit={(
+        { name, username, role, password, userStatus },
+        { setSubmitting }
+      ) => {
+        const myPromise = new Promise((resolve) => {
+          setTimeout(() => {
+            resolve('f')
+            alert('hello' + name + username + role + password + userStatus)
+          }, 2000)
+        })
+        myPromise.then(() => {
+          setSubmitting(false)
+        })
       }}
+      validationSchema={newUserValidationSchema}
     >
-      {({ submitForm }) => (
+      {({ submitForm, isSubmitting, isValid }) => (
         <ButtonWithModal
           renderButton={renderButton}
           renderModal={({ Modal, isOpen, closeModal }) => (
@@ -93,6 +105,16 @@ export const AddUserButton = ({
                     variant="contained"
                     onClick={submitForm}
                     type="submit"
+                    disabled={!isValid || isSubmitting}
+                    startIcon={
+                      isSubmitting && (
+                        <CircularProgress
+                          color="primary"
+                          size={20}
+                          thickness={5}
+                        />
+                      )
+                    }
                   >
                     Save
                   </Button>

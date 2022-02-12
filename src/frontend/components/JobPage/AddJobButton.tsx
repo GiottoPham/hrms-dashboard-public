@@ -4,7 +4,7 @@ import {
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
 import type { JobInputParams } from '@frontend/types/job'
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
 import { object, string } from 'yup'
 import { JobDetailInput } from './JobDetailInput'
@@ -13,11 +13,11 @@ const DEFAULT_JOB: JobInputParams = {
   description: '',
   note: '',
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const newUserValidationSchema = object().shape({
+
+const newJobValidationSchema = object().shape({
   title: string().required(),
   description: string().required(),
-  note: string(),
+  note: string().required(),
 })
 export const AddJobButton = ({
   renderButton,
@@ -26,12 +26,30 @@ export const AddJobButton = ({
 }) => {
   return (
     <Formik<JobInputParams>
+      validateOnMount
       initialValues={DEFAULT_JOB}
-      onSubmit={() => {
-        //
+      onSubmit={({ description, title, note }, { setSubmitting }) => {
+        const myPromise = new Promise((resolve) => {
+          setTimeout(() => {
+            resolve('f')
+            alert('des :' + description + 'head:' + title + 'name:' + note)
+          }, 2000)
+        })
+        myPromise.then(() => {
+          setSubmitting(false)
+        })
       }}
+      validationSchema={newJobValidationSchema}
     >
-      {({ submitForm, setFieldValue, values, errors, touched }) => (
+      {({
+        submitForm,
+        setFieldValue,
+        values,
+        errors,
+        touched,
+        isValid,
+        isSubmitting,
+      }) => (
         <ButtonWithModal
           renderButton={renderButton}
           renderModal={({ Modal, isOpen, closeModal }) => (
@@ -101,8 +119,18 @@ export const AddJobButton = ({
                     }}
                     color="primary"
                     variant="contained"
+                    disabled={!isValid || isSubmitting}
                     onClick={submitForm}
                     type="submit"
+                    startIcon={
+                      isSubmitting && (
+                        <CircularProgress
+                          color="primary"
+                          size={20}
+                          thickness={5}
+                        />
+                      )
+                    }
                   >
                     Save
                   </Button>
