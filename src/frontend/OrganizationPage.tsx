@@ -9,63 +9,93 @@ export const OrganizationPage = () => {
       id: 1,
       name: 'CEO',
       type: 'head',
+      peopleNumber: 20,
+      description: 'abcxyz',
+      headOfUnit: 'Pham Gia Nguyen',
       subUnit: [
         {
           id: 2,
           name: 'CEO',
           type: 'sub-head',
+          peopleNumber: 10,
+          description: 'abcxyz',
+          headOfUnit: 'Pham Khang Nguyen',
           subUnit: [
             {
               id: 3,
               name: 'CEO',
               subUnit: null,
               type: 'sub',
+              peopleNumber: 5,
+              description: 'abcxyz',
+              headOfUnit: 'Truong Anh Bao',
             },
             {
-              id: 3,
+              id: 4,
               name: 'CEO',
               subUnit: null,
               type: 'sub',
+              peopleNumber: 5,
+              description: 'abcxyz',
+              headOfUnit: 'Truong Anh Bao',
             },
           ],
         },
         {
-          id: 4,
+          id: 5,
           name: 'CEO',
           subUnit: null,
           type: 'sub-head',
+          peopleNumber: 10,
+          description: 'abcxyz',
+          headOfUnit: 'Truong Anh Bao',
         },
       ],
     },
     {
-      id: 5,
+      id: 6,
       name: 'CEO',
       type: 'head',
+      peopleNumber: 20,
+      description: 'abcxyz',
+      headOfUnit: 'Pham Gia Nguyen',
       subUnit: [
         {
-          id: 6,
+          id: 7,
           name: 'CEO',
           type: 'sub-head',
+          peopleNumber: 10,
+          description: 'abcxyz',
+          headOfUnit: 'Pham Khang Nguyen',
           subUnit: [
-            {
-              id: 7,
-              name: 'CEO',
-              subUnit: null,
-              type: 'sub',
-            },
             {
               id: 8,
               name: 'CEO',
               subUnit: null,
               type: 'sub',
+              peopleNumber: 5,
+              description: 'abcxyz',
+              headOfUnit: 'Truong Anh Bao',
+            },
+            {
+              id: 9,
+              name: 'CEO',
+              subUnit: null,
+              type: 'sub',
+              peopleNumber: 5,
+              description: 'abcxyz',
+              headOfUnit: 'Truong Anh Bao',
             },
           ],
         },
         {
-          id: 9,
+          id: 10,
           name: 'CEO',
           subUnit: null,
           type: 'sub-head',
+          peopleNumber: 10,
+          description: 'abcxyz',
+          headOfUnit: 'Truong Anh Bao',
         },
       ],
     },
@@ -78,11 +108,29 @@ export const OrganizationPage = () => {
         )}
       >
         <div className="flex flex-col px-10 py-5 ">
-          {LIST_UNIT.map(({ id, name, type, subUnit }) => (
-            <div key={id} className="mt-5">
-              <ListUnitCard name={name} type={type} subUnit={subUnit} />
-            </div>
-          ))}
+          {LIST_UNIT.map(
+            ({
+              id,
+              name,
+              type,
+              subUnit,
+              headOfUnit,
+              peopleNumber,
+              description,
+            }) => (
+              <div key={id} className="mt-5">
+                <ListUnitCard
+                  id={id}
+                  name={name}
+                  type={type}
+                  subUnit={subUnit}
+                  headOfUnit={headOfUnit}
+                  peopleNumber={peopleNumber}
+                  description={description}
+                />
+              </div>
+            )
+          )}
         </div>
       </Layout>
     </AuthGuard>

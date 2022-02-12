@@ -1,20 +1,22 @@
-import type { JobInputParams } from '@frontend/types/job'
 import { useFormikContext } from 'formik'
 import { TextareaAutosize } from '@mui/material'
+import type { UnitInputParams } from '@frontend/types/unit'
 
-export const JobDetailInput = ({
+export const UnitDetailInput = ({
   fieldName,
   label,
   minRow,
   maxRow,
+  disabled = false,
 }: {
-  fieldName: keyof JobInputParams
+  fieldName: keyof UnitInputParams
   label: string
   props?: string
   minRow: number
   maxRow: number
+  disabled?: boolean
 }) => {
-  const { getFieldProps } = useFormikContext<JobInputParams>()
+  const { getFieldProps } = useFormikContext<UnitInputParams>()
   const getFieldPropsName = getFieldProps(fieldName)
   return (
     <div>
@@ -22,10 +24,11 @@ export const JobDetailInput = ({
         {label}
       </span>
       <TextareaAutosize
-        className="w-full border border-gray-400 p-2 rounded-lg"
+        className="w-full border border-gray-400 p-2 rounded-lg text-sm font-light"
         minRows={minRow}
         maxRows={maxRow}
         {...getFieldPropsName}
+        disabled={disabled}
       />
     </div>
   )
