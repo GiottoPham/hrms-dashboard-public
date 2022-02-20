@@ -1,5 +1,7 @@
 import '@styles/tailwind.css'
 import '@styles/shared.css'
+import '@styles/react-phone-number-input.css'
+
 import type { AppProps } from 'next/app'
 import { useState } from 'react'
 import { Hydrate } from 'react-query/hydration'

@@ -74,26 +74,31 @@ const columns: Column<JobDetail>[] = [
 ]
 const jobFake: JobDetail[] = [
   {
+    id: 1,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
   },
   {
+    id: 2,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
   },
   {
+    id: 3,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
   },
   {
+    id: 4,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
   },
   {
+    id: 5,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',

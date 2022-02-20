@@ -3,9 +3,9 @@ export enum UserStatus {
   Disable = 'disable',
 }
 export type UserInputParams = {
-  name: string
   username: string
-  role: string
+  roleId: number
   password: string
   userStatus: UserStatus
 }
+export type UserDetail = UserInputParams & { id: number }

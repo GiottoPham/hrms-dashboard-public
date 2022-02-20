@@ -1,2 +1,7 @@
 export const CURRENT_USER = 'current-user'
 export const AUTH = 'auth'
+export const EMPLOYEE_PARAMS = 'employee-params'
+export const CITIES = 'cities'
+export const DISTRICTS = 'districts'
+export const WARDS = 'wards'
+export const ADD_EMPLOYEE_STEP = 'add_employee_steps'

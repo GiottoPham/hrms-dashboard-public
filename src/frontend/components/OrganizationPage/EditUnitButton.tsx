@@ -183,8 +183,8 @@ export const EditUnitButton = ({
                         disabled={!edit}
                         fieldName="description"
                         label="Unit Description"
-                        maxRow={3}
-                        minRow={3}
+                        maxRows={3}
+                        minRows={3}
                       />
                     </div>
                   </div>

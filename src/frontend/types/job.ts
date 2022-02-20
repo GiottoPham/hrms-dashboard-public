@@ -1,4 +1,5 @@
 export type JobDetail = {
+  id: number
   title: string
   description: string
 }

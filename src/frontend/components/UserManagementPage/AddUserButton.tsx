@@ -1,5 +1,6 @@
 import { StatusInput } from '@components/UserManagementPage/StatusInput'
 import { UserPasswordInput } from '@components/UserManagementPage/UserPasswordInput'
+import { UserRoleSelect } from '@components/UserManagementPage/UserRoleSelect'
 import {
   ButtonWithModal,
   RenderButtonFn,
@@ -7,12 +8,11 @@ import {
 import { UserInputParams, UserStatus } from '@frontend/types/user'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
+import type { PartialDeep } from 'type-fest'
 import { object, string } from 'yup'
 import { UserInput } from './UserInput'
-const DEFAULT_USER: UserInputParams = {
-  name: '',
+const DEFAULT_USER: PartialDeep<UserInputParams> = {
   username: '',
-  role: '',
   password: '',
   userStatus: UserStatus.Enable,
 }
@@ -30,16 +30,16 @@ export const AddUserButton = ({
   renderButton: RenderButtonFn
 }) => {
   return (
-    <Formik<UserInputParams>
+    <Formik
       initialValues={DEFAULT_USER}
       onSubmit={(
-        { name, username, role, password, userStatus },
+        { username, roleId, password, userStatus },
         { setSubmitting }
       ) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
             resolve('f')
-            alert('hello' + name + username + role + password + userStatus)
+            alert('hello' + username + roleId + password + userStatus)
           }, 2000)
         })
         myPromise.then(() => {
@@ -68,16 +68,13 @@ export const AddUserButton = ({
                 <div className="border-b border-gray-500 flex-grow mt-2">
                   <div className="flex flex-row justify-between space-x-10">
                     <div className="w-1/2">
-                      <UserInput fieldName="name" label="Employee Name" />
+                      <UserInput fieldName="username" label="Username" />
                     </div>
                     <div className="w-1/2">
-                      <UserInput fieldName="username" label="Username" />
+                      <UserRoleSelect />
                     </div>
                   </div>
                   <div className="flex flex-row justify-between space-x-10 mt-5">
-                    <div className="w-1/2">
-                      <UserInput fieldName="role" label="Role" />
-                    </div>
                     <div className="w-1/2">
                       <StatusInput />
                     </div>

@@ -7,7 +7,7 @@ import {
 
 export const theme = createTheme({
   typography: {
-    fontFamily: 'Averta',
+    fontFamily: 'Nunito',
     fontSize: 16,
   },
   palette: {

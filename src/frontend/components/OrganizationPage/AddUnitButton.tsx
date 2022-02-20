@@ -60,10 +60,11 @@ export const AddUnitButton = ({
         setFieldValue,
         values,
         errors,
-        touched,
         resetForm,
         isValid,
         isSubmitting,
+        touched,
+        handleBlur,
       }) => {
         return (
           <ButtonWithModal
@@ -86,17 +87,17 @@ export const AddUnitButton = ({
                   <div className="border-b border-gray-500 text-gray-500 text-xl">
                     Add Sub Unit
                   </div>
-                  <div className="border-b border-gray-500 py-3 flex-grow">
+                  <div className="border-b border-gray-500 py-3">
                     <div className="w-full">
                       <TextInput
                         required
                         fullWidth
-                        id="title"
+                        id="name"
                         label="Name"
                         name="name"
                         placeholder={'Unit Name'}
                         value={values.name}
-                        error={!!errors.name && touched.name}
+                        onBlur={handleBlur}
                         onChange={(e) => setFieldValue('name', e.target.value)}
                         InputProps={{
                           classes: {
@@ -105,12 +106,18 @@ export const AddUnitButton = ({
                         }}
                       />
                     </div>
-
+                    {!!errors.name && touched.name && (
+                      <p className="text-danger text-sm font-semibold">
+                        {errors.name}
+                      </p>
+                    )}
                     <div className="w-full pt-2">
                       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
                         Head Of Unit
                       </InputLabel>
                       <Select
+                        name="headOfUnitId"
+                        onBlur={handleBlur}
                         fullWidth
                         value={values.headOfUnitId}
                         onChange={(e) =>
@@ -136,14 +143,25 @@ export const AddUnitButton = ({
                         ))}
                       </Select>
                     </div>
+                    {!!errors.headOfUnitId && touched.headOfUnitId && (
+                      <p className="text-danger text-sm font-semibold">
+                        Please select on of the employees
+                      </p>
+                    )}
                     <div className="w-full mt-2">
                       <UnitDetailInput
+                        onBlur={handleBlur}
                         fieldName="description"
                         label="Unit Description"
-                        maxRow={3}
-                        minRow={3}
+                        maxRows={3}
+                        minRows={3}
                       />
                     </div>
+                    {!!errors.description && touched.description && (
+                      <p className="text-danger text-sm font-semibold">
+                        {errors.description}
+                      </p>
+                    )}
                   </div>
                   <div className="self-end mt-5">
                     <Button

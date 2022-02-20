@@ -1,21 +1,16 @@
 import { useFormikContext } from 'formik'
-import { TextareaAutosize } from '@mui/material'
+import { TextareaAutosize, TextareaAutosizeProps } from '@mui/material'
 import type { UnitInputParams } from '@frontend/types/unit'
 
 export const UnitDetailInput = ({
   fieldName,
   label,
-  minRow,
-  maxRow,
   disabled = false,
+  ...rest
 }: {
   fieldName: keyof UnitInputParams
   label: string
-  props?: string
-  minRow: number
-  maxRow: number
-  disabled?: boolean
-}) => {
+} & TextareaAutosizeProps) => {
   const { getFieldProps } = useFormikContext<UnitInputParams>()
   const getFieldPropsName = getFieldProps(fieldName)
   return (
@@ -25,10 +20,9 @@ export const UnitDetailInput = ({
       </span>
       <TextareaAutosize
         className="w-full border border-gray-400 p-2 rounded-lg text-sm font-light"
-        minRows={minRow}
-        maxRows={maxRow}
-        {...getFieldPropsName}
         disabled={disabled}
+        {...rest}
+        {...getFieldPropsName}
       />
     </div>
   )

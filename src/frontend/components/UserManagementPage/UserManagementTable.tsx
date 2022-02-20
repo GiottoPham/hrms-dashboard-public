@@ -1,4 +1,3 @@
-import type { CurrentUser } from '@frontend/types/auth'
 import { Button, IconButton } from '@mui/material'
 import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
@@ -9,11 +8,12 @@ import AddIcon from '@mui/icons-material/Add'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { AddUserButton } from '@components/UserManagementPage/AddUserButton'
+import { UserDetail, UserStatus } from '@frontend/types/user'
+import { capitalize } from 'lodash'
 type CreateHeaderInput = {
   headerText: string
-  sortBy: 'id' | 'username' | 'fullName' | 'email' | 'name'
+  sortBy: keyof UserDetail
 }
-type UserDetail = CurrentUser['user']
 const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   const Header = () => {
     const [sort, setSort] = useState({ sortBy: 'id', sortOrder: 'asc' })
@@ -51,21 +51,23 @@ const columns: Column<UserDetail>[] = [
     width: 'w-[68px]',
   },
   {
-    Header: createHeader({ headerText: 'Full Name', sortBy: 'fullName' }),
-    accessor: 'fullName',
-    Cell: ({ value }) => <p>{value}</p>,
-    width: 'w-[250px]',
-  },
-  {
-    Header: createHeader({ headerText: 'User Name', sortBy: 'username' }),
+    Header: createHeader({ headerText: 'Username', sortBy: 'username' }),
     accessor: 'username',
     Cell: ({ value }) => <p>{value}</p>,
     width: 'w-[250px]',
   },
   {
-    Header: createHeader({ headerText: 'Email', sortBy: 'email' }),
-    accessor: 'email',
-    Cell: ({ value }) => <p>{value}</p>,
+    Header: createHeader({ headerText: 'Role', sortBy: 'roleId' }),
+    accessor: 'roleId',
+    Cell: ({ value }) => (
+      <p>{roleFake.find((role) => role.id === value)?.name}</p>
+    ),
+    width: 'w-[250px]',
+  },
+  {
+    Header: createHeader({ headerText: 'Status', sortBy: 'userStatus' }),
+    accessor: 'userStatus',
+    Cell: ({ value }) => <p>{capitalize(value)}</p>,
     width: 'w-[250px]',
   },
   {
@@ -84,73 +86,52 @@ const columns: Column<UserDetail>[] = [
 const userFake: UserDetail[] = [
   {
     id: 1,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
     username: 'khoaideptrai',
+    roleId: 1,
+    userStatus: UserStatus.Enable,
+    password: 'abcdxyz',
   },
   {
     id: 2,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
+    username: 'khoaideptrai1',
+    roleId: 2,
+    userStatus: UserStatus.Enable,
+    password: 'abcdxyz1',
   },
   {
     id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
+    username: 'khoaideptrai3',
+    roleId: 3,
+    userStatus: UserStatus.Enable,
+    password: 'abcdxyz3',
+  },
+  {
+    id: 4,
+    username: 'khoaideptrai4',
+    roleId: 1,
+    userStatus: UserStatus.Enable,
+    password: 'abcdxyz4',
+  },
+  {
+    id: 5,
+    username: 'khoaideptrai5',
+    roleId: 2,
+    userStatus: UserStatus.Enable,
+    password: 'abcdxyz5',
+  },
+]
+const roleFake = [
+  {
+    id: 1,
+    name: 'User',
+  },
+  {
+    id: 2,
+    name: 'Super User',
   },
   {
     id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
-  },
-  {
-    id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
-  },
-  {
-    id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
-  },
-  {
-    id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
-  },
-  {
-    id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
-  },
-  {
-    id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
-  },
-  {
-    id: 3,
-    fullName: 'Pham Khang Nguyen',
-    name: 'khoai',
-    email: 'khoai@gmail.com',
-    username: 'khoaideptrai',
+    name: 'Admin',
   },
 ]
 export const UserManagementTable = () => {

@@ -109,9 +109,9 @@ export const BurgerButton = () => {
                               </span>
 
                               {isCollapsed ? (
-                                <KeyboardArrowDownIcon className="h-5 w-5" />
-                              ) : (
                                 <KeyboardArrowUpIcon className="h-5 w-5" />
+                              ) : (
+                                <KeyboardArrowDownIcon className="h-5 w-5" />
                               )}
                             </Button>
                           )}

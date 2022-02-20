@@ -32,9 +32,12 @@ export const SIDEBAR_NAVIGATIONS = () => [
   },
   {
     Icon: PimIcon,
-    href: '/pim',
+    href: '',
     label: 'PIM',
-    subNavs: [{ label: 'PIM', href: '/pim' }],
+    subNavs: [
+      { label: 'Employees Info', href: '/pim/employees-info' },
+      { label: 'Add Employee', href: '/pim/add-employee' },
+    ],
   },
   {
     Icon: LeaveIcon,
