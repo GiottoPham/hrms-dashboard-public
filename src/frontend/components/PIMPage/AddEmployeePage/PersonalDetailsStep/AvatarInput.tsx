@@ -3,7 +3,7 @@ import { Avatar, Button, Badge } from '@mui/material'
 import { useFormikContext } from 'formik'
 import EditIcon from '@mui/icons-material/Edit'
 
-export const AvatarInput = () => {
+export const AvatarInput = ({ disabled = false }: { disabled?: boolean }) => {
   const { setFieldValue, values } =
     useFormikContext<PersonalDetailInputParams>()
   return (
@@ -19,6 +19,7 @@ export const AvatarInput = () => {
             color="inherit"
             variant="outlined"
             component="label"
+            disabled={disabled}
           >
             <EditIcon className="w-6 h-6" />
             <input

@@ -3,37 +3,47 @@ import type { JobDetail } from '@frontend/types/job'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
 
-export const JobTitleSelect = () => {
+export const JobTitleSelect = ({
+  disabled = false,
+}: {
+  disabled?: boolean
+}) => {
   const jobFake: JobDetail[] = [
     {
       id: 1,
       title: 'Art Director',
       description:
         'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+      note: 'abc',
     },
     {
       id: 2,
       title: 'Art Director',
       description:
         'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+      note: 'abc',
     },
+
     {
       id: 3,
       title: 'Art Director',
       description:
         'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+      note: 'abc',
     },
     {
       id: 4,
       title: 'Art Director',
       description:
         'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+      note: 'abc',
     },
     {
       id: 5,
       title: 'Art Director',
       description:
         'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+      note: 'abc',
     },
   ]
   const { values, setFieldValue, handleBlur, errors, touched } =
@@ -44,6 +54,7 @@ export const JobTitleSelect = () => {
         Job Title
       </InputLabel>
       <Autocomplete
+        disabled={disabled}
         options={jobFake}
         renderOption={(props, option) => {
           return (
@@ -68,7 +79,7 @@ export const JobTitleSelect = () => {
             }}
           />
         )}
-        value={jobFake.find((job) => job.id === values.jobId)}
+        value={jobFake.find((job) => job.id === values?.jobId)}
         onChange={(_, newValue) => setFieldValue('jobId', newValue?.id)}
       />
       {!!errors.jobId && touched.jobId && (

@@ -1,15 +1,16 @@
 import { Layout } from '@components/Layout/Layout'
+import { CandidatesTable } from '@components/RecruitmentPage/CandidatePage/CandidatesTable'
 import { AuthGuard } from '@frontend/framework/AuthGuard'
 
-export const OnBoardingPage = () => {
+export const CandidatePage = () => {
   return (
     <AuthGuard>
       <Layout
         renderHeader={() => (
-          <h1 className="font-bold text-2xl uppercase">On Boarding</h1>
+          <h1 className="font-bold text-2xl uppercase">Candidate</h1>
         )}
       >
-        On Boarding
+        <CandidatesTable />
       </Layout>
     </AuthGuard>
   )

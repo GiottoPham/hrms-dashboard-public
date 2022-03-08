@@ -2,7 +2,7 @@ import type { JobDetailInputParams } from '@frontend/types/employee'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
 
-export const UnitSelect = () => {
+export const UnitSelect = ({ disabled = false }: { disabled?: boolean }) => {
   const LIST_UNIT = [
     {
       id: 1,
@@ -98,6 +98,7 @@ export const UnitSelect = () => {
         Unit
       </InputLabel>
       <Autocomplete
+        disabled={disabled}
         options={LIST_UNIT}
         renderOption={(props, option) => {
           return (
@@ -122,7 +123,7 @@ export const UnitSelect = () => {
             }}
           />
         )}
-        value={LIST_UNIT.find((unit) => unit.id === values.unitId)}
+        value={LIST_UNIT.find((unit) => unit.id === values?.unitId)}
         onChange={(_, newValue) => setFieldValue('unitId', newValue?.id)}
       />
       {!!errors.unitId && touched.unitId && (

@@ -2,15 +2,14 @@ import type { UserInputParams } from '@frontend/types/user'
 
 export type Employee = {
   id: number
-  avatar: string
-  name: string
-  jobTitle: string
-  unit: string
-  email: string
-  contact: string
+  personalDetail: Omit<PersonalDetailInputParams, 'avatar'> & {
+    avatar: string
+  }
+  jobDetail: JobDetailInputParams
+  insurance: InsuranceInputParams
 }
 export type PersonalDetailInputParams = {
-  avatar: File
+  avatar: File | Blob
   firstName: string
   lastName: string
   dateOfBirth: string
@@ -47,4 +46,20 @@ export type EmployeeParams = {
   jobDetail: JobDetailInputParams
   personalDetail: PersonalDetailInputParams
   accountDetail: AssignAccountInputParams
+}
+
+export type InsuranceInputParams = {
+  id: number
+  health: InsuranceCommon & {
+    cityId: number
+    kcbId: number
+  }
+  social: InsuranceCommon
+  unemployment: InsuranceCommon
+}
+export type InsuranceCommon = {
+  number: string
+  issueDate: string
+  toDate: string
+  fromDate: string
 }

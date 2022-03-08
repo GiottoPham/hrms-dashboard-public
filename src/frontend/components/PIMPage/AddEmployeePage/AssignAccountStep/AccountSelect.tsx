@@ -90,7 +90,7 @@ export const AccountSelect = () => {
             }}
           />
         )}
-        value={userFake.find((user) => user.id === values.accountId)}
+        value={userFake.find((user) => user.id === values?.accountId)}
         onChange={(_, newValue) => setFieldValue('accountId', newValue?.id)}
       />
       {!!errors.accountId && touched.accountId && (

@@ -1,7 +1,5 @@
-export type JobDetail = {
+export type JobDetail = JobInputParams & {
   id: number
-  title: string
-  description: string
 }
 export type JobInputParams = {
   title: string

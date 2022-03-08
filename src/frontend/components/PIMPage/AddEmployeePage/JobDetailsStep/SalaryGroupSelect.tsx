@@ -2,7 +2,11 @@ import type { JobDetailInputParams } from '@frontend/types/employee'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
 
-export const SalaryGroupSelect = () => {
+export const SalaryGroupSelect = ({
+  disabled = false,
+}: {
+  disabled?: boolean
+}) => {
   const salaryGroup = [
     {
       id: 1,
@@ -38,6 +42,7 @@ export const SalaryGroupSelect = () => {
         Salary Group
       </InputLabel>
       <Autocomplete
+        disabled={disabled}
         options={salaryGroup}
         renderOption={(props, option) => {
           return (
@@ -62,7 +67,7 @@ export const SalaryGroupSelect = () => {
             }}
           />
         )}
-        value={salaryGroup.find((item) => item.id === values.salaryGroup)}
+        value={salaryGroup.find((item) => item.id === values?.salaryGroup)}
         onChange={(_, newValue) => setFieldValue('salaryGroup', newValue?.id)}
       />
       {!!errors.salaryGroup && touched.salaryGroup && (

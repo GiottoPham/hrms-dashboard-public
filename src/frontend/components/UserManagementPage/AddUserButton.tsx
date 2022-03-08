@@ -5,36 +5,42 @@ import {
   ButtonWithModal,
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
-import { UserInputParams, UserStatus } from '@frontend/types/user'
+import { UserDetail, UserInputParams, UserStatus } from '@frontend/types/user'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
+import { useState } from 'react'
 import type { PartialDeep } from 'type-fest'
-import { object, string } from 'yup'
+import { object, string, number } from 'yup'
 import { UserInput } from './UserInput'
-const DEFAULT_USER: PartialDeep<UserInputParams> = {
-  username: '',
-  password: '',
-  userStatus: UserStatus.Enable,
-}
 
 const newUserValidationSchema = object().shape({
-  name: string().required(),
   username: string().required(),
-  role: string().required(),
+  roleId: number().required(),
   userStatus: string().required(),
   password: string().required(),
 })
 export const AddUserButton = ({
+  userDetail,
   renderButton,
+  isEdit = false,
 }: {
+  isEdit?: boolean
+  userDetail?: UserDetail
   renderButton: RenderButtonFn
 }) => {
+  const DEFAULT_USER: PartialDeep<UserInputParams> = {
+    username: userDetail?.username || '',
+    password: userDetail?.password,
+    userStatus: UserStatus.Enable,
+    roleId: userDetail?.roleId,
+  }
+  const [edit, setEdit] = useState(isEdit)
   return (
     <Formik
       initialValues={DEFAULT_USER}
       onSubmit={(
         { username, roleId, password, userStatus },
-        { setSubmitting }
+        { setSubmitting, resetForm }
       ) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
@@ -44,83 +50,108 @@ export const AddUserButton = ({
         })
         myPromise.then(() => {
           setSubmitting(false)
+          if (isEdit) setEdit(true)
+          resetForm()
         })
       }}
       validationSchema={newUserValidationSchema}
     >
-      {({ submitForm, isSubmitting, isValid }) => (
-        <ButtonWithModal
-          renderButton={renderButton}
-          renderModal={({ Modal, isOpen, closeModal }) => (
-            <Modal
-              open={isOpen}
-              onClose={closeModal}
-              closeAfterTransition
-              disableScrollLock
-              onBackdropClick={(e) => {
-                e.stopPropagation()
-              }}
-            >
-              <div className="flex flex-col font-nunito bg-white h-full w-full px-8 py-6 md:w-8/12 lg:w-7/12 xl:w-6/12 md:h-4/6 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl md:overflow-y-auto">
-                <div className="border-b border-gray-500 text-gray-500 text-xl">
-                  Add User
-                </div>
-                <div className="border-b border-gray-500 flex-grow mt-2">
-                  <div className="flex flex-row justify-between space-x-10">
-                    <div className="w-1/2">
-                      <UserInput fieldName="username" label="Username" />
-                    </div>
-                    <div className="w-1/2">
-                      <UserRoleSelect />
-                    </div>
+      {({ submitForm, isSubmitting, isValid, resetForm }) => {
+        return (
+          <ButtonWithModal
+            renderButton={renderButton}
+            renderModal={({ Modal, isOpen, closeModal }) => (
+              <Modal
+                open={isOpen}
+                onClose={() => {
+                  closeModal()
+                  if (isEdit) setEdit(true)
+                  resetForm()
+                }}
+                closeAfterTransition
+                disableScrollLock
+                onBackdropClick={(e) => {
+                  e.stopPropagation()
+                }}
+              >
+                <div className="flex flex-col font-nunito bg-white h-full w-full px-8 py-6 md:w-8/12 lg:w-7/12 xl:w-6/12 md:h-4/6 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl md:overflow-y-auto">
+                  <div className="border-b border-gray-500 text-gray-500 text-xl">
+                    {isEdit ? 'Edit User' : 'Add User'}
                   </div>
-                  <div className="flex flex-row justify-between space-x-10 mt-5">
-                    <div className="w-1/2">
-                      <StatusInput />
-                    </div>
-                  </div>
-                  <div className="bg-gray-200 px-5 pt-5 pb-7 w-2/3 mt-5 rounded-lg">
-                    <UserPasswordInput />
-                  </div>
-                </div>
-                <div className="self-end mt-5">
-                  <Button
-                    classes={{
-                      root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
-                    }}
-                    color="primary"
-                    variant="outlined"
-                    onClick={closeModal}
-                  >
-                    Close
-                  </Button>
-                  <Button
-                    classes={{
-                      root: 'rounded-full font-nunito normal-case shadow-none w-24 text-white',
-                    }}
-                    color="primary"
-                    variant="contained"
-                    onClick={submitForm}
-                    type="submit"
-                    disabled={!isValid || isSubmitting}
-                    startIcon={
-                      isSubmitting && (
-                        <CircularProgress
-                          color="primary"
-                          size={20}
-                          thickness={5}
+                  <div className="border-b border-gray-500 flex-grow mt-2">
+                    <div className="flex flex-row justify-between space-x-10">
+                      <div className="w-1/2">
+                        <UserInput
+                          fieldName="username"
+                          label="Username"
+                          disabled={edit}
                         />
-                      )
-                    }
-                  >
-                    Save
-                  </Button>
+                      </div>
+                      <div className="w-1/2">
+                        <UserRoleSelect disabled={edit} />
+                      </div>
+                    </div>
+                    <div className="flex flex-row justify-between space-x-10 mt-5">
+                      <div className="w-1/2">
+                        <StatusInput disabled={edit} />
+                      </div>
+                    </div>
+                    <div className="bg-gray-200 px-5 pt-5 pb-7 w-2/3 mt-5 rounded-lg">
+                      <UserPasswordInput disabled={edit} />
+                    </div>
+                  </div>
+                  <div className="self-end mt-5">
+                    <Button
+                      classes={{
+                        root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
+                      }}
+                      color="primary"
+                      variant="outlined"
+                      onClick={closeModal}
+                    >
+                      Close
+                    </Button>
+                    {!edit ? (
+                      <Button
+                        classes={{
+                          root: 'rounded-full font-nunito normal-case shadow-none w-24 text-white',
+                        }}
+                        color="primary"
+                        variant="contained"
+                        onClick={submitForm}
+                        type="submit"
+                        disabled={!isValid || isSubmitting}
+                        startIcon={
+                          isSubmitting && (
+                            <CircularProgress
+                              color="primary"
+                              size={20}
+                              thickness={5}
+                            />
+                          )
+                        }
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <Button
+                        classes={{
+                          root: 'rounded-full font-nunito normal-case shadow-none w-24 text-white',
+                        }}
+                        color="primary"
+                        variant="contained"
+                        onClick={() => setEdit(false)}
+                      >
+                        Edit
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Modal>
-          )}
-        ></ButtonWithModal>
-      )}
+              </Modal>
+            )}
+          ></ButtonWithModal>
+        )
+      }}
     </Formik>
   )
 }

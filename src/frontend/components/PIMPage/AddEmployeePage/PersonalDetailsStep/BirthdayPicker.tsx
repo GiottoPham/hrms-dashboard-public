@@ -3,7 +3,13 @@ import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
-export const BirthdayPicker = ({ label }: { label: string }) => {
+export const BirthdayPicker = ({
+  label,
+  disabled = false,
+}: {
+  label: string
+  disabled?: boolean
+}) => {
   const { values, setFieldValue } =
     useFormikContext<PersonalDetailInputParams>()
   return (
@@ -12,6 +18,7 @@ export const BirthdayPicker = ({ label }: { label: string }) => {
         {label}
       </InputLabel>
       <DesktopDatePicker
+        disabled={disabled}
         autoFocus={false}
         value={values.dateOfBirth}
         onChange={(newValue) => {
@@ -20,6 +27,7 @@ export const BirthdayPicker = ({ label }: { label: string }) => {
         }}
         renderInput={(params) => (
           <TextField
+            disabled={disabled}
             fullWidth
             {...params}
             InputProps={{

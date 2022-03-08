@@ -56,6 +56,10 @@ module.exports = {
       'black': '#161616',
       'transparent': 'transparent',
       'current': 'currentColor',
+      'late': '#FFCB76',
+      'ontime': '#7ED321',
+      'leave': '#666666',
+      'pending': '#A859E5',
     },
     extend: {
       spacing: {

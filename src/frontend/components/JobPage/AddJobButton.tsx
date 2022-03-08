@@ -3,32 +3,40 @@ import {
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
-import type { JobInputParams } from '@frontend/types/job'
+import type { JobDetail, JobInputParams } from '@frontend/types/job'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
+import { useState } from 'react'
 import { object, string } from 'yup'
 import { JobDetailInput } from './JobDetailInput'
-const DEFAULT_JOB: JobInputParams = {
-  title: '',
-  description: '',
-  note: '',
-}
 
 const newJobValidationSchema = object().shape({
-  title: string().required(),
-  description: string().required(),
-  note: string().required(),
+  title: string().required('Title is required'),
+  description: string().required('Description is required'),
+  note: string().required('Note is required'),
 })
 export const AddJobButton = ({
   renderButton,
+  jobDetail,
+  isEdit = false,
 }: {
+  isEdit?: boolean
+  jobDetail?: JobDetail
   renderButton: RenderButtonFn
 }) => {
+  const [edit, setEdit] = useState(isEdit)
+  const DEFAULT_JOB: JobInputParams = {
+    title: jobDetail?.title || '',
+    description: jobDetail?.description || '',
+    note: jobDetail?.note || '',
+  }
   return (
     <Formik<JobInputParams>
-      validateOnMount
       initialValues={DEFAULT_JOB}
-      onSubmit={({ description, title, note }, { setSubmitting }) => {
+      onSubmit={(
+        { description, title, note },
+        { setSubmitting, resetForm }
+      ) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
             resolve('f')
@@ -37,6 +45,8 @@ export const AddJobButton = ({
         })
         myPromise.then(() => {
           setSubmitting(false)
+          if (isEdit) setEdit(true)
+          resetForm()
         })
       }}
       validationSchema={newJobValidationSchema}
@@ -49,13 +59,18 @@ export const AddJobButton = ({
         touched,
         isValid,
         isSubmitting,
+        resetForm,
       }) => (
         <ButtonWithModal
           renderButton={renderButton}
           renderModal={({ Modal, isOpen, closeModal }) => (
             <Modal
               open={isOpen}
-              onClose={closeModal}
+              onClose={() => {
+                closeModal()
+                if (isEdit) setEdit(true)
+                resetForm()
+              }}
               closeAfterTransition
               disableScrollLock
               onBackdropClick={(e) => {
@@ -69,6 +84,7 @@ export const AddJobButton = ({
                 <div className="border-b border-gray-500 py-4 flex-grow">
                   <div className="w-full">
                     <TextInput
+                      disabled={edit}
                       required
                       fullWidth
                       id="title"
@@ -87,6 +103,7 @@ export const AddJobButton = ({
                   </div>
                   <div className="w-full">
                     <JobDetailInput
+                      disabled={edit}
                       fieldName="description"
                       label="Job Description"
                       maxRow={3}
@@ -95,6 +112,7 @@ export const AddJobButton = ({
                   </div>
                   <div className="w-full">
                     <JobDetailInput
+                      disabled={edit}
                       fieldName="note"
                       label="Note"
                       maxRow={3}
@@ -113,27 +131,40 @@ export const AddJobButton = ({
                   >
                     Close
                   </Button>
-                  <Button
-                    classes={{
-                      root: 'rounded-full font-nunito normal-case shadow-none w-24 text-white',
-                    }}
-                    color="primary"
-                    variant="contained"
-                    disabled={!isValid || isSubmitting}
-                    onClick={submitForm}
-                    type="submit"
-                    startIcon={
-                      isSubmitting && (
-                        <CircularProgress
-                          color="primary"
-                          size={20}
-                          thickness={5}
-                        />
-                      )
-                    }
-                  >
-                    Save
-                  </Button>
+                  {!edit ? (
+                    <Button
+                      classes={{
+                        root: 'rounded-full font-nunito normal-case shadow-none w-24 text-white',
+                      }}
+                      color="primary"
+                      variant="contained"
+                      disabled={!isValid || isSubmitting}
+                      onClick={submitForm}
+                      type="submit"
+                      startIcon={
+                        isSubmitting && (
+                          <CircularProgress
+                            color="primary"
+                            size={20}
+                            thickness={5}
+                          />
+                        )
+                      }
+                    >
+                      Save
+                    </Button>
+                  ) : (
+                    <Button
+                      classes={{
+                        root: 'rounded-full font-nunito normal-case shadow-none w-24 text-white',
+                      }}
+                      color="primary"
+                      variant="contained"
+                      onClick={() => setEdit(false)}
+                    >
+                      Edit
+                    </Button>
+                  )}
                 </div>
               </div>
             </Modal>

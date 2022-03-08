@@ -29,8 +29,8 @@ export const Table = <T extends Record<string, unknown>>({
   const tableHeight = headerHeight + rowCount * rowHeight + 1
 
   return (
-    <div className="flex flex-col bg-white rounded-lg overflow-hidden border border-primary">
-      <div className="align-middle inline-block w-full">
+    <div className="flex flex-col bg-white rounded-lg border border-primary overflow-hidden">
+      <div className="align-middle inline-block w-full overflow-x-auto">
         <div
           style={{ minHeight: !isEmpty(rows) ? tableHeight : HEADER_HEIGHT }}
         >

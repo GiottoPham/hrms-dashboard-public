@@ -7,10 +7,12 @@ export const DistrictSelect = ({
   label,
   permanent = true,
   cityId,
+  disabled = false,
 }: {
   label: string
   permanent?: boolean
   cityId?: number
+  disabled?: boolean
 }) => {
   const {
     values: { permanentAddress, temporaryAddress },
@@ -32,6 +34,7 @@ export const DistrictSelect = ({
         {label}
       </InputLabel>
       <Select
+        disabled={disabled}
         displayEmpty
         error={
           permanent

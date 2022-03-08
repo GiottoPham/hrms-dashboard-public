@@ -43,98 +43,105 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 
   return Header
 }
-const columns: Column<UserDetail>[] = [
-  {
-    Header: createHeader({ headerText: 'ID', sortBy: 'id' }),
-    accessor: 'id',
-    Cell: ({ value }) => <p>{value}</p>,
-    width: 'w-[68px]',
-  },
-  {
-    Header: createHeader({ headerText: 'Username', sortBy: 'username' }),
-    accessor: 'username',
-    Cell: ({ value }) => <p>{value}</p>,
-    width: 'w-[250px]',
-  },
-  {
-    Header: createHeader({ headerText: 'Role', sortBy: 'roleId' }),
-    accessor: 'roleId',
-    Cell: ({ value }) => (
-      <p>{roleFake.find((role) => role.id === value)?.name}</p>
-    ),
-    width: 'w-[250px]',
-  },
-  {
-    Header: createHeader({ headerText: 'Status', sortBy: 'userStatus' }),
-    accessor: 'userStatus',
-    Cell: ({ value }) => <p>{capitalize(value)}</p>,
-    width: 'w-[250px]',
-  },
-  {
-    id: 'actionCell',
-    accessor: 'id',
-    Cell: () => (
-      <div className="flex justify-end">
-        <IconButton>
-          <EditIcon className="w-5 h-5" />
-        </IconButton>
-      </div>
-    ),
-    width: 'w-[50px]',
-  },
-]
-const userFake: UserDetail[] = [
-  {
-    id: 1,
-    username: 'khoaideptrai',
-    roleId: 1,
-    userStatus: UserStatus.Enable,
-    password: 'abcdxyz',
-  },
-  {
-    id: 2,
-    username: 'khoaideptrai1',
-    roleId: 2,
-    userStatus: UserStatus.Enable,
-    password: 'abcdxyz1',
-  },
-  {
-    id: 3,
-    username: 'khoaideptrai3',
-    roleId: 3,
-    userStatus: UserStatus.Enable,
-    password: 'abcdxyz3',
-  },
-  {
-    id: 4,
-    username: 'khoaideptrai4',
-    roleId: 1,
-    userStatus: UserStatus.Enable,
-    password: 'abcdxyz4',
-  },
-  {
-    id: 5,
-    username: 'khoaideptrai5',
-    roleId: 2,
-    userStatus: UserStatus.Enable,
-    password: 'abcdxyz5',
-  },
-]
-const roleFake = [
-  {
-    id: 1,
-    name: 'User',
-  },
-  {
-    id: 2,
-    name: 'Super User',
-  },
-  {
-    id: 3,
-    name: 'Admin',
-  },
-]
+
 export const UserManagementTable = () => {
+  const userFake: UserDetail[] = [
+    {
+      id: 1,
+      username: 'khoaideptrai',
+      roleId: 1,
+      userStatus: UserStatus.Enable,
+      password: 'abcdxyz',
+    },
+    {
+      id: 2,
+      username: 'khoaideptrai1',
+      roleId: 2,
+      userStatus: UserStatus.Enable,
+      password: 'abcdxyz1',
+    },
+    {
+      id: 3,
+      username: 'khoaideptrai3',
+      roleId: 3,
+      userStatus: UserStatus.Enable,
+      password: 'abcdxyz3',
+    },
+    {
+      id: 4,
+      username: 'khoaideptrai4',
+      roleId: 1,
+      userStatus: UserStatus.Enable,
+      password: 'abcdxyz4',
+    },
+    {
+      id: 5,
+      username: 'khoaideptrai5',
+      roleId: 2,
+      userStatus: UserStatus.Enable,
+      password: 'abcdxyz5',
+    },
+  ]
+  const roleFake = [
+    {
+      id: 1,
+      name: 'User',
+    },
+    {
+      id: 2,
+      name: 'Super User',
+    },
+    {
+      id: 3,
+      name: 'Admin',
+    },
+  ]
+  const columns: Column<UserDetail>[] = [
+    {
+      Header: createHeader({ headerText: 'ID', sortBy: 'id' }),
+      accessor: 'id',
+      Cell: ({ value }) => <p>{value}</p>,
+      width: 'w-[68px]',
+    },
+    {
+      Header: createHeader({ headerText: 'Username', sortBy: 'username' }),
+      accessor: 'username',
+      Cell: ({ value }) => <p>{value}</p>,
+      width: 'w-[250px]',
+    },
+    {
+      Header: createHeader({ headerText: 'Role', sortBy: 'roleId' }),
+      accessor: 'roleId',
+      Cell: ({ value }) => (
+        <p>{roleFake.find((role) => role.id === value)?.name}</p>
+      ),
+      width: 'w-[250px]',
+    },
+    {
+      Header: createHeader({ headerText: 'Status', sortBy: 'userStatus' }),
+      accessor: 'userStatus',
+      Cell: ({ value }) => <p>{capitalize(value)}</p>,
+      width: 'w-[250px]',
+    },
+    {
+      id: 'actionCell',
+      accessor: 'id',
+      Cell: ({ row }) => (
+        <div className="flex justify-end">
+          <AddUserButton
+            isEdit={true}
+            userDetail={row.original}
+            renderButton={({ openModal }) => (
+              <IconButton onClick={openModal}>
+                <EditIcon className="w-5 h-5" />
+              </IconButton>
+            )}
+          />
+        </div>
+      ),
+      width: 'w-[50px]',
+    },
+  ]
   return (
     <div className="rounded px-10 py-5 flex flex-col">
       <AddUserButton

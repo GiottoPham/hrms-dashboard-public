@@ -4,9 +4,11 @@ import { useFormikContext } from 'formik'
 export const AddressInput = ({
   permanent = true,
   label,
+  disabled = false,
 }: {
   label: string
   permanent?: boolean
+  disabled?: boolean
 }) => {
   const {
     values: { permanentAddress, temporaryAddress },
@@ -24,6 +26,7 @@ export const AddressInput = ({
   return (
     <>
       <TextInput
+        disabled={disabled}
         id={permanent ? 'permanentAddress.address' : 'temporaryAddress.address'}
         required
         fullWidth

@@ -42,69 +42,82 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 
   return Header
 }
-const columns: Column<JobDetail>[] = [
-  {
-    Header: createHeader({ headerText: 'Job Title', sortBy: 'title' }),
-    accessor: 'title',
-    Cell: ({ value }) => <p>{value}</p>,
-    width: 'w-[68px]',
-  },
-  {
-    Header: createHeader({
-      headerText: 'Job Description',
-      sortBy: 'description',
-    }),
-    accessor: 'description',
-    Cell: ({ value }) => <p className="leading-loose p-2">{value}</p>,
-    width: 'w-[400px]',
-  },
 
-  {
-    id: 'actionCell',
-    accessor: 'title',
-    Cell: () => (
-      <div className="flex justify-end">
-        <IconButton>
-          <EditIcon className="w-5 h-5" />
-        </IconButton>
-      </div>
-    ),
-    width: 'w-[50px]',
-  },
-]
 const jobFake: JobDetail[] = [
   {
     id: 1,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+    note: 'abc',
   },
   {
     id: 2,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+    note: 'abc',
   },
+
   {
     id: 3,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+    note: 'abc',
   },
   {
     id: 4,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+    note: 'abc',
   },
   {
     id: 5,
     title: 'Art Director',
     description:
       'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
+    note: 'abc',
   },
 ]
 export const JobTable = () => {
+  const columns: Column<JobDetail>[] = [
+    {
+      Header: createHeader({ headerText: 'Job Title', sortBy: 'title' }),
+      accessor: 'title',
+      Cell: ({ value }) => <p>{value}</p>,
+      width: 'w-[68px]',
+    },
+    {
+      Header: createHeader({
+        headerText: 'Job Description',
+        sortBy: 'description',
+      }),
+      accessor: 'description',
+      Cell: ({ value }) => <p className="leading-loose p-2">{value}</p>,
+      width: 'w-[400px]',
+    },
+
+    {
+      id: 'actionCell',
+      accessor: 'title',
+      Cell: ({ row }) => (
+        <div className="flex justify-end">
+          <AddJobButton
+            isEdit={true}
+            jobDetail={row.original}
+            renderButton={({ openModal }) => (
+              <IconButton onClick={openModal}>
+                <EditIcon className="w-5 h-5" />
+              </IconButton>
+            )}
+          />
+        </div>
+      ),
+      width: 'w-[50px]',
+    },
+  ]
   return (
     <div className="rounded px-10 py-5 flex flex-col">
       <AddJobButton

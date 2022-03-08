@@ -4,18 +4,21 @@ import { useFormikContext } from 'formik'
 export const EmployeeDetailsInput = ({
   fieldName,
   label,
+  disabled = false,
 }: {
   fieldName: keyof Pick<
     PersonalDetailInputParams,
     'email' | 'firstName' | 'lastName' | 'phone'
   >
   label: string
+  disabled?: boolean
 }) => {
   const { values, errors, setFieldValue, touched, handleBlur } =
     useFormikContext<PersonalDetailInputParams>()
   return (
     <>
       <TextInput
+        disabled={disabled}
         required
         fullWidth
         id={fieldName}

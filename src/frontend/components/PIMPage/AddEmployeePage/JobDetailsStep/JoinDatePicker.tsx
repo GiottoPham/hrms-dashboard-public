@@ -3,7 +3,13 @@ import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
-export const JoinDatePicker = ({ label }: { label: string }) => {
+export const JoinDatePicker = ({
+  label,
+  disabled = false,
+}: {
+  label: string
+  disabled?: boolean
+}) => {
   const { values, setFieldValue } = useFormikContext<JobDetailInputParams>()
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -11,6 +17,7 @@ export const JoinDatePicker = ({ label }: { label: string }) => {
         {label}
       </InputLabel>
       <DesktopDatePicker
+        disabled={disabled}
         autoFocus={false}
         value={values.joinDate}
         onChange={(newValue) => {
@@ -19,6 +26,7 @@ export const JoinDatePicker = ({ label }: { label: string }) => {
         }}
         renderInput={(params) => (
           <TextField
+            disabled={disabled}
             fullWidth
             {...params}
             InputProps={{

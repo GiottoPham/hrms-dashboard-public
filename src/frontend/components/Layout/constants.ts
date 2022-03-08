@@ -3,10 +3,8 @@ import { MonitorIcon } from '@frontend/framework/icons/MonitorIcon'
 import { PimIcon } from '@frontend/framework/icons/PimIcon'
 import { LeaveIcon } from '@frontend/framework/icons/LeaveIcon'
 import { AttendanceIcon } from '@frontend/framework/icons/AttendanceIcon'
-import { MyInfoIcon } from '@frontend/framework/icons/MyInfoIcon'
 import { RecruitmentIcon } from '@frontend/framework/icons/RecruitmentIcon'
-import { InsuranceIcon } from '@frontend/framework/icons/InsuranceIcon'
-import TaskIcon from '@mui/icons-material/Task'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 /**
  * Layout Component
  */
@@ -27,7 +25,6 @@ export const SIDEBAR_NAVIGATIONS = () => [
       { label: 'User Management', href: '/monitor/user-management' },
       { label: 'Job', href: '/monitor/job' },
       { label: 'Organization', href: '/monitor/organization' },
-      { label: 'Role', href: '/monitor/role' },
     ],
   },
   {
@@ -53,26 +50,17 @@ export const SIDEBAR_NAVIGATIONS = () => [
   },
   {
     Icon: RecruitmentIcon,
-    href: '/recruitment',
+    href: '',
     label: 'Recruitment',
-    subNavs: [{ label: 'Recruitment', href: '/recruitment' }],
+    subNavs: [
+      { label: 'Vacancies Info', href: '/recruitment/vacancies-info' },
+      { label: 'Candidate', href: '/recruitment/candidate' },
+    ],
   },
   {
-    Icon: TaskIcon,
-    href: '/on-boarding',
-    label: 'On-boarding',
-    subNavs: [{ label: 'On-boarding', href: '/on-boarding' }],
-  },
-  {
-    Icon: InsuranceIcon,
-    href: '/insurance',
-    label: 'Insurance',
-    subNavs: [{ label: 'Insurance', href: '/insurance' }],
-  },
-  {
-    Icon: MyInfoIcon,
-    href: '/my-info',
-    label: 'My Info',
-    subNavs: [{ label: 'My Info', href: '/my-info' }],
+    Icon: AttachMoneyIcon,
+    href: '/payroll',
+    label: 'Payroll',
+    subNavs: [{ label: 'Payroll', href: '/payroll' }],
   },
 ]

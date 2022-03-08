@@ -4,7 +4,9 @@ import { useFormikContext } from 'formik'
 export const UserInput = ({
   fieldName,
   label,
+  disabled = false,
 }: {
+  disabled?: boolean
   fieldName: keyof UserInputParams
   label: string
 }) => {
@@ -12,6 +14,7 @@ export const UserInput = ({
     useFormikContext<UserInputParams>()
   return (
     <TextInput
+      disabled={disabled}
       required
       fullWidth
       id={fieldName}

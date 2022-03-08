@@ -1,14 +1,19 @@
 import { FormikErrors, useFormikContext } from 'formik'
 import type { Bonus, JobDetailInputParams } from '@frontend/types/employee'
 import { TextInput } from '@frontend/framework/TextInput'
-import { Button } from '@mui/material'
-
+import { IconButton } from '@mui/material'
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 export type BonusDetailProps = {
   onRemoveClick: () => void
   bonusId: number
+  disabled?: boolean
 }
 
-export const BonusDetail = ({ onRemoveClick, bonusId }: BonusDetailProps) => {
+export const BonusDetail = ({
+  onRemoveClick,
+  bonusId,
+  disabled,
+}: BonusDetailProps) => {
   const {
     values: { bonus },
     errors: { bonus: bonusError },
@@ -17,9 +22,10 @@ export const BonusDetail = ({ onRemoveClick, bonusId }: BonusDetailProps) => {
     handleBlur,
   } = useFormikContext<JobDetailInputParams>()
   return (
-    <div className="w-full flex space-x-10">
-      <div className="w-1/3">
+    <div className="w-full flex">
+      <div className="w-1/2 mr-2">
         <TextInput
+          disabled={disabled}
           required
           fullWidth
           id={`bonus[${bonusId}].bonusName`}
@@ -50,8 +56,9 @@ export const BonusDetail = ({ onRemoveClick, bonusId }: BonusDetailProps) => {
             </p>
           )}
       </div>
-      <div className="w-1/3">
+      <div className="w-1/2 mr-1">
         <TextInput
+          disabled={disabled}
           required
           type="number"
           fullWidth
@@ -74,20 +81,13 @@ export const BonusDetail = ({ onRemoveClick, bonusId }: BonusDetailProps) => {
         />
       </div>
       {bonusId !== 0 ? (
-        <div className="w-1/3 flex items-end">
-          <Button
-            onClick={onRemoveClick}
-            disableElevation
-            variant="contained"
-            classes={{
-              root: 'text-white text-base font-nunito font-semibold normal-case h-10 rounded-full',
-            }}
-          >
-            Delete
-          </Button>
+        <div className="self-end w-10">
+          <IconButton onClick={onRemoveClick}>
+            <RemoveCircleOutlineIcon className="w-6 h-6 text-danger" />
+          </IconButton>
         </div>
       ) : (
-        <div className="w-1/3"></div>
+        <div className="w-10"></div>
       )}
     </div>
   )

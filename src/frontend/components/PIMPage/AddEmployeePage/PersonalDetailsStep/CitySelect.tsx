@@ -6,9 +6,11 @@ import { useFormikContext } from 'formik'
 export const CitySelect = ({
   label,
   permanent = true,
+  disabled = false,
 }: {
   label: string
   permanent?: boolean
+  disabled?: boolean
 }) => {
   const {
     values: { permanentAddress, temporaryAddress },
@@ -30,6 +32,7 @@ export const CitySelect = ({
         {label}
       </InputLabel>
       <Select
+        disabled={disabled}
         name={permanent ? `permanentAddress.cityId` : `temporaryAddress.cityId`}
         error={
           permanent

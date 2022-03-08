@@ -2,7 +2,11 @@ import type { UserInputParams } from '@frontend/types/user'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
 
-export const UserRoleSelect = () => {
+export const UserRoleSelect = ({
+  disabled = false,
+}: {
+  disabled?: boolean
+}) => {
   const roleFake = [
     {
       id: 1,
@@ -25,6 +29,7 @@ export const UserRoleSelect = () => {
         Role
       </InputLabel>
       <Autocomplete
+        disabled={disabled}
         options={roleFake}
         renderOption={(props, option) => {
           return (
@@ -49,7 +54,7 @@ export const UserRoleSelect = () => {
             }}
           />
         )}
-        value={roleFake.find((role) => role.id === values.roleId)}
+        value={roleFake.find((role) => role.id === values?.roleId)}
         onChange={(_, newValue) => setFieldValue('roleId', newValue?.id)}
       />
       {!!errors.roleId && touched.roleId && (
