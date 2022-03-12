@@ -1,11 +1,8 @@
 import { ButtonWithPopover } from '@frontend/framework/ButtonWithPopover'
 import { useCurrentUser } from '@frontend/state/auth-queries'
-import { Avatar, Button, IconButton } from '@mui/material'
+import { Avatar, Button } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { TextInput } from '@frontend/framework/TextInput'
-import { useState } from 'react'
-import SearchIcon from '@mui/icons-material/Search'
 import { useLogout } from '@frontend/state/auth-mutation'
 
 type AppBarContentProps = {
@@ -14,31 +11,11 @@ type AppBarContentProps = {
 export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
   const { currentUser } = useCurrentUser()
   const { logout } = useLogout()
-  const [searchInput, setSearchInput] = useState('')
   if (!currentUser?.user) return null
   return (
     <div className="flex justify-between items-center bg-primary h-full w-full px-6 font-nunito">
       <div>{renderHeader && renderHeader()}</div>
-      <div className="w-1/3">
-        <TextInput
-          fullWidth
-          id="search"
-          name="search"
-          placeholder="Search Employee"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          InputProps={{
-            classes: {
-              root: 'h-12 rounded-full font-nunito bg-white text-sm',
-            },
-            endAdornment: (
-              <IconButton>
-                <SearchIcon className="w-5 h-5" />
-              </IconButton>
-            ),
-          }}
-        />
-      </div>
+      <div className="w-1/3"></div>
       {currentUser ? (
         <div className="flex items-center">
           <p className="font-bold text-secondary-600">

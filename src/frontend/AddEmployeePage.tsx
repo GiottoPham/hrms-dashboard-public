@@ -31,7 +31,10 @@ export const AddEmployeePage = () => {
               />
             )}
             {addStep === 2 && (
-              <AssignAccountStep goBack={() => setAddStep(addStep - 1)} />
+              <AssignAccountStep
+                goBack={() => setAddStep(addStep - 1)}
+                goReset={() => setAddStep(0)}
+              />
             )}
           </div>
         </div>

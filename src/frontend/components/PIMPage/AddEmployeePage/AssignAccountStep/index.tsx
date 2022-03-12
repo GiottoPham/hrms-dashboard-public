@@ -29,7 +29,13 @@ const newAccountValidationSchema = object().shape({
 
   newAccount: newUserValidationSchema,
 })
-export const AssignAccountStep = ({ goBack }: { goBack: () => void }) => {
+export const AssignAccountStep = ({
+  goBack,
+  goReset,
+}: {
+  goBack: () => void
+  goReset: () => void
+}) => {
   const {
     employeeParams: { accountDetail, jobDetail, personalDetail },
   } = useAddEmployeeForm()
@@ -56,6 +62,7 @@ export const AssignAccountStep = ({ goBack }: { goBack: () => void }) => {
         })
         myPromise.then(() => {
           setSubmitting(false)
+          goReset()
         })
       }}
       validationSchema={newAccountValidationSchema}

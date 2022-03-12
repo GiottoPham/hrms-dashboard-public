@@ -13,7 +13,7 @@ export const useCurrentUser = () => {
     isLoading: isLoadingUser,
     ...rest
   } = useQuery([CURRENT_USER, auth?.userId], fetchUser(auth?.userId), {
-    enabled: auth ? true : false,
+    enabled: true,
   })
   return {
     currentUser,

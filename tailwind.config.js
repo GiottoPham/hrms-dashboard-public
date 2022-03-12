@@ -60,6 +60,7 @@ module.exports = {
       'ontime': '#7ED321',
       'leave': '#666666',
       'pending': '#A859E5',
+      'total': '#A86500',
     },
     extend: {
       spacing: {
