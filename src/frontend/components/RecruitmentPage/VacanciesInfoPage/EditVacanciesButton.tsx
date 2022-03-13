@@ -13,10 +13,11 @@ import { number, object, string } from 'yup'
 import type { PartialDeep } from 'type-fest'
 import { VacanciesUnitSelect } from '@components/RecruitmentPage/VacanciesInfoPage/VacanciesUnitSelect'
 import { VacanciesExpiredDate } from '@components/RecruitmentPage/VacanciesInfoPage/VacanciesExpiredDate'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { VacanciesHiringManagerSelect } from '@components/RecruitmentPage/VacanciesInfoPage/VacanciesHiringManagerSelect'
 import { VacanciesJobSelect } from '@components/RecruitmentPage/VacanciesInfoPage/VacanciesJobSelect'
 import cx from 'classnames'
+import { useToast } from '@frontend/framework/Toast'
 export const EditVacanciesButton = ({
   renderButton,
   vacanciesInfo,
@@ -26,6 +27,8 @@ export const EditVacanciesButton = ({
   vacanciesInfo?: VacanciesInfo
   isEdit?: boolean
 }) => {
+  const { openToast } = useToast()
+  const refModal = useRef<HTMLButtonElement>(null)
   const [edit, setEdit] = useState(isEdit ? true : false)
   const DEFAULT_VACANCIES: PartialDeep<VacanciesEditParams> = {
     hiringManagerId: vacanciesInfo?.hiringManagerId,
@@ -53,14 +56,24 @@ export const EditVacanciesButton = ({
       onSubmit={(values, { setSubmitting, resetForm }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert(values)
+            resolve(values)
           }, 2000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           if (isEdit) setEdit(true)
           resetForm()
+          openToast(
+            isEdit ? 'Edit vacancies successful' : 'Add new vacancy successful',
+            {
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'right',
+              },
+            }
+          )
+          refModal.current?.click()
         })
       }}
       validationSchema={newVacanciesValidationSchema}
@@ -142,10 +155,11 @@ export const EditVacanciesButton = ({
                       </span>
                       <TextareaAutosize
                         disabled={edit}
-                        className={cx('w-full border p-2 rounded-lg', {
+                        className={cx('w-full border p-2 rounded-lg text-sm', {
                           'border-danger':
                             !!errors.postContent && touched.postContent,
                           'border-gray-400': !errors.postContent,
+                          'text-gray-500': edit,
                         })}
                         minRows={3}
                         maxRows={3}
@@ -155,6 +169,7 @@ export const EditVacanciesButton = ({
                   </div>
                   <div className="self-end mt-5">
                     <Button
+                      ref={refModal}
                       classes={{
                         root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
                       }}

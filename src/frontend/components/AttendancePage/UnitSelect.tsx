@@ -104,7 +104,7 @@ export const UnitSelect = () => {
             </li>
           )
         }}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
+        isOptionEqualToValue={(option, value) => option.id === value?.id}
         getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField

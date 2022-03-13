@@ -2,6 +2,7 @@ import { CitySelect } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetai
 import { DateInput } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetail/DateInput'
 import { KCBSelect } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetail/KCBSelect'
 import { NumberInput } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetail/NumberInput'
+import { useToast } from '@frontend/framework/Toast'
 import type { InsuranceInputParams } from '@frontend/types/employee'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
@@ -56,19 +57,26 @@ export const EditInsuranceInfo = () => {
     unemployment: insuranceSchema,
   })
   const [edit, setEdit] = useState(true)
+  const { openToast } = useToast()
   return (
     <Formik
       initialValues={DEFAULT_INSURANCE_DETAIL}
       onSubmit={(values, { setSubmitting }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert(values)
+            resolve(values)
           }, 1000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           setEdit(true)
+          openToast('Edit insurance info successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
         })
       }}
       validationSchema={newInsuranceDetailValidationSchema}
@@ -212,7 +220,7 @@ export const EditInsuranceInfo = () => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center mt-5">
+            <div className="flex justify-center mt-5 pb-5">
               {!edit ? (
                 <Button
                   classes={{

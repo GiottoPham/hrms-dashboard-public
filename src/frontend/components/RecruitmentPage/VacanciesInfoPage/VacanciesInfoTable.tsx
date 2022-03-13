@@ -265,7 +265,7 @@ export const VacanciesInfoTable = () => {
       expiredDate: new Date().toISOString(),
       quantity: '1',
       status: 0,
-      postContent: '',
+      postContent: 'asdasd',
     },
     {
       id: 2,
@@ -276,7 +276,7 @@ export const VacanciesInfoTable = () => {
       expiredDate: new Date().toISOString(),
       quantity: '1',
       status: 0,
-      postContent: '',
+      postContent: 'sadsad',
     },
     {
       id: 3,
@@ -287,7 +287,7 @@ export const VacanciesInfoTable = () => {
       expiredDate: new Date().toISOString(),
       quantity: '1',
       status: 0,
-      postContent: '',
+      postContent: 'sadasd',
     },
     {
       id: 4,

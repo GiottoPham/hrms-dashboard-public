@@ -1,12 +1,14 @@
+import { HeadOfUnitSelect } from '@components/OrganizationPage/HeadOfUnitSelect'
 import {
   ButtonWithModal,
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
+import { useToast } from '@frontend/framework/Toast'
 import type { UnitInputParams } from '@frontend/types/unit'
-import { Button, InputLabel, MenuItem, Select } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { object, string, number } from 'yup'
 import { UnitDetailInput } from './UnitDetailInput'
 
@@ -42,32 +44,30 @@ export const EditUnitButton = ({
     id: id,
   }
   const [edit, setEdit] = useState(false)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const { openToast } = useToast()
   return (
     <Formik
       validateOnMount
       initialValues={DEFAULT_UNIT}
-      onSubmit={(
-        { description, headOfUnitId, name, id },
-        { setSubmitting }
-      ) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert(
-              'des :' +
-                description +
-                'head:' +
-                headOfUnitId +
-                'name:' +
-                name +
-                'id:' +
-                id
-            )
+            resolve(values)
           }, 1000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           setEdit(false)
+          resetForm()
+          openToast('Edit sub-unit successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
+          closeRef.current?.click()
         })
       }}
       validationSchema={newUnitValidationSchema}
@@ -148,35 +148,7 @@ export const EditUnitButton = ({
                     </div>
 
                     <div className="w-full pt-2">
-                      <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
-                        Head Of Unit
-                      </InputLabel>
-                      <Select
-                        disabled={!edit}
-                        fullWidth
-                        value={values.headOfUnitId}
-                        onChange={(e) =>
-                          setFieldValue('headOfUnitId', e.target.value)
-                        }
-                        componentsProps={{
-                          root: {
-                            className: 'font-nunito text-sm rounded-lg h-10 ',
-                          },
-                          input: {
-                            className: 'w-full py-1.5',
-                          },
-                        }}
-                      >
-                        {EMPLOYEE.map(({ id, name }) => (
-                          <MenuItem
-                            key={id}
-                            value={id}
-                            className="font-nunito text-sm"
-                          >
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                      <HeadOfUnitSelect disabled={!edit} />
                     </div>
                     <div className="w-full mt-2">
                       <UnitDetailInput
@@ -190,6 +162,7 @@ export const EditUnitButton = ({
                   </div>
                   <div className="self-end mt-5">
                     <Button
+                      ref={closeRef}
                       classes={{
                         root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
                       }}
@@ -211,6 +184,15 @@ export const EditUnitButton = ({
                         color="primary"
                         variant="contained"
                         disabled={!isValid || isSubmitting}
+                        startIcon={
+                          isSubmitting && (
+                            <CircularProgress
+                              color="primary"
+                              size={20}
+                              thickness={5}
+                            />
+                          )
+                        }
                         onClick={() => {
                           submitForm()
                         }}

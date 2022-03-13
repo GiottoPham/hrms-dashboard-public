@@ -74,7 +74,7 @@ export const AccountSelect = () => {
             </li>
           )
         }}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
+        isOptionEqualToValue={(option, value) => option.id === value?.id}
         getOptionLabel={(option) => option.username}
         renderInput={(params) => (
           <TextField

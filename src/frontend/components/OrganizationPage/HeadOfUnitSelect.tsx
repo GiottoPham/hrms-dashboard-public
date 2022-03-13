@@ -1,10 +1,10 @@
 import type { Employee } from '@frontend/types/employee'
-import type { VacanciesEditParams } from '@frontend/types/vacancies-info'
+import type { UnitInputParams } from '@frontend/types/unit'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
 import type { PartialDeep } from 'type-fest'
 
-export const VacanciesHiringManagerSelect = ({
+export const HeadOfUnitSelect = ({
   disabled = false,
 }: {
   disabled?: boolean
@@ -82,11 +82,11 @@ export const VacanciesHiringManagerSelect = ({
     },
   ]
   const { values, setFieldValue, handleBlur, errors, touched } =
-    useFormikContext<VacanciesEditParams>()
+    useFormikContext<UnitInputParams>()
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
-        Hiring Manager
+        Head of Unit
       </InputLabel>
       <Autocomplete
         disabled={disabled}
@@ -108,9 +108,9 @@ export const VacanciesHiringManagerSelect = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            name="hiringManagerId"
+            name="headOfUnitId"
             onBlur={handleBlur}
-            error={!!errors.hiringManagerId && touched.hiringManagerId}
+            error={!!errors.headOfUnitId && touched.headOfUnitId}
             InputProps={{
               classes: {
                 root: 'h-10 rounded-lg font-nunito bg-white text-sm pt-1',
@@ -119,14 +119,12 @@ export const VacanciesHiringManagerSelect = ({
             }}
           />
         )}
-        value={employeesFake.find((emp) => emp.id === values?.hiringManagerId)}
-        onChange={(_, newValue) =>
-          setFieldValue('hiringManagerId', newValue?.id)
-        }
+        value={employeesFake.find((emp) => emp.id === values?.headOfUnitId)}
+        onChange={(_, newValue) => setFieldValue('headOfUnitId', newValue?.id)}
       />
-      {!!errors.hiringManagerId && touched.hiringManagerId && (
+      {!!errors.headOfUnitId && touched.headOfUnitId && (
         <p className="text-danger text-sm font-semibold">
-          {errors.hiringManagerId}
+          {errors.headOfUnitId}
         </p>
       )}
     </>

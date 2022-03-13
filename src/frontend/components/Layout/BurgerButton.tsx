@@ -60,7 +60,7 @@ export const BurgerButton = () => {
                               root: cx(
                                 'font-nunito font-semibold hover:text-primary-400 focus:text-primary-400 normal-case justify-between rounded-lg text-sm h-12 pl-4',
                                 {
-                                  'text-primary': pathname === href,
+                                  'text-primary-400': pathname === href,
                                   'text-gray-500': pathname !== href,
                                 }
                               ),
@@ -94,10 +94,10 @@ export const BurgerButton = () => {
                               href={href}
                               classes={{
                                 root: cx(
-                                  'font-nunito font-semibold hover:text-primary normal-case justify-between rounded-lg text-sm h-12 pl-4',
+                                  'font-nunito font-semibold hover:text-primary-400 focus:text-primary-400 normal-case justify-between rounded-lg text-sm h-12 pl-4',
                                   {
                                     'text-gray-500': isCollapsed,
-                                    'text-primary': !isCollapsed,
+                                    'text-primary-400': !isCollapsed,
                                   }
                                 ),
                               }}

@@ -13,20 +13,25 @@ export const UserInput = ({
   const { values, errors, setFieldValue, touched } =
     useFormikContext<UserInputParams>()
   return (
-    <TextInput
-      disabled={disabled}
-      required
-      fullWidth
-      id={fieldName}
-      label={label}
-      name={fieldName}
-      placeholder={label}
-      value={values[fieldName]}
-      error={!!errors[fieldName] && touched[fieldName]}
-      onChange={(e) => setFieldValue(fieldName, e.target.value)}
-      InputProps={{
-        classes: { root: 'h-10 rounded-lg font-nunito bg-white text-sm' },
-      }}
-    />
+    <>
+      <TextInput
+        disabled={disabled}
+        required
+        fullWidth
+        id={fieldName}
+        label={label}
+        name={fieldName}
+        placeholder={label}
+        value={values[fieldName]}
+        error={!!errors[fieldName] && touched[fieldName]}
+        onChange={(e) => setFieldValue(fieldName, e.target.value)}
+        InputProps={{
+          classes: { root: 'h-10 rounded-lg font-nunito bg-white text-sm' },
+        }}
+      />
+      {!!errors[fieldName] && touched[fieldName] && (
+        <p className="text-danger text-sm font-semibold">{errors[fieldName]}</p>
+      )}
+    </>
   )
 }

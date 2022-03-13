@@ -11,8 +11,10 @@ import { isEqual } from 'lodash'
 import { useState } from 'react'
 import { JoinDatePicker } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/JoinDatePicker'
 import { JobTitleSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/JobTitleSelect'
+import { useToast } from '@frontend/framework/Toast'
 export const EditJobSalaryInfo = () => {
   const [edit, setEdit] = useState(true)
+  const { openToast } = useToast()
   const bonusSchema = object().shape({
     bonusName: string(),
     bonusAmount: string(),
@@ -55,13 +57,19 @@ export const EditJobSalaryInfo = () => {
         )
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert({ ...values, bonus: bonusCompact })
+            resolve({ ...values, bonus: bonusCompact })
           }, 1000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           setEdit(true)
+          openToast('Edit job info successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
         })
       }}
       validationSchema={newJobDetailValidationSchema}

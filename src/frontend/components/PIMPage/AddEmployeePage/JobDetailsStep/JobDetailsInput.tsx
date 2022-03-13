@@ -19,7 +19,7 @@ export const JobDetailsInput = ({
         required
         fullWidth
         id={fieldName}
-        type={fieldName}
+        type={fieldName === 'salary' ? 'number' : fieldName}
         label={label}
         name={fieldName}
         onBlur={handleBlur}

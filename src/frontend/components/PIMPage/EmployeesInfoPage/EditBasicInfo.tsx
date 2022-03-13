@@ -6,6 +6,7 @@ import { DistrictSelect } from '@components/PIMPage/AddEmployeePage/PersonalDeta
 import { EmployeeDetailsInput } from '@components/PIMPage/AddEmployeePage/PersonalDetailsStep/EmployeeDetailsInput'
 import { WardSelect } from '@components/PIMPage/AddEmployeePage/PersonalDetailsStep/WardSelect'
 import { PhoneNumberInput } from '@frontend/framework/PhoneNumberInput'
+import { useToast } from '@frontend/framework/Toast'
 import type { PersonalDetailInputParams } from '@frontend/types/employee'
 import { Button, CircularProgress, InputLabel } from '@mui/material'
 import { Formik } from 'formik'
@@ -23,6 +24,7 @@ export const convertURLtoFile = async (url: string) => {
 }
 
 export const EditBasicInfo = () => {
+  const { openToast } = useToast()
   const [edit, setEdit] = useState(true)
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true)
   const [avatarFile, setAvatarFile] = useState<Blob>()
@@ -100,16 +102,22 @@ export const EditBasicInfo = () => {
     <Formik
       validateOnMount
       initialValues={DEFAULT_PERSONAL_DETAIL}
-      onSubmit={(value, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert(value)
+            resolve(values)
           }, 1000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           setEdit(true)
+          openToast('Edit basic info successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
         })
       }}
       validationSchema={newPersonalDetailValidationSchema}

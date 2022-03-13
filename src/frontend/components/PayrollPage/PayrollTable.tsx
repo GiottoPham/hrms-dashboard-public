@@ -12,6 +12,7 @@ import { usePayrollParams } from '@frontend/state/payroll-params'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { EmployeePayroll } from '@components/PayrollPage/EmployeePayroll'
 import cx from 'classnames'
+import { MonthPayrollFilter } from '@components/PayrollPage/MonthPayrollFilter'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -297,40 +298,45 @@ export const PayrollTable = () => {
     },
   ]
   return (
-    <div className="rounded px-10 py-10 flex flex-row w-full justify-center space-x-10">
-      <div
-        className={cx('overflow-auto flex flex-col', {
-          'w-2/5': showPayroll,
-          'w-full': !showPayroll,
-        })}
-      >
-        <Table<PartialDeep<Employee>>
-          data={employeesFake}
-          columns={columns}
-          rowCount={5}
-        />
-        <div className="self-end mt-5">
-          <Button
-            classes={{
-              root: 'min-w-0 w-10 h-10 bg-white border border-primary',
-            }}
-            color="inherit"
-            variant="outlined"
-          >
-            <ChevronLeftIcon className="w-7 h-7 text-primary" />
-          </Button>
-          <Button
-            classes={{
-              root: 'min-w-0 w-10 h-10 bg-white border border-primary ml-5',
-            }}
-            color="inherit"
-            variant="outlined"
-          >
-            <ChevronRightIcon className="w-7 h-7 text-primary" />
-          </Button>
-        </div>
+    <div className="rounded px-10 py-5 flex flex-col w-full justify-center">
+      <div className="w-60 mb-5">
+        <MonthPayrollFilter />
       </div>
-      {showPayroll && <EmployeePayroll />}
+      <div className="flex space-x-10">
+        <div
+          className={cx('overflow-auto flex flex-col', {
+            'w-2/5': showPayroll,
+            'w-full': !showPayroll,
+          })}
+        >
+          <Table<PartialDeep<Employee>>
+            data={employeesFake}
+            columns={columns}
+            rowCount={5}
+          />
+          <div className="self-end mt-5">
+            <Button
+              classes={{
+                root: 'min-w-0 w-10 h-10 bg-white border border-primary',
+              }}
+              color="inherit"
+              variant="outlined"
+            >
+              <ChevronLeftIcon className="w-7 h-7 text-primary" />
+            </Button>
+            <Button
+              classes={{
+                root: 'min-w-0 w-10 h-10 bg-white border border-primary ml-5',
+              }}
+              color="inherit"
+              variant="outlined"
+            >
+              <ChevronRightIcon className="w-7 h-7 text-primary" />
+            </Button>
+          </div>
+        </div>
+        {showPayroll && <EmployeePayroll />}
+      </div>
     </div>
   )
 }

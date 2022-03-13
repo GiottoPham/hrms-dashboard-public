@@ -1,27 +1,25 @@
+import { HeadOfUnitSelect } from '@components/OrganizationPage/HeadOfUnitSelect'
 import {
   ButtonWithModal,
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
+import { useToast } from '@frontend/framework/Toast'
 import type { UnitInputParams } from '@frontend/types/unit'
-import {
-  Button,
-  InputLabel,
-  MenuItem,
-  Select,
-  CircularProgress,
-} from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
+import { useRef } from 'react'
 import { object, string, number } from 'yup'
 import { UnitDetailInput } from './UnitDetailInput'
 const DEFAULT_UNIT: Partial<UnitInputParams> = {
   name: '',
   description: '',
+  headOfUnitId: undefined,
 }
 const newUnitValidationSchema = object().shape({
   name: string().required('Name must not be empty'),
   description: string().required('Description must not be empty'),
-  headOfUnitId: number().required('Head of unit must not be empty'),
+  headOfUnitId: number().required('Please select one of the employees'),
 })
 export const AddUnitButton = ({
   renderButton,
@@ -30,27 +28,28 @@ export const AddUnitButton = ({
   renderButton: RenderButtonFn
   closePopover: () => void
 }) => {
-  const EMPLOYEE = [
-    { id: 1, name: 'Pham Gia Nguyen' },
-    { id: 2, name: 'Pham Khang Nguyen' },
-    { id: 3, name: 'Truong Anh Bao' },
-  ]
-
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const { openToast } = useToast()
   return (
     <Formik
-      validateOnMount
       initialValues={DEFAULT_UNIT}
-      onSubmit={({ description, headOfUnitId, name }, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert(
-              'des :' + description + 'head:' + headOfUnitId + 'name:' + name
-            )
+            resolve(values)
           }, 2000)
         })
         myPromise.then(() => {
           setSubmitting(false)
+          resetForm()
+          openToast('Add new sub-unit successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
+          closeRef.current?.click()
         })
       }}
       validationSchema={newUnitValidationSchema}
@@ -98,6 +97,7 @@ export const AddUnitButton = ({
                         placeholder={'Unit Name'}
                         value={values.name}
                         onBlur={handleBlur}
+                        error={!!errors.name && touched.name}
                         onChange={(e) => setFieldValue('name', e.target.value)}
                         InputProps={{
                           classes: {
@@ -112,42 +112,8 @@ export const AddUnitButton = ({
                       </p>
                     )}
                     <div className="w-full pt-2">
-                      <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
-                        Head Of Unit
-                      </InputLabel>
-                      <Select
-                        name="headOfUnitId"
-                        onBlur={handleBlur}
-                        fullWidth
-                        value={values.headOfUnitId}
-                        onChange={(e) =>
-                          setFieldValue('headOfUnitId', e.target.value)
-                        }
-                        componentsProps={{
-                          root: {
-                            className: 'font-nunito text-sm rounded-lg h-10 ',
-                          },
-                          input: {
-                            className: 'w-full py-1.5',
-                          },
-                        }}
-                      >
-                        {EMPLOYEE.map(({ id, name }) => (
-                          <MenuItem
-                            key={id}
-                            value={id}
-                            className="font-nunito text-sm"
-                          >
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                      <HeadOfUnitSelect />
                     </div>
-                    {!!errors.headOfUnitId && touched.headOfUnitId && (
-                      <p className="text-danger text-sm font-semibold">
-                        Please select on of the employees
-                      </p>
-                    )}
                     <div className="w-full mt-2">
                       <UnitDetailInput
                         onBlur={handleBlur}
@@ -165,6 +131,7 @@ export const AddUnitButton = ({
                   </div>
                   <div className="self-end mt-5">
                     <Button
+                      ref={closeRef}
                       classes={{
                         root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
                       }}

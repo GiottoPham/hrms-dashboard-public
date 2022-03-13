@@ -7,7 +7,7 @@ import { AuthGuard } from '@frontend/framework/AuthGuard'
 import { useAddEmployeeForm } from '@frontend/state/add-employee-form'
 
 export const AddEmployeePage = () => {
-  const { addStep, setAddStep } = useAddEmployeeForm()
+  const { addStep, setAddStep, resetEmployeeForm } = useAddEmployeeForm()
   return (
     <AuthGuard>
       <Layout
@@ -33,7 +33,10 @@ export const AddEmployeePage = () => {
             {addStep === 2 && (
               <AssignAccountStep
                 goBack={() => setAddStep(addStep - 1)}
-                goReset={() => setAddStep(0)}
+                goReset={() => {
+                  setAddStep(0)
+                  resetEmployeeForm()
+                }}
               />
             )}
           </div>

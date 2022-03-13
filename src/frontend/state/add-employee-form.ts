@@ -30,11 +30,18 @@ export const useAddEmployeeForm = () => {
     },
     [queryClient]
   )
+  const resetEmployeeForm = useCallback(() => {
+    queryClient.setQueryData<PartialDeep<EmployeeParams>>(
+      EMPLOYEE_PARAMS,
+      defaultEmployeeParams
+    )
+  }, [queryClient])
   return {
     employeeParams,
     setEmployeeParams,
     addStep,
     setAddStep,
+    resetEmployeeForm,
   }
 }
 

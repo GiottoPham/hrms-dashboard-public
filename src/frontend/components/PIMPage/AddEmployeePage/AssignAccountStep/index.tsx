@@ -10,6 +10,7 @@ import { NewAccountStatusInput } from '@components/PIMPage/AddEmployeePage/Assig
 import { RoleSelect } from '@components/PIMPage/AddEmployeePage/AssignAccountStep/RoleSelect'
 import { NewPasswordInput } from '@components/PIMPage/AddEmployeePage/AssignAccountStep/NewPasswordInput'
 import { AccountSelect } from '@components/PIMPage/AddEmployeePage/AssignAccountStep/AccountSelect'
+import { useToast } from '@frontend/framework/Toast'
 const newUserValidationSchema = object()
   .shape({
     username: string().required('User name is required'),
@@ -50,19 +51,30 @@ export const AssignAccountStep = ({
         ? accountDetail?.newAccount || null
         : accountDetail?.newAccount,
   }
+  const { openToast } = useToast()
   return (
     <Formik
       initialValues={DEFAULT_ACCOUNT_DETAIL}
       onSubmit={(values, { setSubmitting }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert('hello' + values + jobDetail + personalDetail)
+            resolve({
+              accountDetail: values,
+              jobDetail: jobDetail,
+              personalDetail: personalDetail,
+            })
           }, 2000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           goReset()
+          openToast('Add new employee successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
         })
       }}
       validationSchema={newAccountValidationSchema}
@@ -97,7 +109,7 @@ export const AssignAccountStep = ({
                     </div>
                     <div className="w-1/2"></div>
                   </div>
-                  <div className="bg-gray-200 px-5 pt-5 pb-7 w-2/3 mt-5 rounded-lg">
+                  <div className="bg-gray-200 px-5 pt-5 pb-7 w-1/2 mt-2 rounded-lg">
                     <NewPasswordInput />
                   </div>
                 </div>

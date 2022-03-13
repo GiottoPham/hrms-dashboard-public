@@ -5,19 +5,20 @@ import {
   ButtonWithModal,
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
+import { useToast } from '@frontend/framework/Toast'
 import { UserDetail, UserInputParams, UserStatus } from '@frontend/types/user'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { PartialDeep } from 'type-fest'
 import { object, string, number } from 'yup'
 import { UserInput } from './UserInput'
 
 const newUserValidationSchema = object().shape({
-  username: string().required(),
-  roleId: number().required(),
+  username: string().required('Username is required'),
+  roleId: number().required('Please select one of the roles'),
   userStatus: string().required(),
-  password: string().required(),
+  password: string().required('Password is required'),
 })
 export const AddUserButton = ({
   userDetail,
@@ -30,28 +31,37 @@ export const AddUserButton = ({
 }) => {
   const DEFAULT_USER: PartialDeep<UserInputParams> = {
     username: userDetail?.username || '',
-    password: userDetail?.password,
+    password: userDetail?.password || '',
     userStatus: UserStatus.Enable,
     roleId: userDetail?.roleId,
   }
   const [edit, setEdit] = useState(isEdit)
+  const { openToast } = useToast()
+  const refModal = useRef<HTMLButtonElement>(null)
   return (
     <Formik
       initialValues={DEFAULT_USER}
-      onSubmit={(
-        { username, roleId, password, userStatus },
-        { setSubmitting, resetForm }
-      ) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert('hello' + username + roleId + password + userStatus)
+            resolve(values)
           }, 2000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           if (isEdit) setEdit(true)
           resetForm()
+          openToast(
+            isEdit ? 'Edit user successful' : 'Add new user successful',
+            {
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'right',
+              },
+            }
+          )
+          refModal.current?.click()
         })
       }}
       validationSchema={newUserValidationSchema}
@@ -91,17 +101,18 @@ export const AddUserButton = ({
                         <UserRoleSelect disabled={edit} />
                       </div>
                     </div>
-                    <div className="flex flex-row justify-between space-x-10 mt-5">
+                    <div className="flex flex-row justify-between space-x-10 mt-2">
                       <div className="w-1/2">
                         <StatusInput disabled={edit} />
                       </div>
                     </div>
-                    <div className="bg-gray-200 px-5 pt-5 pb-7 w-2/3 mt-5 rounded-lg">
+                    <div className="bg-gray-200 px-5 py-4 w-1/2 mt-2 rounded-lg">
                       <UserPasswordInput disabled={edit} />
                     </div>
                   </div>
                   <div className="self-end mt-5">
                     <Button
+                      ref={refModal}
                       classes={{
                         root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
                       }}

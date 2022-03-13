@@ -24,7 +24,7 @@ export const Toast = forwardRef<HTMLDivElement, Props>(
           className={cx(
             'relative flex items-center py-3 w-[450px] rounded-lg shadow-lg bg-white border-t-4 ',
             {
-              'border-primary': variant === 'success',
+              'border-success': variant === 'success',
               'border-danger': variant === 'error',
               'border-warning': variant === 'warning',
               'border-info-500': variant === 'info',
@@ -35,7 +35,7 @@ export const Toast = forwardRef<HTMLDivElement, Props>(
             className={cx(
               'flex items-center justify-center rounded-full h-10 w-10 ml-5 mr-9',
               {
-                'bg-primary': variant === 'success',
+                'bg-success': variant === 'success',
                 'bg-danger': variant === 'error',
                 'bg-warning': variant === 'warning',
                 'bg-info-500': variant === 'info',
@@ -57,7 +57,7 @@ export const Toast = forwardRef<HTMLDivElement, Props>(
           <div className="space-y-3 font-inter">
             <p
               className={cx('text-lg font-semibold', {
-                'text-primary': variant === 'success',
+                'text-success': variant === 'success',
                 'text-danger': variant === 'error',
                 'text-warning': variant === 'warning',
                 'text-info-500': variant === 'info',

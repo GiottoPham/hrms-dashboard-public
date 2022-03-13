@@ -16,7 +16,7 @@ export const JobDetailInput = ({
   maxRow: number
   disabled?: boolean
 }) => {
-  const { getFieldProps } = useFormikContext<JobInputParams>()
+  const { getFieldProps, errors, touched } = useFormikContext<JobInputParams>()
   const getFieldPropsName = getFieldProps(fieldName)
   return (
     <div>
@@ -25,13 +25,18 @@ export const JobDetailInput = ({
       </span>
       <TextareaAutosize
         disabled={disabled}
-        className={cx('w-full border border-gray-400 p-2 rounded-lg', {
-          'text-gray-400': disabled,
+        className={cx('w-full border p-2 rounded-lg text-sm', {
+          'text-gray-500': disabled,
+          'border-danger': !!errors[fieldName] && touched[fieldName],
+          'border-gray-400': !errors[fieldName],
         })}
         minRows={minRow}
         maxRows={maxRow}
         {...getFieldPropsName}
       />
+      {!!errors[fieldName] && touched[fieldName] && (
+        <p className="text-danger text-sm font-semibold">{errors[fieldName]}</p>
+      )}
     </div>
   )
 }

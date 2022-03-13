@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik'
 import { TextareaAutosize, TextareaAutosizeProps } from '@mui/material'
 import type { UnitInputParams } from '@frontend/types/unit'
-
+import cx from 'classnames'
 export const UnitDetailInput = ({
   fieldName,
   label,
@@ -11,7 +11,7 @@ export const UnitDetailInput = ({
   fieldName: keyof UnitInputParams
   label: string
 } & TextareaAutosizeProps) => {
-  const { getFieldProps } = useFormikContext<UnitInputParams>()
+  const { getFieldProps, errors, touched } = useFormikContext<UnitInputParams>()
   const getFieldPropsName = getFieldProps(fieldName)
   return (
     <div>
@@ -19,7 +19,11 @@ export const UnitDetailInput = ({
         {label}
       </span>
       <TextareaAutosize
-        className="w-full border border-gray-400 p-2 rounded-lg text-sm font-light"
+        className={cx('w-full border p-2 rounded-lg text-sm', {
+          'border-danger': !!errors[fieldName] && touched[fieldName],
+          'border-gray-400': !errors[fieldName],
+          'text-gray-500': disabled,
+        })}
         disabled={disabled}
         {...rest}
         {...getFieldPropsName}

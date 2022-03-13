@@ -3,10 +3,11 @@ import {
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
+import { useToast } from '@frontend/framework/Toast'
 import type { JobDetail, JobInputParams } from '@frontend/types/job'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { object, string } from 'yup'
 import { JobDetailInput } from './JobDetailInput'
 
@@ -30,23 +31,29 @@ export const AddJobButton = ({
     description: jobDetail?.description || '',
     note: jobDetail?.note || '',
   }
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const { openToast } = useToast()
   return (
     <Formik<JobInputParams>
       initialValues={DEFAULT_JOB}
-      onSubmit={(
-        { description, title, note },
-        { setSubmitting, resetForm }
-      ) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         const myPromise = new Promise((resolve) => {
           setTimeout(() => {
-            resolve('f')
-            alert('des :' + description + 'head:' + title + 'name:' + note)
+            resolve(values)
           }, 2000)
         })
         myPromise.then(() => {
           setSubmitting(false)
           if (isEdit) setEdit(true)
           resetForm()
+          openToast(isEdit ? 'Edit job successful' : 'Add new job successful', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right',
+            },
+          })
+          closeRef.current?.click()
         })
       }}
       validationSchema={newJobValidationSchema}
@@ -100,6 +107,11 @@ export const AddJobButton = ({
                         },
                       }}
                     />
+                    {!!errors.title && touched.title && (
+                      <p className="text-danger text-sm font-semibold">
+                        {errors.title}
+                      </p>
+                    )}
                   </div>
                   <div className="w-full">
                     <JobDetailInput
@@ -122,6 +134,7 @@ export const AddJobButton = ({
                 </div>
                 <div className="self-end mt-5">
                   <Button
+                    ref={closeRef}
                     classes={{
                       root: 'rounded-full font-nunito normal-case shadow-none w-24 text-primary mr-5',
                     }}

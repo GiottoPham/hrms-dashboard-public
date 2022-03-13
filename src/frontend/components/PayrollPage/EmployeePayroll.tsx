@@ -101,7 +101,7 @@ export const EmployeePayroll = () => {
         >
           <AccordionSummary classes={{ root: 'p-0 h-12' }}>
             <CardActionArea
-              className="w-full h-12 flex bg-primary relative"
+              className="w-full h-12 flex bg-primary relative font-semibold"
               onClick={() => setShow(!show)}
             >
               {show && (
@@ -190,7 +190,7 @@ export const EmployeePayroll = () => {
         >
           <AccordionSummary classes={{ root: 'p-0 h-12' }}>
             <CardActionArea
-              className="w-full h-12 flex bg-primary relative"
+              className="w-full h-12 flex bg-primary relative font-semibold"
               onClick={() => setShowBonus(!showBonus)}
             >
               <div className="w-full h-12 flex bg-primary relative">
@@ -264,7 +264,7 @@ export const EmployeePayroll = () => {
         >
           <AccordionSummary classes={{ root: 'p-0 h-12' }}>
             <CardActionArea
-              className="w-full h-12 flex bg-primary relative"
+              className="w-full h-12 flex bg-primary relative font-semibold"
               onClick={() => setShowTax(!showTax)}
             >
               <div className="w-full h-12 flex bg-primary relative">

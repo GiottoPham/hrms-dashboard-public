@@ -10,16 +10,18 @@ export const UserPasswordInput = ({
 }) => {
   const { setFieldValue } = useFormikContext<UserInputParams>()
   return (
-    <div className="flex flex-row">
-      <UserInput
-        fieldName="password"
-        label="Password/ Random Password"
-        disabled={disabled}
-      />
+    <div className="flex flex-col">
+      <div className="w-full">
+        <UserInput
+          fieldName="password"
+          label="Password/ Random Password"
+          disabled={disabled}
+        />
+      </div>
       <Button
         disabled={disabled}
         classes={{
-          root: 'rounded-full font-nunito normal-case shadow-none text-white h-10 self-end ml-3',
+          root: 'rounded-full font-nunito normal-case shadow-none text-white h-10 w-1/3 mt-3',
         }}
         color="primary"
         variant="contained"

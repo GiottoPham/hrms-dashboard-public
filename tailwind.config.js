@@ -61,6 +61,7 @@ module.exports = {
       'leave': '#666666',
       'pending': '#A859E5',
       'total': '#A86500',
+      'success': '#4BB543',
     },
     extend: {
       spacing: {
