@@ -2,7 +2,6 @@ import { Button, Checkbox, IconButton } from '@mui/material'
 import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
-import { useState } from 'react'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import type { LeaveDetail, LeaveEmployeeList } from '@frontend/types/leave'
@@ -10,21 +9,25 @@ import { formatDate } from '@frontend/framework/utils/date'
 import { LeaveStatusButton } from '@components/LeavePage/LeaveStatusButton'
 import { LeaveActionButton } from '@components/LeavePage/LeaveActionButton'
 import { CheckLeaveCell } from '@components/LeavePage/CheckLeaveCell'
-import { useCheckedLeaveDetail } from '@frontend/state/leave-params'
+import {
+  useCheckedLeaveDetail,
+  useLeaveParams,
+} from '@frontend/state/leave-params'
 import { isEqual } from 'lodash'
 import { LeaveDate } from '@components/LeavePage/LeaveDate'
 import { LeaveUnitSelect } from '@components/LeavePage/LeaveUnitSelect'
 import { LeaveActionSelectedButton } from '@components/LeavePage/LeaveActionSelectedButton'
+import { useLeaves } from '@frontend/state/leave-queries'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof LeaveDetail
 }
 const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   const Header = () => {
-    const [sort, setSort] = useState({
-      sortBy: 'employeeName',
-      sortOrder: 'asc',
-    })
+    const {
+      leaveParams: { sort },
+      setLeaveParams,
+    } = useLeaveParams()
 
     return (
       <header className="flex items-center">
@@ -32,9 +35,23 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
         <IconButton
           classes={{ root: 'p-1 w-8 h-8' }}
           onClick={() => {
-            if (sort.sortOrder === 'asc')
-              setSort((prev) => ({ ...prev, sortOrder: 'desc' }))
-            else setSort((prev) => ({ ...prev, sortOrder: 'asc' }))
+            if (sort.sortBy === sortBy) {
+              if (sort.sortOrder === 'asc') {
+                setLeaveParams((prev) => ({
+                  ...prev!,
+                  sort: { ...sort, sortOrder: 'desc' },
+                }))
+              } else
+                setLeaveParams((prev) => ({
+                  ...prev!,
+                  sort: { ...sort, sortOrder: 'asc' },
+                }))
+            } else if (sortBy) {
+              setLeaveParams((prev) => ({
+                ...prev!,
+                sort: { sortBy: sortBy, sortOrder: 'asc' },
+              }))
+            }
           }}
         >
           {sort?.sortBy !== sortBy && <UpDownIcon />}
@@ -115,7 +132,9 @@ export const LeaveTable = () => {
       status: 2,
     },
   ]
-  const allLeave = leaveFake.map((leave) => leave.id)
+  const { leaveParams, setLeaveParams } = useLeaveParams()
+  const { leaves = leaveFake, isLoading } = useLeaves(leaveParams)
+  const allLeave = leaves.map((leave) => leave.id)
   const { checkedLeaveIds, setCheckedLeaveDetail } = useCheckedLeaveDetail()
   const columns: Column<LeaveDetail>[] = [
     {
@@ -243,7 +262,12 @@ export const LeaveTable = () => {
         </div>
         <LeaveActionSelectedButton />
       </div>
-      <Table<LeaveDetail> data={leaveFake} columns={columns} rowCount={5} />
+      <Table<LeaveDetail>
+        data={leaves}
+        columns={columns}
+        rowCount={5}
+        isLoading={isLoading}
+      />
       <div className="self-end mt-5">
         <Button
           classes={{
@@ -251,6 +275,13 @@ export const LeaveTable = () => {
           }}
           color="inherit"
           variant="outlined"
+          onClick={() => {
+            if (leaveParams.pagination && leaveParams.pagination > 1)
+              setLeaveParams((prev) => ({
+                ...prev!,
+                pagination: leaveParams.pagination - 1,
+              }))
+          }}
         >
           <ChevronLeftIcon className="w-7 h-7 text-primary" />
         </Button>
@@ -260,6 +291,13 @@ export const LeaveTable = () => {
           }}
           color="inherit"
           variant="outlined"
+          onClick={() => {
+            if (leaveParams.pagination)
+              setLeaveParams((prev) => ({
+                ...prev!,
+                pagination: leaveParams.pagination + 1,
+              }))
+          }}
         >
           <ChevronRightIcon className="w-7 h-7 text-primary" />
         </Button>

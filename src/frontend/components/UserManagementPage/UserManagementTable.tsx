@@ -3,30 +3,47 @@ import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import EditIcon from '@mui/icons-material/Edit'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
-import { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { AddUserButton } from '@components/UserManagementPage/AddUserButton'
 import { UserDetail, UserStatus } from '@frontend/types/user'
 import { capitalize } from 'lodash'
+import { useUserParams } from '@frontend/state/user-params'
+import { useUsers } from '@frontend/state/user-queries'
 type CreateHeaderInput = {
   headerText: string
   sortBy: keyof UserDetail
 }
 const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   const Header = () => {
-    const [sort, setSort] = useState({ sortBy: 'id', sortOrder: 'asc' })
-
+    const {
+      userParams: { sort },
+      setUserParams,
+    } = useUserParams()
     return (
       <header className="flex items-center">
         {headerText}
         <IconButton
           classes={{ root: 'p-1 w-8 h-8' }}
           onClick={() => {
-            if (sort.sortOrder === 'asc')
-              setSort((prev) => ({ ...prev, sortOrder: 'desc' }))
-            else setSort((prev) => ({ ...prev, sortOrder: 'asc' }))
+            if (sort.sortBy === sortBy) {
+              if (sort.sortOrder === 'asc') {
+                setUserParams((prev) => ({
+                  ...prev!,
+                  sort: { ...sort, sortOrder: 'desc' },
+                }))
+              } else
+                setUserParams((prev) => ({
+                  ...prev!,
+                  sort: { ...sort, sortOrder: 'asc' },
+                }))
+            } else {
+              setUserParams((prev) => ({
+                ...prev!,
+                sort: { sortBy: sortBy, sortOrder: 'asc' },
+              }))
+            }
           }}
         >
           {sort?.sortBy !== sortBy && <UpDownIcon />}
@@ -45,6 +62,8 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 }
 
 export const UserManagementTable = () => {
+  const { userParams, setUserParams } = useUserParams()
+
   const userFake: UserDetail[] = [
     {
       id: 1,
@@ -142,6 +161,7 @@ export const UserManagementTable = () => {
       width: 'w-[50px]',
     },
   ]
+  const { users = userFake, isLoading } = useUsers(userParams)
   return (
     <div className="rounded px-10 py-5 flex flex-col">
       <AddUserButton
@@ -159,7 +179,12 @@ export const UserManagementTable = () => {
         )}
       />
 
-      <Table<UserDetail> data={userFake} columns={columns} rowCount={5} />
+      <Table<UserDetail>
+        data={users}
+        columns={columns}
+        rowCount={5}
+        isLoading={isLoading}
+      />
       <div className="self-end mt-5">
         <Button
           classes={{
@@ -167,6 +192,13 @@ export const UserManagementTable = () => {
           }}
           color="inherit"
           variant="outlined"
+          onClick={() => {
+            if (userParams.pagination && userParams.pagination > 1)
+              setUserParams((prev) => ({
+                ...prev!,
+                pagination: userParams.pagination - 1,
+              }))
+          }}
         >
           <ChevronLeftIcon className="w-7 h-7 text-primary" />
         </Button>
@@ -176,6 +208,13 @@ export const UserManagementTable = () => {
           }}
           color="inherit"
           variant="outlined"
+          onClick={() => {
+            if (userParams.pagination)
+              setUserParams((prev) => ({
+                ...prev!,
+                pagination: userParams.pagination + 1,
+              }))
+          }}
         >
           <ChevronRightIcon className="w-7 h-7 text-primary" />
         </Button>

@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/lab'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import { Row, TableOptions, useTable } from 'react-table'
@@ -11,6 +12,7 @@ type TableProps<T extends Record<string, unknown>> = TableOptions<T> & {
   rowHeight?: number
   rowCount?: number
   renderRow?: (inputs: { row: Row<T>; rowHeight: number }) => JSX.Element
+  isLoading?: boolean
 }
 
 export const Table = <T extends Record<string, unknown>>({
@@ -22,6 +24,7 @@ export const Table = <T extends Record<string, unknown>>({
   rowHeight = 45,
   rowCount = 12,
   renderRow,
+  isLoading,
 }: TableProps<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ data, columns })
@@ -59,35 +62,50 @@ export const Table = <T extends Record<string, unknown>>({
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                prepareRow(row)
-                if (renderRow) {
-                  return renderRow({ row, rowHeight })
-                }
-                return (
-                  // eslint-disable-next-line react/jsx-key
-                  <tr
-                    {...row.getRowProps()}
-                    className={cx({
-                      'bg-blue-100': checkedRowIndices.includes(row.index),
-                      'border-r-4 border-r-primary':
-                        selectedRowIndex === row.index,
-                      'bg-primary-100': row.index % 2 === 0,
-                    })}
-                  >
-                    {row.cells.map((cell) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <td
-                        {...cell.getCellProps()}
-                        style={{ height: rowHeight }}
-                        className="px-3 text-sm"
-                      >
-                        {cell.render('Cell')}
+              {isLoading
+                ? [...Array(rowCount)].map((index) => (
+                    <tr
+                      key={index}
+                      style={{ height: rowHeight }}
+                      className="border-b border-b-primary-100"
+                    >
+                      <td className="px-6" colSpan={columns.length}>
+                        <Skeleton
+                          variant="text"
+                          classes={{ root: 'w-full bg-primary-100' }}
+                        />
                       </td>
-                    ))}
-                  </tr>
-                )
-              })}
+                    </tr>
+                  ))
+                : rows.map((row) => {
+                    prepareRow(row)
+                    if (renderRow) {
+                      return renderRow({ row, rowHeight })
+                    }
+                    return (
+                      // eslint-disable-next-line react/jsx-key
+                      <tr
+                        {...row.getRowProps()}
+                        className={cx({
+                          'bg-blue-100': checkedRowIndices.includes(row.index),
+                          'border-r-4 border-r-primary':
+                            selectedRowIndex === row.index,
+                          'bg-primary-100': row.index % 2 === 0,
+                        })}
+                      >
+                        {row.cells.map((cell) => (
+                          // eslint-disable-next-line react/jsx-key
+                          <td
+                            {...cell.getCellProps()}
+                            style={{ height: rowHeight }}
+                            className="px-3 text-sm"
+                          >
+                            {cell.render('Cell')}
+                          </td>
+                        ))}
+                      </tr>
+                    )
+                  })}
             </tbody>
           </table>
         </div>

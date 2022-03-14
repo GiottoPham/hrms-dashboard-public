@@ -6,6 +6,7 @@ import {
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
 import { useToast } from '@frontend/framework/Toast'
+import { useCreateUser, useEditUser } from '@frontend/state/user-mutation'
 import { UserDetail, UserInputParams, UserStatus } from '@frontend/types/user'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
@@ -38,16 +39,19 @@ export const AddUserButton = ({
   const [edit, setEdit] = useState(isEdit)
   const { openToast } = useToast()
   const refModal = useRef<HTMLButtonElement>(null)
+  const { createUser } = useCreateUser()
+  const { editUser } = useEditUser()
   return (
     <Formik
       initialValues={DEFAULT_USER}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 2000)
-        })
-        myPromise.then(() => {
+        const myPromise = !isEdit
+          ? createUser(values as UserInputParams)
+          : editUser({
+              id: userDetail?.id as number,
+              userParams: values as UserInputParams,
+            })
+        myPromise.finally(() => {
           setSubmitting(false)
           if (isEdit) setEdit(true)
           resetForm()
