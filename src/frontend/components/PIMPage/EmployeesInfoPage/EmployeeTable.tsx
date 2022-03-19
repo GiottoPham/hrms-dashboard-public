@@ -188,8 +188,8 @@ export const EmployeeTable = () => {
       type: 'head',
       peopleNumber: 20,
       description: 'abcxyz',
-      headOfUnit: 'Pham Gia Nguyen',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
     {
       id: 2,
@@ -197,8 +197,8 @@ export const EmployeeTable = () => {
       type: 'sub-head',
       peopleNumber: 10,
       description: 'abcxyz',
-      headOfUnit: 'Pham Khang Nguyen',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
     {
       id: 3,
@@ -206,8 +206,8 @@ export const EmployeeTable = () => {
       type: 'sub',
       peopleNumber: 5,
       description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
     {
       id: 4,
@@ -215,18 +215,18 @@ export const EmployeeTable = () => {
       type: 'sub',
       peopleNumber: 5,
       description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
 
     {
       id: 5,
       name: 'ALO2',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
       type: 'sub-head',
       peopleNumber: 10,
       description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
     },
 
     {
@@ -235,8 +235,8 @@ export const EmployeeTable = () => {
       type: 'head',
       peopleNumber: 20,
       description: 'abcxyz',
-      headOfUnit: 'Pham Gia Nguyen',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
     {
       id: 7,
@@ -244,8 +244,8 @@ export const EmployeeTable = () => {
       type: 'sub-head',
       peopleNumber: 10,
       description: 'abcxyz',
-      headOfUnit: 'Pham Khang Nguyen',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
     {
       id: 8,
@@ -253,8 +253,8 @@ export const EmployeeTable = () => {
       type: 'sub',
       peopleNumber: 5,
       description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
     {
       id: 9,
@@ -262,18 +262,18 @@ export const EmployeeTable = () => {
       type: 'sub',
       peopleNumber: 5,
       description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
     },
 
     {
       id: 10,
       name: 'CEO',
-      subUnit: null,
+      headOfUnitId: 1,
+      subUnits: null,
       type: 'sub-head',
       peopleNumber: 10,
       description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
     },
   ]
   const { employeeParams } = useEmployeeParams()
