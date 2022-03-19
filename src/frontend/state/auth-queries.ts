@@ -5,53 +5,43 @@ import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 
 export const useCurrentUser = () => {
-  const queryClient = useQueryClient()
-  const auth = queryClient.getQueryData<Auth>(AUTH)
+  const { auth } = useAuth()
 
   const {
     data: currentUser,
     isLoading: isLoadingUser,
     ...rest
-  } = useQuery([CURRENT_USER, auth?.userId], fetchUser(auth?.userId), {
+  } = useQuery([CURRENT_USER, auth?.token], fetchUser(auth?.id as number), {
     enabled: true,
+    retry: false,
   })
   return {
-    currentUser,
-    isLoading: isLoadingUser,
+    currentUser: currentUser,
+    isLoadingUser,
     ...rest,
   }
 }
 export const useAuth = () => {
   const queryClient = useQueryClient()
   const auth = queryClient.getQueryData<Auth>(AUTH)
+  const ISSERVER = typeof window === 'undefined'
+  if (!auth && !ISSERVER) {
+    const token = localStorage.getItem('token')
+    const isTokenExpired = (token: string) =>
+      Date.now() >= JSON.parse(atob(token.split('.')[1])).exp * 1000
+    if (token && !isTokenExpired(token))
+      queryClient.setQueryData<Auth>([AUTH], {
+        token: token,
+        id: parseInt(localStorage.getItem('id') as string),
+      })
+  }
 
-  // const queryFn =
-  //   auth?.hasTriedKeepLogin === 'true'
-  //     ? () => {
-  //         throw new Error('Keep Login fail')
-  //       }
-  //     : keepLogin
-
-  // const { data, ...rest } = useQuery<Auth>({
-  //   queryKey: AUTH,
-  //   queryFn,
-  //   retry: false,
-  //   refetchInterval: 10 * 60 * 1000,
-  //   refetchIntervalInBackground: true,
-  //   onError: () => {
-  //     if (auth?.accessToken) {
-  //       location.href = '/'
-  //     } else {
-  //       queryClient.setQueryData<Auth>(AUTH, { hasTriedKeepLogin: 'true' })
-  //     }
-  //   },
-  // })
-
-  const accessToken = auth?.accessToken
+  const accessToken = auth?.token
 
   useEffect(() => {
     if (accessToken) {
       axios.defaults.headers.Authorization = `Bearer ${accessToken}`
+      axios.defaults.headers['Access-Control-Allow-Origin'] = '*'
     }
   }, [accessToken])
 

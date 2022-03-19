@@ -5,9 +5,9 @@ import { useState } from 'react'
 export const ListUnitCard = ({
   id,
   name,
-  subUnit,
+  subUnits,
   type,
-  headOfUnit,
+  headOfUnitId,
   description,
   peopleNumber,
 }: Unit) => {
@@ -18,7 +18,7 @@ export const ListUnitCard = ({
         id={id}
         description={description}
         peopleNumber={peopleNumber}
-        headOfUnit={headOfUnit}
+        headOfUnitId={headOfUnitId}
         name={name}
         label={
           type === 'head'
@@ -31,13 +31,13 @@ export const ListUnitCard = ({
       />
       <div className="ml-20 flex flex-col">
         {toggle &&
-          subUnit?.map(
+          subUnits?.map(
             ({
               id: subId,
               name: subName,
-              subUnit: subOfUnit,
+              subUnits: subOfUnit,
               type: subType,
-              headOfUnit: subHeadOfUnit,
+              headOfUnitId: subHeadOfUnit,
               peopleNumber: subPeopleNumber,
               description: subDescription,
             }) => (
@@ -46,9 +46,9 @@ export const ListUnitCard = ({
                   id={subId}
                   peopleNumber={subPeopleNumber}
                   description={subDescription}
-                  headOfUnit={subHeadOfUnit}
+                  headOfUnitId={subHeadOfUnit}
                   name={subName}
-                  subUnit={subOfUnit}
+                  subUnits={subOfUnit}
                   type={subType}
                 />
               </div>

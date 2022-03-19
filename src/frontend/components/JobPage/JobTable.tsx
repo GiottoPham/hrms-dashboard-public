@@ -3,29 +3,46 @@ import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import EditIcon from '@mui/icons-material/Edit'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
-import { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { AddJobButton } from './AddJobButton'
 import type { JobDetail } from '@frontend/types/job'
+import { useJobParams } from '@frontend/state/job-params'
+import { useJobs } from '@frontend/state/job-queries'
 type CreateHeaderInput = {
   headerText: string
-  sortBy: 'title' | 'description'
+  sortBy: keyof JobDetail
 }
 const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   const Header = () => {
-    const [sort, setSort] = useState({ sortBy: 'title', sortOrder: 'asc' })
-
+    const {
+      jobParams: { sort },
+      setJobParams,
+    } = useJobParams()
     return (
       <header className="flex items-center">
         {headerText}
         <IconButton
           classes={{ root: 'p-1 w-8 h-8' }}
           onClick={() => {
-            if (sort.sortOrder === 'asc')
-              setSort((prev) => ({ ...prev, sortOrder: 'desc' }))
-            else setSort((prev) => ({ ...prev, sortOrder: 'asc' }))
+            if (sort.sortBy === sortBy) {
+              if (sort.sortOrder === 'asc') {
+                setJobParams((prev) => ({
+                  ...prev!,
+                  sort: { ...sort, sortOrder: 'desc' },
+                }))
+              } else
+                setJobParams((prev) => ({
+                  ...prev!,
+                  sort: { ...sort, sortOrder: 'asc' },
+                }))
+            } else {
+              setJobParams((prev) => ({
+                ...prev!,
+                sort: { sortBy: sortBy, sortOrder: 'asc' },
+              }))
+            }
           }}
         >
           {sort?.sortBy !== sortBy && <UpDownIcon />}
@@ -43,45 +60,10 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   return Header
 }
 
-const jobFake: JobDetail[] = [
-  {
-    id: 1,
-    title: 'Art Director',
-    description:
-      'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-    note: 'abc',
-  },
-  {
-    id: 2,
-    title: 'Art Director',
-    description:
-      'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-    note: 'abc',
-  },
-
-  {
-    id: 3,
-    title: 'Art Director',
-    description:
-      'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-    note: 'abc',
-  },
-  {
-    id: 4,
-    title: 'Art Director',
-    description:
-      'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-    note: 'abc',
-  },
-  {
-    id: 5,
-    title: 'Art Director',
-    description:
-      'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-    note: 'abc',
-  },
-]
 export const JobTable = () => {
+  const { jobParams } = useJobParams()
+  const { jobs = [], isLoading } = useJobs(jobParams)
+
   const columns: Column<JobDetail>[] = [
     {
       Header: createHeader({ headerText: 'Job Title', sortBy: 'title' }),
@@ -135,7 +117,12 @@ export const JobTable = () => {
         )}
       />
 
-      <Table<JobDetail> data={jobFake} columns={columns} rowCount={5} />
+      <Table<JobDetail>
+        data={jobs}
+        columns={columns}
+        rowCount={5}
+        isLoading={isLoading}
+      />
       <div className="self-end mt-5">
         <Button
           classes={{
@@ -143,6 +130,13 @@ export const JobTable = () => {
           }}
           color="inherit"
           variant="outlined"
+          // onClick={() => {
+          //   if (jobParams.pagination && jobParams.pagination > 1)
+          //     setJobParams((prev) => ({
+          //       ...prev!,
+          //       pagination: jobParams.pagination - 1,
+          //     }))
+          // }}
         >
           <ChevronLeftIcon className="w-7 h-7 text-primary" />
         </Button>
@@ -152,6 +146,13 @@ export const JobTable = () => {
           }}
           color="inherit"
           variant="outlined"
+          // onClick={() => {
+          //   if (jobParams.pagination)
+          //     setJobParams((prev) => ({
+          //       ...prev!,
+          //       pagination: jobParams.pagination + 1,
+          //     }))
+          // }}
         >
           <ChevronRightIcon className="w-7 h-7 text-primary" />
         </Button>

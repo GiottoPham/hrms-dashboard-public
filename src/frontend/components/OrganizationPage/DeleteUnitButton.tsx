@@ -2,7 +2,9 @@ import {
   ButtonWithModal,
   RenderButtonFn,
 } from '@frontend/framework/ButtonWithModal'
-import { Button } from '@mui/material'
+import { useDeleteUnit } from '@frontend/state/unit-mutation'
+import { Button, CircularProgress } from '@mui/material'
+import { useToast } from '@frontend/framework/Toast'
 
 export const DeleteUnitButton = ({
   renderButton,
@@ -13,9 +15,9 @@ export const DeleteUnitButton = ({
   id: number
   closePopover: () => void
 }) => {
-  const handleDelete = () => {
-    alert(id)
-  }
+  const { deleteUnit, isLoading } = useDeleteUnit()
+  const { openToast } = useToast()
+
   return (
     <ButtonWithModal
       renderButton={renderButton}
@@ -54,7 +56,24 @@ export const DeleteUnitButton = ({
                 }}
                 color="primary"
                 variant="contained"
-                onClick={handleDelete}
+                disabled={isLoading}
+                onClick={() =>
+                  deleteUnit(id).finally(() => {
+                    openToast('Delete sub-unit successful', {
+                      variant: 'success',
+                      anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      },
+                    })
+                    closeModal()
+                  })
+                }
+                startIcon={
+                  isLoading && (
+                    <CircularProgress color="primary" size={20} thickness={5} />
+                  )
+                }
                 type="submit"
               >
                 Yes

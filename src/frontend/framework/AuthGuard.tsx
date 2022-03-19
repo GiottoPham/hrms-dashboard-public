@@ -21,7 +21,7 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
     )
   }
 
-  if (!currentUser?.user) {
+  if (!currentUser) {
     return <LoginPage />
   }
 

@@ -4,14 +4,14 @@ export enum UserStatus {
 }
 export type UserInputParams = {
   username: string
-  roleId: number
+  roleid: number
   password: string
-  userStatus: UserStatus
+  accountStatus: UserStatus
 }
 export type UserDetail = UserInputParams & { id: number }
 
 export type UserDetailParams = {
-  pagination: number // 1 page = 10 item
+  pagination?: number // 1 page = 10 item
   sort: {
     sortBy: keyof UserDetail // string
     sortOrder: 'asc' | 'desc'

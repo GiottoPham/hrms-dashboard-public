@@ -11,16 +11,14 @@ type AppBarContentProps = {
 export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
   const { currentUser } = useCurrentUser()
   const { logout } = useLogout()
-  if (!currentUser?.user) return null
+  if (!currentUser) return null
   return (
     <div className="flex justify-between items-center bg-primary h-full w-full px-6 font-nunito">
       <div>{renderHeader && renderHeader()}</div>
       <div className="w-1/3"></div>
       {currentUser ? (
         <div className="flex items-center">
-          <p className="font-bold text-secondary-600">
-            {currentUser.user.fullName}
-          </p>
+          <p className="font-bold text-secondary-600">{currentUser.username}</p>
 
           <ButtonWithPopover
             renderButton={({ openPopover }) => (
@@ -30,7 +28,7 @@ export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
                 onClick={openPopover}
               >
                 <Avatar classes={{ root: 'h-9 w-9 font-nunito bg-secondary' }}>
-                  {currentUser.user.fullName[0]}
+                  {currentUser.username[0]}
                 </Avatar>
                 <ExpandMoreIcon className="w-4 h-4 ml-2" />
               </Button>

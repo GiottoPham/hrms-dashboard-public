@@ -8,36 +8,36 @@ export const AccountSelect = () => {
     {
       id: 1,
       username: 'khoaideptrai',
-      roleId: 1,
-      userStatus: UserStatus.Enable,
+      roleid: 1,
+      accountStatus: UserStatus.Enable,
       password: 'abcdxyz',
     },
     {
       id: 2,
       username: 'khoaideptrai1',
-      roleId: 2,
-      userStatus: UserStatus.Enable,
+      roleid: 2,
+      accountStatus: UserStatus.Enable,
       password: 'abcdxyz1',
     },
     {
       id: 3,
       username: 'khoaideptrai3',
-      roleId: 3,
-      userStatus: UserStatus.Enable,
+      roleid: 3,
+      accountStatus: UserStatus.Enable,
       password: 'abcdxyz3',
     },
     {
       id: 4,
       username: 'khoaideptrai4',
-      roleId: 1,
-      userStatus: UserStatus.Enable,
+      roleid: 1,
+      accountStatus: UserStatus.Enable,
       password: 'abcdxyz4',
     },
     {
       id: 5,
       username: 'khoaideptrai5',
-      roleId: 2,
-      userStatus: UserStatus.Enable,
+      roleid: 2,
+      accountStatus: UserStatus.Enable,
       password: 'abcdxyz5',
     },
   ]
@@ -69,7 +69,7 @@ export const AccountSelect = () => {
             <li {...props} key={option.id}>
               <p className="text-sm">
                 {option.username} -{' '}
-                {roleFake.find((role) => role.id === option.roleId)?.name}
+                {roleFake.find((role) => role.id === option.roleid)?.name}
               </p>
             </li>
           )

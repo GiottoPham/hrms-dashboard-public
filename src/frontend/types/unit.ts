@@ -4,8 +4,8 @@ export type Unit = {
   name: string
   peopleNumber: number
   description: string
-  headOfUnit: string
-  subUnit: Unit[] | null
+  headOfUnitId: number
+  subUnits: Unit[] | null
 }
 export type UnitInputParams = {
   name: string

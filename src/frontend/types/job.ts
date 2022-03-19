@@ -6,3 +6,10 @@ export type JobInputParams = {
   description: string
   note: string
 }
+export type JobDetailParams = {
+  pagination?: number // 1 page = 10 item
+  sort: {
+    sortBy: keyof JobDetail // string
+    sortOrder: 'asc' | 'desc'
+  }
+}

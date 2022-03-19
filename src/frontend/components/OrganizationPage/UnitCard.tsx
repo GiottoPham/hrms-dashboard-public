@@ -15,14 +15,14 @@ export const UnitCard = ({
   label,
   peopleNumber,
   handleClick,
-  headOfUnit,
+  headOfUnitId,
   description,
 }: {
   id: number
   name: string
   label: string
   peopleNumber: number
-  headOfUnit: string
+  headOfUnitId: number
   description: string
   handleClick: () => void
 }) => {
@@ -113,7 +113,7 @@ export const UnitCard = ({
                   id={id}
                   name={name}
                   description={description}
-                  headOfUnit={headOfUnit}
+                  headOfUnitId={headOfUnitId}
                   closePopover={closePopover}
                   renderButton={({ openModal }) => (
                     <Button

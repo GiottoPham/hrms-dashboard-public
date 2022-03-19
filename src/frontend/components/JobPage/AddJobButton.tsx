@@ -4,6 +4,7 @@ import {
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
 import { useToast } from '@frontend/framework/Toast'
+import { useCreateJob, useEditJob } from '@frontend/state/job-mutation'
 import type { JobDetail, JobInputParams } from '@frontend/types/job'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
@@ -33,16 +34,19 @@ export const AddJobButton = ({
   }
   const closeRef = useRef<HTMLButtonElement>(null)
   const { openToast } = useToast()
+  const { editJob } = useEditJob()
+  const { createJob } = useCreateJob()
   return (
     <Formik<JobInputParams>
       initialValues={DEFAULT_JOB}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 2000)
-        })
-        myPromise.then(() => {
+        const myPromise = !isEdit
+          ? createJob(values as JobInputParams)
+          : editJob({
+              id: jobDetail?.id as number,
+              jobParams: values as JobInputParams,
+            })
+        myPromise.finally(() => {
           setSubmitting(false)
           if (isEdit) setEdit(true)
           resetForm()

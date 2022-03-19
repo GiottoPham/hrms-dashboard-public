@@ -43,9 +43,9 @@ export const UserRoleSelect = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            name="roleId"
+            name="roleid"
             onBlur={handleBlur}
-            error={!!errors.roleId && touched.roleId}
+            error={!!errors.roleid && touched.roleid}
             InputProps={{
               classes: {
                 root: 'h-10 rounded-lg font-nunito bg-white text-sm pt-1',
@@ -54,11 +54,11 @@ export const UserRoleSelect = ({
             }}
           />
         )}
-        value={roleFake.find((role) => role.id === values?.roleId)}
-        onChange={(_, newValue) => setFieldValue('roleId', newValue?.id)}
+        value={roleFake.find((role) => role.id === values?.roleid)}
+        onChange={(_, newValue) => setFieldValue('roleid', newValue?.id)}
       />
-      {!!errors.roleId && touched.roleId && (
-        <p className="text-danger text-sm font-semibold">{errors.roleId}</p>
+      {!!errors.roleid && touched.roleid && (
+        <p className="text-danger text-sm font-semibold">{errors.roleid}</p>
       )}
     </>
   )

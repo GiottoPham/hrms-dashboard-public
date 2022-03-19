@@ -10,6 +10,8 @@ export const useLogin = () => {
     mutationFn: login,
     onSuccess: (auth) => {
       queryClient.setQueryData<Auth>(AUTH, auth)
+      localStorage.setItem('token', auth.token)
+      localStorage.setItem('id', auth.id.toString())
     },
   })
 

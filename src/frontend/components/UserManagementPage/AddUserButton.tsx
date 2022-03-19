@@ -17,8 +17,8 @@ import { UserInput } from './UserInput'
 
 const newUserValidationSchema = object().shape({
   username: string().required('Username is required'),
-  roleId: number().required('Please select one of the roles'),
-  userStatus: string().required(),
+  roleid: number().required('Please select one of the roles'),
+  accountStatus: string().required(),
   password: string().required('Password is required'),
 })
 export const AddUserButton = ({
@@ -33,8 +33,8 @@ export const AddUserButton = ({
   const DEFAULT_USER: PartialDeep<UserInputParams> = {
     username: userDetail?.username || '',
     password: userDetail?.password || '',
-    userStatus: UserStatus.Enable,
-    roleId: userDetail?.roleId,
+    accountStatus: UserStatus.Enable,
+    roleid: userDetail?.roleid,
   }
   const [edit, setEdit] = useState(isEdit)
   const { openToast } = useToast()

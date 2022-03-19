@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { AddUserButton } from '@components/UserManagementPage/AddUserButton'
-import { UserDetail, UserStatus } from '@frontend/types/user'
+import type { UserDetail } from '@frontend/types/user'
 import { capitalize } from 'lodash'
 import { useUserParams } from '@frontend/state/user-params'
 import { useUsers } from '@frontend/state/user-queries'
@@ -62,45 +62,7 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 }
 
 export const UserManagementTable = () => {
-  const { userParams, setUserParams } = useUserParams()
-
-  const userFake: UserDetail[] = [
-    {
-      id: 1,
-      username: 'khoaideptrai',
-      roleId: 1,
-      userStatus: UserStatus.Enable,
-      password: 'abcdxyz',
-    },
-    {
-      id: 2,
-      username: 'khoaideptrai1',
-      roleId: 2,
-      userStatus: UserStatus.Enable,
-      password: 'abcdxyz1',
-    },
-    {
-      id: 3,
-      username: 'khoaideptrai3',
-      roleId: 3,
-      userStatus: UserStatus.Enable,
-      password: 'abcdxyz3',
-    },
-    {
-      id: 4,
-      username: 'khoaideptrai4',
-      roleId: 1,
-      userStatus: UserStatus.Enable,
-      password: 'abcdxyz4',
-    },
-    {
-      id: 5,
-      username: 'khoaideptrai5',
-      roleId: 2,
-      userStatus: UserStatus.Enable,
-      password: 'abcdxyz5',
-    },
-  ]
+  const { userParams } = useUserParams()
   const roleFake = [
     {
       id: 1,
@@ -129,16 +91,16 @@ export const UserManagementTable = () => {
       width: 'w-[250px]',
     },
     {
-      Header: createHeader({ headerText: 'Role', sortBy: 'roleId' }),
-      accessor: 'roleId',
+      Header: createHeader({ headerText: 'Role', sortBy: 'roleid' }),
+      accessor: 'roleid',
       Cell: ({ value }) => (
         <p>{roleFake.find((role) => role.id === value)?.name}</p>
       ),
       width: 'w-[250px]',
     },
     {
-      Header: createHeader({ headerText: 'Status', sortBy: 'userStatus' }),
-      accessor: 'userStatus',
+      Header: createHeader({ headerText: 'Status', sortBy: 'accountStatus' }),
+      accessor: 'accountStatus',
       Cell: ({ value }) => <p>{capitalize(value)}</p>,
       width: 'w-[250px]',
     },
@@ -161,7 +123,7 @@ export const UserManagementTable = () => {
       width: 'w-[50px]',
     },
   ]
-  const { users = userFake, isLoading } = useUsers(userParams)
+  const { users = [], isLoading } = useUsers(userParams)
   return (
     <div className="rounded px-10 py-5 flex flex-col">
       <AddUserButton
@@ -180,7 +142,7 @@ export const UserManagementTable = () => {
       />
 
       <Table<UserDetail>
-        data={users}
+        data={users as UserDetail[]}
         columns={columns}
         rowCount={5}
         isLoading={isLoading}
@@ -192,13 +154,14 @@ export const UserManagementTable = () => {
           }}
           color="inherit"
           variant="outlined"
-          onClick={() => {
-            if (userParams.pagination && userParams.pagination > 1)
-              setUserParams((prev) => ({
-                ...prev!,
-                pagination: userParams.pagination - 1,
-              }))
-          }}
+          // onClick={() => {
+          //   if (userParams.pagination && userParams.pagination > 1) {
+          //     setUserParams((prev) => ({
+          //       ...prev!,
+          //       pagination: userParams.pagination - 1,
+          //     }))
+          //   }
+          // }}
         >
           <ChevronLeftIcon className="w-7 h-7 text-primary" />
         </Button>
@@ -208,13 +171,13 @@ export const UserManagementTable = () => {
           }}
           color="inherit"
           variant="outlined"
-          onClick={() => {
-            if (userParams.pagination)
-              setUserParams((prev) => ({
-                ...prev!,
-                pagination: userParams.pagination + 1,
-              }))
-          }}
+          // onClick={() => {
+          //   if (userParams.pagination)
+          //     setUserParams((prev) => ({
+          //       ...prev!,
+          //       pagination: userParams.pagination + 1,
+          //     }))
+          // }}
         >
           <ChevronRightIcon className="w-7 h-7 text-primary" />
         </Button>

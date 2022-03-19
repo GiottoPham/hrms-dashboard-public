@@ -134,7 +134,7 @@ export const LeaveTable = () => {
   ]
   const { leaveParams, setLeaveParams } = useLeaveParams()
   const { leaves = leaveFake, isLoading } = useLeaves(leaveParams)
-  const allLeave = leaves.map((leave) => leave.id)
+  const allLeave = leaves?.map((leave) => leave.id)
   const { checkedLeaveIds, setCheckedLeaveDetail } = useCheckedLeaveDetail()
   const columns: Column<LeaveDetail>[] = [
     {

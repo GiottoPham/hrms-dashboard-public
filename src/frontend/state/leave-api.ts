@@ -7,10 +7,10 @@ export const fetchLeaves = (
   return axios
     .request({
       method: 'GET',
-      url: '/api/leaves',
-      params: leaveParams,
+      url: '/api/v1/leaves',
+      params: { departmentId: leaveParams.unitId },
     })
-    .then((res) => res.data)
+    .then((res) => res.data.leaveEmployeeList)
 }
 export const updateLeaveStatusRequest = (listIds: number[], status: number) => {
   return axios

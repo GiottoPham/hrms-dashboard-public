@@ -3,13 +3,19 @@ import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import EditIcon from '@mui/icons-material/Edit'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
-import { useState } from 'react'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import type { Employee } from '@frontend/types/employee'
 import { EditEmployeeButton } from '@components/PIMPage/EmployeesInfoPage/EditEmployeeButton'
 import type { JobDetail } from '@frontend/types/job'
 import type { PartialDeep } from 'type-fest'
+import { useEmployeeParams } from '@frontend/state/employee-params'
+import { useEmployees } from '@frontend/state/employee-queries'
+import { useJobs } from '@frontend/state/job-queries'
+import { useJobParams } from '@frontend/state/job-params'
+import { useUnits } from '@frontend/state/unit-queries'
+import type { Unit } from '@frontend/types/unit'
+
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -17,13 +23,10 @@ type CreateHeaderInput = {
 
 const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   const Header = () => {
-    const [sort, setSort] = useState<{
-      sortBy?:
-        | keyof Employee['personalDetail']
-        | 'id'
-        | keyof Employee['jobDetail']
-      sortOrder: string
-    }>({ sortBy: 'id', sortOrder: 'asc' })
+    const {
+      employeeParams: { sort },
+      setEmployeeParams,
+    } = useEmployeeParams()
 
     return (
       <header className="flex items-center">
@@ -32,13 +35,23 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
           <IconButton
             classes={{ root: 'p-1 w-8 h-8' }}
             onClick={() => {
-              if (sort.sortOrder === 'asc')
-                setSort((prev) => ({
-                  ...prev,
-                  sortBy: sortBy,
-                  sortOrder: 'desc',
+              if (sort.sortBy === sortBy) {
+                if (sort.sortOrder === 'asc') {
+                  setEmployeeParams((prev) => ({
+                    ...prev!,
+                    sort: { ...sort, sortOrder: 'desc' },
+                  }))
+                } else
+                  setEmployeeParams((prev) => ({
+                    ...prev!,
+                    sort: { ...sort, sortOrder: 'asc' },
+                  }))
+              } else {
+                setEmployeeParams((prev) => ({
+                  ...prev!,
+                  sort: { sortBy: sortBy, sortOrder: 'asc' },
                 }))
-              else setSort((prev) => ({ ...prev, sortOrder: 'asc' }))
+              }
             }}
           >
             {sort?.sortBy !== sortBy && <UpDownIcon />}
@@ -168,7 +181,7 @@ export const EmployeeTable = () => {
       note: 'abc',
     },
   ]
-  const LIST_UNIT = [
+  const LIST_UNIT: Unit[] = [
     {
       id: 1,
       name: 'CEO',
@@ -176,6 +189,7 @@ export const EmployeeTable = () => {
       peopleNumber: 20,
       description: 'abcxyz',
       headOfUnit: 'Pham Gia Nguyen',
+      subUnit: null,
     },
     {
       id: 2,
@@ -184,6 +198,7 @@ export const EmployeeTable = () => {
       peopleNumber: 10,
       description: 'abcxyz',
       headOfUnit: 'Pham Khang Nguyen',
+      subUnit: null,
     },
     {
       id: 3,
@@ -192,6 +207,7 @@ export const EmployeeTable = () => {
       peopleNumber: 5,
       description: 'abcxyz',
       headOfUnit: 'Truong Anh Bao',
+      subUnit: null,
     },
     {
       id: 4,
@@ -200,6 +216,7 @@ export const EmployeeTable = () => {
       peopleNumber: 5,
       description: 'abcxyz',
       headOfUnit: 'Truong Anh Bao',
+      subUnit: null,
     },
 
     {
@@ -219,6 +236,7 @@ export const EmployeeTable = () => {
       peopleNumber: 20,
       description: 'abcxyz',
       headOfUnit: 'Pham Gia Nguyen',
+      subUnit: null,
     },
     {
       id: 7,
@@ -227,6 +245,7 @@ export const EmployeeTable = () => {
       peopleNumber: 10,
       description: 'abcxyz',
       headOfUnit: 'Pham Khang Nguyen',
+      subUnit: null,
     },
     {
       id: 8,
@@ -235,6 +254,7 @@ export const EmployeeTable = () => {
       peopleNumber: 5,
       description: 'abcxyz',
       headOfUnit: 'Truong Anh Bao',
+      subUnit: null,
     },
     {
       id: 9,
@@ -243,6 +263,7 @@ export const EmployeeTable = () => {
       peopleNumber: 5,
       description: 'abcxyz',
       headOfUnit: 'Truong Anh Bao',
+      subUnit: null,
     },
 
     {
@@ -255,6 +276,12 @@ export const EmployeeTable = () => {
       headOfUnit: 'Truong Anh Bao',
     },
   ]
+  const { employeeParams } = useEmployeeParams()
+  const { employees = employeesFake, isLoading: employeeLoading } =
+    useEmployees(employeeParams)
+  const { jobParams } = useJobParams()
+  const { jobs = jobFake, isLoading: jobLoading } = useJobs(jobParams)
+  const { units = LIST_UNIT, isLoading: unitLoading } = useUnits(false)
   const columns: Column<PartialDeep<Employee>>[] = [
     {
       Header: createHeader({ headerText: 'ID', sortBy: 'id' }),
@@ -291,7 +318,7 @@ export const EmployeeTable = () => {
       Header: createHeader({ headerText: 'Job Title', sortBy: 'jobId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{jobFake.find((job) => job.id === value?.jobId)?.title}</p>
+        <p>{jobs.find((job) => job.id === value?.jobId)?.title}</p>
       ),
       width: 'w-[250px]',
     },
@@ -300,7 +327,7 @@ export const EmployeeTable = () => {
       Header: createHeader({ headerText: 'Unit', sortBy: 'unitId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{LIST_UNIT.find((unit) => unit.id === value?.unitId)?.name}</p>
+        <p>{units.find((unit) => unit.id === value?.unitId)?.name}</p>
       ),
       width: 'w-[250px]',
     },
@@ -339,9 +366,10 @@ export const EmployeeTable = () => {
   return (
     <div className="rounded px-10 py-10 flex flex-col">
       <Table<PartialDeep<Employee>>
-        data={employeesFake}
+        data={employees}
         columns={columns}
         rowCount={5}
+        isLoading={jobLoading && employeeLoading && unitLoading}
       />
       <div className="self-end mt-5">
         <Button

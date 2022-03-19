@@ -19,6 +19,7 @@ import type { JobDetail } from '@frontend/types/job'
 import type { Employee } from '@frontend/types/employee'
 import type { PartialDeep } from 'type-fest'
 import AddIcon from '@mui/icons-material/Add'
+import { useVacancies } from '@frontend/state/vacancies-queries'
 
 type CreateHeaderInput = {
   headerText: string
@@ -68,10 +69,6 @@ export const VacanciesInfoTable = () => {
         email: 'giotto2015.py@gmail.com',
         phone: '0854662633',
       },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
     },
     {
       id: 2,
@@ -81,10 +78,6 @@ export const VacanciesInfoTable = () => {
         lastName: 'Pham',
         email: 'giotto2015.py@gmail.com',
         phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
       },
     },
     {
@@ -96,10 +89,6 @@ export const VacanciesInfoTable = () => {
         email: 'giotto2015.py@gmail.com',
         phone: '0854662633',
       },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
     },
     {
       id: 4,
@@ -110,10 +99,6 @@ export const VacanciesInfoTable = () => {
         email: 'giotto2015.py@gmail.com',
         phone: '0854662633',
       },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
     },
     {
       id: 5,
@@ -123,10 +108,6 @@ export const VacanciesInfoTable = () => {
         lastName: 'Pham',
         email: 'giotto2015.py@gmail.com',
         phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
       },
     },
   ]
@@ -259,8 +240,8 @@ export const VacanciesInfoTable = () => {
     {
       id: 1,
       hiringManagerId: 1,
-      jobId: 1,
-      unitId: 1,
+      positionId: 1,
+      departmentId: 1,
       publishedDate: new Date().toISOString(),
       expiredDate: new Date().toISOString(),
       quantity: '1',
@@ -270,8 +251,8 @@ export const VacanciesInfoTable = () => {
     {
       id: 2,
       hiringManagerId: 1,
-      jobId: 1,
-      unitId: 1,
+      positionId: 1,
+      departmentId: 1,
       publishedDate: new Date().toISOString(),
       expiredDate: new Date().toISOString(),
       quantity: '1',
@@ -281,8 +262,8 @@ export const VacanciesInfoTable = () => {
     {
       id: 3,
       hiringManagerId: 1,
-      jobId: 1,
-      unitId: 1,
+      positionId: 1,
+      departmentId: 1,
       publishedDate: new Date().toISOString(),
       expiredDate: new Date().toISOString(),
       quantity: '1',
@@ -292,8 +273,8 @@ export const VacanciesInfoTable = () => {
     {
       id: 4,
       hiringManagerId: 1,
-      jobId: 1,
-      unitId: 1,
+      positionId: 1,
+      departmentId: 1,
       publishedDate: new Date().toISOString(),
       expiredDate: new Date().toISOString(),
       quantity: '1',
@@ -303,8 +284,8 @@ export const VacanciesInfoTable = () => {
     {
       id: 5,
       hiringManagerId: 1,
-      jobId: 1,
-      unitId: 1,
+      positionId: 1,
+      departmentId: 1,
       publishedDate: new Date().toISOString(),
       expiredDate: new Date().toISOString(),
       quantity: '1',
@@ -312,6 +293,7 @@ export const VacanciesInfoTable = () => {
       postContent: '',
     },
   ]
+  const { vacancies = vacanciesFake, isLoading } = useVacancies()
   const columns: Column<VacanciesInfo>[] = [
     {
       accessor: 'id',
@@ -346,9 +328,9 @@ export const VacanciesInfoTable = () => {
       id: 'JobCell',
       Header: createHeader({
         headerText: 'Job Title',
-        sortBy: 'jobId',
+        sortBy: 'positionId',
       }),
-      accessor: 'jobId',
+      accessor: 'positionId',
       Cell: ({ value }) => (
         <p className="leading-loose">
           {jobFake.find((job) => job.id === value)?.title}
@@ -360,9 +342,9 @@ export const VacanciesInfoTable = () => {
       id: 'UnitCell',
       Header: createHeader({
         headerText: 'Unit',
-        sortBy: 'unitId',
+        sortBy: 'departmentId',
       }),
-      accessor: 'unitId',
+      accessor: 'departmentId',
       Cell: ({ value }) => (
         <p className="leading-loose">
           {LIST_UNIT.find((unit) => unit.id === value)?.name}
@@ -461,9 +443,10 @@ export const VacanciesInfoTable = () => {
         )}
       />
       <Table<VacanciesInfo>
-        data={vacanciesFake}
+        data={vacancies}
         columns={columns}
         rowCount={5}
+        isLoading={isLoading}
       />
       <div className="self-end mt-5">
         <Button

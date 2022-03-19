@@ -19,6 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         defaultOptions: {
           queries: {
             staleTime: Infinity,
+            cacheTime: Infinity,
+            refetchOnWindowFocus: false,
           },
         },
       })

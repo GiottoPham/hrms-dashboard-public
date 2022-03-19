@@ -5,6 +5,7 @@ import {
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
 import { useToast } from '@frontend/framework/Toast'
+import { useCreateUnit } from '@frontend/state/unit-mutation'
 import type { UnitInputParams } from '@frontend/types/unit'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
@@ -30,16 +31,12 @@ export const AddUnitButton = ({
 }) => {
   const closeRef = useRef<HTMLButtonElement>(null)
   const { openToast } = useToast()
+  const { createUnit } = useCreateUnit()
   return (
     <Formik
       initialValues={DEFAULT_UNIT}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 2000)
-        })
-        myPromise.then(() => {
+        createUnit(values as UnitInputParams).finally(() => {
           setSubmitting(false)
           resetForm()
           openToast('Add new sub-unit successful', {

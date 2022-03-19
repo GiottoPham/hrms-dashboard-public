@@ -7,12 +7,11 @@ import type { Updater } from 'react-query/types/core/utils'
 export const usePayrollParams = () => {
   const queryClient = useQueryClient()
 
-  const { data: payrollParams = undefined } = useQuery<
-    PayrollParams | undefined
-  >({
-    queryKey: PAYROLL_PARAMS,
-    queryFn: () => undefined,
-  })
+  const { data: payrollParams = defaultPayrollParams } =
+    useQuery<PayrollParams>({
+      queryKey: PAYROLL_PARAMS,
+      queryFn: () => defaultPayrollParams,
+    })
 
   const setPayrollParams = useCallback(
     (
@@ -30,4 +29,8 @@ export const usePayrollParams = () => {
     payrollParams,
     setPayrollParams,
   }
+}
+const defaultPayrollParams: PayrollParams = {
+  month: new Date().toISOString(),
+  employeeId: 1,
 }

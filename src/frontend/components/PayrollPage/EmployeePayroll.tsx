@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import { useState } from 'react'
 import { currencyFormatter } from '@frontend/framework/utils/currency'
+import { usePayroll } from '@frontend/state/payroll-queries'
 
 export const EmployeePayroll = () => {
   const { payrollParams } = usePayrollParams()
@@ -45,6 +46,8 @@ export const EmployeePayroll = () => {
     personalIncomeTax: '20000',
     netIncome: '30000',
   }
+  const { payroll = payrollFake, isLoading } = usePayroll(payrollParams)
+  if (isLoading) return null
   return (
     <div className="flex-grow relative h-full font-nunito text-sm font-semibold">
       <div className="absolute left-0 top-0 -mt-5 -mr-2">
@@ -79,7 +82,7 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>{currencyFormatter(payrollFake.basicSalary)}</p>
+            <p>{currencyFormatter(payroll.basicSalary)}</p>
           </div>
         </div>
         <div className="w-full h-12 flex bg-primary-200">
@@ -126,7 +129,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(4)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payrollFake.monthlyInfo.standardDay}
+                {payroll.monthlyInfo.standardDay}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -136,7 +139,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(5)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payrollFake.monthlyInfo.actualDay}
+                {payroll.monthlyInfo.actualDay}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -146,7 +149,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(6)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payrollFake.monthlyInfo.unpaidLeave}
+                {payroll.monthlyInfo.unpaidLeave}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -156,7 +159,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(7)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payrollFake.monthlyInfo.paidLeave}
+                {payroll.monthlyInfo.paidLeave}
               </div>
             </div>
           </AccordionDetails>
@@ -168,7 +171,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payrollFake.totalDerivedSalary)}
+            {currencyFormatter(payroll.totalDerivedSalary)}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -179,7 +182,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payrollFake.derivedSalary)}
+            {currencyFormatter(payroll.derivedSalary)}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -206,13 +209,13 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payrollFake.totalBonus)}
+                  {currencyFormatter(payroll.totalBonus)}
                 </div>
               </div>
             </CardActionArea>
           </AccordionSummary>
           <AccordionDetails classes={{ root: 'p-0' }}>
-            {payrollFake.bonus.map((item, index) => (
+            {payroll.bonus.map((item, index) => (
               <div
                 className={cx('w-full h-12 flex', {
                   'bg-white': index % 2 === 0,
@@ -239,7 +242,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payrollFake.totalDerivedSalary)}
+            {currencyFormatter(payroll.totalDerivedSalary)}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -253,7 +256,7 @@ export const EmployeePayroll = () => {
             (I)*10.5/100
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payrollFake.mandatoryInsurance)}
+            {currencyFormatter(payroll.mandatoryInsurance)}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -280,7 +283,7 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payrollFake.personalIncomeTax)}
+                  {currencyFormatter(payroll.personalIncomeTax)}
                 </div>
               </div>
             </CardActionArea>
@@ -325,7 +328,7 @@ export const EmployeePayroll = () => {
                 (I)-(II.A)-(8)-(9)-(10)
               </div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(payrollFake.taxableIncome)}
+                {currencyFormatter(payroll.taxableIncome)}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -335,7 +338,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(12)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(payrollFake.personalIncomeTax)}
+                {currencyFormatter(payroll.personalIncomeTax)}
               </div>
             </div>
           </AccordionDetails>
@@ -347,7 +350,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">(I)-(II)</div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payrollFake.netIncome)}
+            {currencyFormatter(payroll.netIncome)}
           </div>
         </div>
       </div>

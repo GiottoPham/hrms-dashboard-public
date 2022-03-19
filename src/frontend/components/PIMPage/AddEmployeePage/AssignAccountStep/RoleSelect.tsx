@@ -22,11 +22,11 @@ export const RoleSelect = () => {
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<AssignAccountInputParams>()
   useEffect(() => {
-    if (values.newAccount?.roleId === undefined)
-      setFieldValue(`newAccount.roleId`, null, false)
+    if (values.newAccount?.roleid === undefined)
+      setFieldValue(`newAccount.roleid`, null, false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  if (values.newAccount?.roleId === undefined) return null
+  if (values.newAccount?.roleid === undefined) return null
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
@@ -46,17 +46,17 @@ export const RoleSelect = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            name="newAccount.roleId"
+            name="newAccount.roleid"
             onBlur={handleBlur}
             error={
               !!(
                 (errors as FormikErrors<AssignAccountInputParams>)
                   ?.newAccount as FormikErrors<UserInputParams>
-              )?.roleId &&
+              )?.roleid &&
               (
                 (touched as FormikTouched<AssignAccountInputParams>)
                   ?.newAccount as FormikTouched<UserInputParams>
-              )?.roleId
+              )?.roleid
             }
             InputProps={{
               classes: {
@@ -66,25 +66,25 @@ export const RoleSelect = () => {
             }}
           />
         )}
-        value={roleFake.find((role) => role.id === values.newAccount?.roleId)}
+        value={roleFake.find((role) => role.id === values.newAccount?.roleid)}
         onChange={(_, newValue) =>
-          setFieldValue('newAccount.roleId', newValue?.id || null)
+          setFieldValue('newAccount.roleid', newValue?.id || null)
         }
       />
       {!!(
         (errors as FormikErrors<AssignAccountInputParams>)
           ?.newAccount as FormikErrors<UserInputParams>
-      )?.roleId &&
+      )?.roleid &&
         (
           (touched as FormikTouched<AssignAccountInputParams>)
             ?.newAccount as FormikTouched<UserInputParams>
-        )?.roleId && (
+        )?.roleid && (
           <p className="text-danger text-sm font-semibold">
             {
               (
                 (errors as FormikErrors<AssignAccountInputParams>)
                   ?.newAccount as FormikErrors<UserInputParams>
-              )?.roleId
+              )?.roleid
             }
           </p>
         )}

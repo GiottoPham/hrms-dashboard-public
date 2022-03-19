@@ -7,6 +7,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { formatDate } from '@frontend/framework/utils/date'
 import type { Candidate, Candidates } from '@frontend/types/candidate'
+import { useCandidates } from '@frontend/state/candidate-queries'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Candidate
@@ -127,6 +128,9 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
       contact: '0854662633',
     },
   ]
+  const { candidates = candidateFake, isLoading } = useCandidates({
+    vacanciesId: vacanciesId,
+  })
   const columns: Column<Candidate>[] = [
     {
       accessor: 'id',
@@ -186,7 +190,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
       }),
       accessor: 'email',
       Cell: ({ value }) => <p className="leading-loose">{value}</p>,
-      width: 'w-[100px]',
+      width: 'w-[150px]',
     },
     {
       id: 'contact',
@@ -246,9 +250,10 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
   return (
     <div className="rounded px-10 py-5 flex flex-col">
       <Table<Candidate>
-        data={candidateFake}
+        data={candidates}
         columns={vacanciesId ? columnsWithId : columns}
         rowCount={5}
+        isLoading={isLoading}
       />
       {!vacanciesId && (
         <div className="self-end mt-5">

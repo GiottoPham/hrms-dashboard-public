@@ -1,11 +1,10 @@
-import type { CurrentUser } from '@frontend/types/auth'
 import axios from 'axios'
-
-export const fetchUser = (id?: string) => (): Promise<CurrentUser> => {
+import type { UserDetail } from '@frontend/types/user'
+export const fetchUser = (id: number) => (): Promise<UserDetail> => {
   return axios
     .request({
       method: 'GET',
-      url: `/user/${id}`,
+      url: `/api/v1/account/${id}`,
     })
     .then((res) => res.data)
 }
@@ -19,7 +18,7 @@ export const login = ({
   return axios
     .request<Auth>({
       method: 'POST',
-      url: '/login',
+      url: '/api/v1/auth/login',
       data: {
         username,
         password,
@@ -53,6 +52,7 @@ export const logout = () => {
 // }
 
 export type Auth = {
-  userId?: string
-  accessToken?: string
+  token: string
+  id: number
+  // roleid: number
 }

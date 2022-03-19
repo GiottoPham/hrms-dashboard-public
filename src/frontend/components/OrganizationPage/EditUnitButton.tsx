@@ -5,6 +5,7 @@ import {
 } from '@frontend/framework/ButtonWithModal'
 import { TextInput } from '@frontend/framework/TextInput'
 import { useToast } from '@frontend/framework/Toast'
+import { useEditUnit } from '@frontend/state/unit-mutation'
 import type { UnitInputParams } from '@frontend/types/unit'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
@@ -16,18 +17,17 @@ const newUnitValidationSchema = object().shape({
   name: string().required('Name must not be empty'),
   description: string().required('Description must not be empty'),
   headOfUnitId: number().required('Head of unit must not be empty'),
-  id: number().required(),
 })
 export const EditUnitButton = ({
   renderButton,
   closePopover,
   name,
   description,
-  headOfUnit,
+  headOfUnitId,
   id,
 }: {
   id: number
-  headOfUnit: string
+  headOfUnitId: number
   renderButton: RenderButtonFn
   closePopover: () => void
 } & Partial<UnitInputParams>) => {
@@ -36,39 +36,36 @@ export const EditUnitButton = ({
     { id: 2, name: 'Pham Khang Nguyen' },
     { id: 3, name: 'Truong Anh Bao' },
   ]
-  const initialHeadUnitId = EMPLOYEE.find(({ name }) => name === headOfUnit)?.id
-  const DEFAULT_UNIT: Partial<UnitInputParams> & { id: number } = {
+  const initialHeadUnitId = EMPLOYEE.find(({ id }) => id === headOfUnitId)?.id
+  const DEFAULT_UNIT: Partial<UnitInputParams> = {
     name: name,
     description: description,
     headOfUnitId: initialHeadUnitId,
-    id: id,
   }
   const [edit, setEdit] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
   const { openToast } = useToast()
+  const { editUnit } = useEditUnit()
   return (
     <Formik
       validateOnMount
       initialValues={DEFAULT_UNIT}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 1000)
-        })
-        myPromise.then(() => {
-          setSubmitting(false)
-          setEdit(false)
-          resetForm()
-          openToast('Edit sub-unit successful', {
-            variant: 'success',
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'right',
-            },
-          })
-          closeRef.current?.click()
-        })
+        editUnit({ id: id, unitParams: values as UnitInputParams }).finally(
+          () => {
+            setSubmitting(false)
+            setEdit(false)
+            resetForm()
+            openToast('Edit sub-unit successful', {
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'right',
+              },
+            })
+            closeRef.current?.click()
+          }
+        )
       }}
       validationSchema={newUnitValidationSchema}
     >
@@ -105,7 +102,7 @@ export const EditUnitButton = ({
                   </div>
                   <div className="border-b border-gray-500 py-3 flex-grow">
                     <div className="w-full flex space-x-2">
-                      <div className="w-3/4">
+                      <div className="w-full">
                         <TextInput
                           disabled={!edit}
                           required
@@ -119,25 +116,6 @@ export const EditUnitButton = ({
                           onChange={(e) =>
                             setFieldValue('name', e.target.value)
                           }
-                          InputProps={{
-                            classes: {
-                              root: 'h-10 rounded-lg font-nunito bg-white text-sm',
-                            },
-                          }}
-                        />
-                      </div>
-                      <div className="w-1/4">
-                        <TextInput
-                          disabled={!edit}
-                          required
-                          fullWidth
-                          id="id"
-                          label="Unit Id"
-                          name="unit-id"
-                          placeholder={'Unit Id'}
-                          value={values.id}
-                          error={!!errors.name && touched.name}
-                          onChange={(e) => setFieldValue('id', e.target.value)}
                           InputProps={{
                             classes: {
                               root: 'h-10 rounded-lg font-nunito bg-white text-sm',

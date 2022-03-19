@@ -14,8 +14,8 @@ import { useToast } from '@frontend/framework/Toast'
 const newUserValidationSchema = object()
   .shape({
     username: string().required('User name is required'),
-    roleId: mixed().required('Select one of the roles'),
-    userStatus: string().required(),
+    roleid: mixed().required('Select one of the roles'),
+    accountStatus: string().required(),
     password: string().required('Password is required'),
   })
   .nullable()

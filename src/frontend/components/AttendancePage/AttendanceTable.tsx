@@ -1,6 +1,8 @@
 import { AttendanceWeek } from '@components/AttendancePage/AttendanceWeek'
 import { UnitSelect } from '@components/AttendancePage/UnitSelect'
 import { formatDate } from '@frontend/framework/utils/date'
+import { useAttendanceParams } from '@frontend/state/attendance-params'
+import { useAttendances } from '@frontend/state/attendance-queries'
 import type { AttendanceList } from '@frontend/types/attendance'
 import { Avatar } from '@mui/material'
 import { Tooltip } from '@mui/material'
@@ -353,9 +355,13 @@ export const AttendanceTable = () => {
       ],
     },
   ]
+  const { attendanceParams } = useAttendanceParams()
+  const { attendances = attendanceList, isLoading } =
+    useAttendances(attendanceParams)
+  if (isLoading) return null
   const listDate =
-    attendanceList.length > 0
-      ? attendanceList[0].listCheckin.map((attendance) => attendance.date)
+    attendances.length > 0
+      ? attendances[0].listCheckin.map((attendance) => attendance.date)
       : []
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -382,7 +388,7 @@ export const AttendanceTable = () => {
           </div>
         ))}
       </div>
-      {attendanceList.map((attendance, index) => (
+      {attendances.map((attendance, index) => (
         <div
           key={index}
           className={cx(

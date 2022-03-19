@@ -25,7 +25,6 @@ export const useUserParams = () => {
   }
 }
 export const defaultUserParams: UserDetailParams = {
-  pagination: 1,
   sort: {
     sortBy: 'id',
     sortOrder: 'asc',
