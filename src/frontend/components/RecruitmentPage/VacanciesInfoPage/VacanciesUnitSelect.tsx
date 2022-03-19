@@ -116,9 +116,9 @@ export const VacanciesUnitSelect = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            name="unitId"
+            name="departmentId"
             onBlur={handleBlur}
-            error={!!errors.unitId && touched.unitId}
+            error={!!errors.departmentId && touched.departmentId}
             InputProps={{
               classes: {
                 root: 'h-10 rounded-lg font-nunito bg-white text-sm pt-1',
@@ -127,11 +127,13 @@ export const VacanciesUnitSelect = ({
             }}
           />
         )}
-        value={LIST_UNIT.find((unit) => unit.id === values?.unitId)}
-        onChange={(_, newValue) => setFieldValue('unitId', newValue?.id)}
+        value={LIST_UNIT.find((unit) => unit.id === values?.departmentId)}
+        onChange={(_, newValue) => setFieldValue('departmentId', newValue?.id)}
       />
-      {!!errors.unitId && touched.unitId && (
-        <p className="text-danger text-sm font-semibold">{errors.unitId}</p>
+      {!!errors.departmentId && touched.departmentId && (
+        <p className="text-danger text-sm font-semibold">
+          {errors.departmentId}
+        </p>
       )}
     </>
   )

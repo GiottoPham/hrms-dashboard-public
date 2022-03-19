@@ -68,9 +68,9 @@ export const VacanciesJobSelect = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            name="jobId"
+            name="positionId"
             onBlur={handleBlur}
-            error={!!errors.jobId && touched.jobId}
+            error={!!errors.positionId && touched.positionId}
             InputProps={{
               classes: {
                 root: 'h-10 rounded-lg font-nunito bg-white text-sm pt-1',
@@ -79,11 +79,11 @@ export const VacanciesJobSelect = ({
             }}
           />
         )}
-        value={jobFake.find((job) => job.id === values?.jobId)}
-        onChange={(_, newValue) => setFieldValue('jobId', newValue?.id)}
+        value={jobFake.find((job) => job.id === values?.positionId)}
+        onChange={(_, newValue) => setFieldValue('positionId', newValue?.id)}
       />
-      {!!errors.jobId && touched.jobId && (
-        <p className="text-danger text-sm font-semibold">{errors.jobId}</p>
+      {!!errors.positionId && touched.positionId && (
+        <p className="text-danger text-sm font-semibold">{errors.positionId}</p>
       )}
     </>
   )

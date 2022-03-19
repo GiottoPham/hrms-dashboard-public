@@ -32,8 +32,8 @@ export const EditVacanciesButton = ({
   const [edit, setEdit] = useState(isEdit ? true : false)
   const DEFAULT_VACANCIES: PartialDeep<VacanciesEditParams> = {
     hiringManagerId: vacanciesInfo?.hiringManagerId,
-    jobId: vacanciesInfo?.jobId,
-    unitId: vacanciesInfo?.unitId,
+    positionId: vacanciesInfo?.positionId,
+    departmentId: vacanciesInfo?.departmentId,
     publishedDate: vacanciesInfo?.publishedDate || new Date().toISOString(),
     expiredDate: vacanciesInfo?.expiredDate || new Date().toISOString(),
     postContent: vacanciesInfo?.postContent || '',
@@ -43,8 +43,8 @@ export const EditVacanciesButton = ({
 
   const newVacanciesValidationSchema = object().shape({
     hiringManagerId: number().required('Select a hiring manager'),
-    jobId: number().required('Select a job'),
-    unitId: number().required('Select a unit'),
+    positionId: number().required('Select a job'),
+    departmentId: number().required('Select a unit'),
     publishedDate: string().required(),
     expiredDate: string().required(),
     postContent: string().required(),
