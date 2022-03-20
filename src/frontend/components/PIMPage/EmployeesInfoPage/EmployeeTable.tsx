@@ -14,7 +14,6 @@ import { useEmployees } from '@frontend/state/employee-queries'
 import { useJobs } from '@frontend/state/job-queries'
 import { useJobParams } from '@frontend/state/job-params'
 import { useUnits } from '@frontend/state/unit-queries'
-import type { Unit } from '@frontend/types/unit'
 
 type CreateHeaderInput = {
   headerText: string
@@ -181,107 +180,12 @@ export const EmployeeTable = () => {
       note: 'abc',
     },
   ]
-  const LIST_UNIT: Unit[] = [
-    {
-      id: 1,
-      name: 'CEO',
-      type: 'head',
-      peopleNumber: 20,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-    {
-      id: 2,
-      name: 'ALO',
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-    {
-      id: 3,
-      name: 'BLE',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-    {
-      id: 4,
-      name: 'BLE2',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-
-    {
-      id: 5,
-      name: 'ALO2',
-      headOfUnitId: 1,
-      subUnits: null,
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-    },
-
-    {
-      id: 6,
-      name: 'CEO',
-      type: 'head',
-      peopleNumber: 20,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-    {
-      id: 7,
-      name: 'CEO',
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-    {
-      id: 8,
-      name: 'CEO',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-    {
-      id: 9,
-      name: 'CEO',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnitId: 1,
-      subUnits: null,
-    },
-
-    {
-      id: 10,
-      name: 'CEO',
-      headOfUnitId: 1,
-      subUnits: null,
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-    },
-  ]
   const { employeeParams } = useEmployeeParams()
   const { employees = employeesFake, isLoading: employeeLoading } =
     useEmployees(employeeParams)
   const { jobParams } = useJobParams()
   const { jobs = jobFake, isLoading: jobLoading } = useJobs(jobParams)
-  const { units = LIST_UNIT, isLoading: unitLoading } = useUnits(false)
+  const { units, isLoading: unitLoading } = useUnits(false)
   const columns: Column<PartialDeep<Employee>>[] = [
     {
       Header: createHeader({ headerText: 'ID', sortBy: 'id' }),
@@ -327,7 +231,7 @@ export const EmployeeTable = () => {
       Header: createHeader({ headerText: 'Unit', sortBy: 'unitId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{units.find((unit) => unit.id === value?.unitId)?.name}</p>
+        <p>{units?.find((unit) => unit.id === value?.unitId)?.name}</p>
       ),
       width: 'w-[250px]',
     },

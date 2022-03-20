@@ -19,22 +19,13 @@ export const OrganizationPage = () => {
             <UnitCardSkeleton />
           ) : (
             units.map(
-              ({
-                id,
-                name,
-                type,
-                subUnits,
-                headOfUnitId,
-                peopleNumber,
-                description,
-              }) => (
+              ({ id, name, type, subUnits, peopleNumber, description }) => (
                 <div key={id} className="mt-5">
                   <ListUnitCard
                     id={id}
                     name={name}
                     type={type}
                     subUnits={subUnits}
-                    headOfUnitId={headOfUnitId}
                     peopleNumber={peopleNumber}
                     description={description}
                   />
