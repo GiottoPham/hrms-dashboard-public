@@ -21,13 +21,9 @@ export const createUserRequest = (
 ): Promise<void> => {
   return axios
     .request({
-      method: 'PUT',
-      url: `/api/v1/account/4`,
-      data: {
-        username: userParams.username,
-        password: userParams.password,
-        status: 'enable',
-      },
+      method: 'POST',
+      url: `/api/v1/account`,
+      data: { ...userParams, status: userParams.status.toUpperCase() },
     })
     .then((res) => res.data)
 }
@@ -38,11 +34,8 @@ export const editUserRequest = (
   return axios
     .request({
       method: 'PUT',
-      url: `/api/v1/accounts/${id}`,
-      data: {
-        ...userParams,
-        status: userParams.accountStatus,
-      },
+      url: `/api/v1/account/${id}`,
+      data: { ...userParams, status: userParams.status.toUpperCase() },
     })
     .then((res) => res.data)
 }

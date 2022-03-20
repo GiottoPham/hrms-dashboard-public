@@ -15,16 +15,16 @@ export const UnitCard = ({
   label,
   peopleNumber,
   handleClick,
-  headOfUnitId,
   description,
+  managerOfUnitId,
 }: {
   id: number
   name: string
   label: string
   peopleNumber: number
-  headOfUnitId: number
   description: string
   handleClick: () => void
+  managerOfUnitId: number
 }) => {
   const [toggle, setToggle] = useState(false)
   return (
@@ -73,6 +73,7 @@ export const UnitCard = ({
             >
               <div className="w-28">
                 <AddUnitButton
+                  id={id}
                   closePopover={closePopover}
                   renderButton={({ openModal }) => (
                     <Button
@@ -113,7 +114,7 @@ export const UnitCard = ({
                   id={id}
                   name={name}
                   description={description}
-                  headOfUnitId={headOfUnitId}
+                  managerOfUnitId={managerOfUnitId}
                   closePopover={closePopover}
                   renderButton={({ openModal }) => (
                     <Button

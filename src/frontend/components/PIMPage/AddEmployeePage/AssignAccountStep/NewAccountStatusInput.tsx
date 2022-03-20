@@ -7,18 +7,16 @@ import { useEffect } from 'react'
 export const NewAccountStatusInput = () => {
   const { values, setFieldValue } = useFormikContext<AssignAccountInputParams>()
   useEffect(() => {
-    if (!values.newAccount?.accountStatus)
-      setFieldValue('newAccount.accountStatus', UserStatus.Enable, false)
+    if (!values.newAccount?.status)
+      setFieldValue('newAccount.status', UserStatus.Enable, false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  if (!values.newAccount?.accountStatus) return null
+  if (!values.newAccount?.status) return null
   return (
     <RadioGroup
-      name="newAccount.accountStatus"
-      value={values.newAccount?.accountStatus}
-      onChange={(e) =>
-        setFieldValue('newAccount.accountStatus', e.target.value)
-      }
+      name="newAccount.status"
+      value={values.newAccount?.status}
+      onChange={(e) => setFieldValue('newAccount.status', e.target.value)}
     >
       <FormLabel classes={{ root: 'text-sm font-nunito font-bold text-black' }}>
         Status

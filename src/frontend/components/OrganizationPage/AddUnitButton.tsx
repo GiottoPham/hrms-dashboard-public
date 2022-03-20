@@ -12,23 +12,27 @@ import { Formik } from 'formik'
 import { useRef } from 'react'
 import { object, string, number } from 'yup'
 import { UnitDetailInput } from './UnitDetailInput'
-const DEFAULT_UNIT: Partial<UnitInputParams> = {
-  name: '',
-  description: '',
-  headOfUnitId: undefined,
-}
 const newUnitValidationSchema = object().shape({
   name: string().required('Name must not be empty'),
   description: string().required('Description must not be empty'),
-  headOfUnitId: number().required('Please select one of the employees'),
+  managerOfUnitId: number().required('Please select one of the employees'),
+  headOfUnitId: number().required(),
 })
 export const AddUnitButton = ({
+  id,
   renderButton,
   closePopover,
 }: {
+  id: number
   renderButton: RenderButtonFn
   closePopover: () => void
 }) => {
+  const DEFAULT_UNIT: Partial<UnitInputParams> = {
+    name: '',
+    description: '',
+    headOfUnitId: id,
+    managerOfUnitId: undefined,
+  }
   const closeRef = useRef<HTMLButtonElement>(null)
   const { openToast } = useToast()
   const { createUnit } = useCreateUnit()

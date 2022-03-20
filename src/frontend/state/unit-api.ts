@@ -18,7 +18,7 @@ export const createUnitRequest = (
   return axios
     .request({
       method: 'POST',
-      url: `/api/units`,
+      url: `/api/v1/department`,
       data: unitParams,
     })
     .then((res) => res.data)
@@ -30,7 +30,7 @@ export const editUnitRequest = (
   return axios
     .request({
       method: 'PUT',
-      url: `/api/units/${id}`,
+      url: `/api/v1/department/${id}`,
       data: unitParams,
     })
     .then((res) => res.data)

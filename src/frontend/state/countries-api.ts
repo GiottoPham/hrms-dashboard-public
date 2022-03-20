@@ -2,16 +2,9 @@ import type { City, District, Ward } from '@frontend/types/coutries'
 import axios from 'axios'
 
 export const fetchCities = (): Promise<City[]> => {
-  const axiosWithCountries = axios.create({
-    baseURL: `https://vapi.vnappmob.com`,
-  })
-
-  return axiosWithCountries
-    .request({
-      method: 'GET',
-      url: '/api/province',
-    })
-    .then((res) => res.data.results)
+  return fetch('https://vapi.vnappmob.com/api/province').then((res) =>
+    res.json().then((res) => res.results)
+  )
 }
 export const fetchDistricts = (provinceId: number): Promise<District[]> => {
   const axiosWithCountries = axios.create({

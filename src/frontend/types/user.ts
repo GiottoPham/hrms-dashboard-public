@@ -6,7 +6,7 @@ export type UserInputParams = {
   username: string
   roleid: number
   password: string
-  accountStatus: UserStatus
+  status: UserStatus
 }
 export type UserDetail = UserInputParams & { id: number }
 

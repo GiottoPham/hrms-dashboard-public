@@ -26,7 +26,7 @@ export const createEmployeeRequest = (
   return axios
     .request({
       method: 'POST',
-      url: `/api/employees`,
+      url: `/api/v1/employee`,
       data: formData,
     })
     .then((res) => res.data)

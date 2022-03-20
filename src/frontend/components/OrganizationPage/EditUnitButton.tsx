@@ -16,31 +16,25 @@ import { UnitDetailInput } from './UnitDetailInput'
 const newUnitValidationSchema = object().shape({
   name: string().required('Name must not be empty'),
   description: string().required('Description must not be empty'),
-  headOfUnitId: number().required('Head of unit must not be empty'),
+  managerOfUnitId: number().required('Head of unit must not be empty'),
 })
 export const EditUnitButton = ({
   renderButton,
   closePopover,
   name,
   description,
-  headOfUnitId,
+  managerOfUnitId,
   id,
 }: {
   id: number
-  headOfUnitId: number
+  managerOfUnitId: number
   renderButton: RenderButtonFn
   closePopover: () => void
 } & Partial<UnitInputParams>) => {
-  const EMPLOYEE = [
-    { id: 1, name: 'Pham Gia Nguyen' },
-    { id: 2, name: 'Pham Khang Nguyen' },
-    { id: 3, name: 'Truong Anh Bao' },
-  ]
-  const initialHeadUnitId = EMPLOYEE.find(({ id }) => id === headOfUnitId)?.id
   const DEFAULT_UNIT: Partial<UnitInputParams> = {
     name: name,
     description: description,
-    headOfUnitId: initialHeadUnitId,
+    managerOfUnitId: managerOfUnitId,
   }
   const [edit, setEdit] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)

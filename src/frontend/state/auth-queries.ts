@@ -41,7 +41,6 @@ export const useAuth = () => {
   useEffect(() => {
     if (accessToken) {
       axios.defaults.headers.Authorization = `Bearer ${accessToken}`
-      axios.defaults.headers['Access-Control-Allow-Origin'] = '*'
     }
   }, [accessToken])
 

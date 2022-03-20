@@ -6,8 +6,8 @@ export const StatusInput = ({ disabled = false }: { disabled?: boolean }) => {
   const { values, setFieldValue } = useFormikContext<UserInputParams>()
   return (
     <RadioGroup
-      value={values.accountStatus}
-      onChange={(e) => setFieldValue('userStatus', e.target.value)}
+      value={values.status}
+      onChange={(e) => setFieldValue('status', e.target.value)}
     >
       <FormLabel classes={{ root: 'text-sm font-nunito font-bold text-black' }}>
         Status

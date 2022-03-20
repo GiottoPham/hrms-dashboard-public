@@ -4,11 +4,12 @@ export type Unit = {
   name: string
   peopleNumber: number
   description: string
-  headOfUnitId: number
   subUnits: Unit[] | null
+  managerOfUnitId: number
 }
 export type UnitInputParams = {
   name: string
   description: string
   headOfUnitId: number
+  managerOfUnitId: number
 }

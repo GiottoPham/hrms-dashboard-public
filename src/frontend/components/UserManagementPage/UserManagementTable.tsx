@@ -99,8 +99,8 @@ export const UserManagementTable = () => {
       width: 'w-[250px]',
     },
     {
-      Header: createHeader({ headerText: 'Status', sortBy: 'accountStatus' }),
-      accessor: 'accountStatus',
+      Header: createHeader({ headerText: 'Status', sortBy: 'status' }),
+      accessor: 'status',
       Cell: ({ value }) => <p>{capitalize(value)}</p>,
       width: 'w-[250px]',
     },

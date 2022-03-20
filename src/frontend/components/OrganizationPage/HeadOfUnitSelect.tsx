@@ -108,9 +108,9 @@ export const HeadOfUnitSelect = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            name="headOfUnitId"
+            name="managerOfUnitId"
             onBlur={handleBlur}
-            error={!!errors.headOfUnitId && touched.headOfUnitId}
+            error={!!errors.managerOfUnitId && touched.managerOfUnitId}
             InputProps={{
               classes: {
                 root: 'h-10 rounded-lg font-nunito bg-white text-sm pt-1',
@@ -119,12 +119,14 @@ export const HeadOfUnitSelect = ({
             }}
           />
         )}
-        value={employeesFake.find((emp) => emp.id === values?.headOfUnitId)}
-        onChange={(_, newValue) => setFieldValue('headOfUnitId', newValue?.id)}
+        value={employeesFake.find((emp) => emp.id === values?.managerOfUnitId)}
+        onChange={(_, newValue) =>
+          setFieldValue('managerOfUnitId', newValue?.id)
+        }
       />
-      {!!errors.headOfUnitId && touched.headOfUnitId && (
+      {!!errors.managerOfUnitId && touched.managerOfUnitId && (
         <p className="text-danger text-sm font-semibold">
-          {errors.headOfUnitId}
+          {errors.managerOfUnitId}
         </p>
       )}
     </>

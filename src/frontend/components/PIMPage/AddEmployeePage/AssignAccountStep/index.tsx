@@ -1,5 +1,9 @@
 import { useAddEmployeeForm } from '@frontend/state/add-employee-form'
-import type { AssignAccountInputParams } from '@frontend/types/employee'
+import type {
+  AssignAccountInputParams,
+  JobDetailInputParams,
+  PersonalDetailInputParams,
+} from '@frontend/types/employee'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
 import type { PartialDeep } from 'type-fest'
@@ -11,11 +15,12 @@ import { RoleSelect } from '@components/PIMPage/AddEmployeePage/AssignAccountSte
 import { NewPasswordInput } from '@components/PIMPage/AddEmployeePage/AssignAccountStep/NewPasswordInput'
 import { AccountSelect } from '@components/PIMPage/AddEmployeePage/AssignAccountStep/AccountSelect'
 import { useToast } from '@frontend/framework/Toast'
+import { useCreateEmployee } from '@frontend/state/employee-mutation'
 const newUserValidationSchema = object()
   .shape({
     username: string().required('User name is required'),
     roleid: mixed().required('Select one of the roles'),
-    accountStatus: string().required(),
+    status: string().required(),
     password: string().required('Password is required'),
   })
   .nullable()
@@ -52,20 +57,16 @@ export const AssignAccountStep = ({
         : accountDetail?.newAccount,
   }
   const { openToast } = useToast()
+  const { createEmployee } = useCreateEmployee()
   return (
     <Formik
       initialValues={DEFAULT_ACCOUNT_DETAIL}
       onSubmit={(values, { setSubmitting }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({
-              accountDetail: values,
-              jobDetail: jobDetail,
-              personalDetail: personalDetail,
-            })
-          }, 2000)
-        })
-        myPromise.then(() => {
+        createEmployee({
+          accountDetail: values as AssignAccountInputParams,
+          jobDetail: jobDetail as JobDetailInputParams,
+          personalDetail: personalDetail as PersonalDetailInputParams,
+        }).then(() => {
           setSubmitting(false)
           goReset()
           openToast('Add new employee successful', {

@@ -18,7 +18,7 @@ import { UserInput } from './UserInput'
 const newUserValidationSchema = object().shape({
   username: string().required('Username is required'),
   roleid: number().required('Please select one of the roles'),
-  accountStatus: string().required(),
+  status: string().required(),
   password: string().required('Password is required'),
 })
 export const AddUserButton = ({
@@ -33,7 +33,7 @@ export const AddUserButton = ({
   const DEFAULT_USER: PartialDeep<UserInputParams> = {
     username: userDetail?.username || '',
     password: userDetail?.password || '',
-    accountStatus: UserStatus.Enable,
+    status: UserStatus.Enable,
     roleid: userDetail?.roleid,
   }
   const [edit, setEdit] = useState(isEdit)

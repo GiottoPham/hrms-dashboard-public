@@ -7,7 +7,7 @@ export const ListUnitCard = ({
   name,
   subUnits,
   type,
-  headOfUnitId,
+  managerOfUnitId,
   description,
   peopleNumber,
 }: Unit) => {
@@ -18,7 +18,7 @@ export const ListUnitCard = ({
         id={id}
         description={description}
         peopleNumber={peopleNumber}
-        headOfUnitId={headOfUnitId}
+        managerOfUnitId={managerOfUnitId}
         name={name}
         label={
           type === 'head'
@@ -37,7 +37,7 @@ export const ListUnitCard = ({
               name: subName,
               subUnits: subOfUnit,
               type: subType,
-              headOfUnitId: subHeadOfUnit,
+              managerOfUnitId: subHeadOfUnit,
               peopleNumber: subPeopleNumber,
               description: subDescription,
             }) => (
@@ -46,7 +46,7 @@ export const ListUnitCard = ({
                   id={subId}
                   peopleNumber={subPeopleNumber}
                   description={subDescription}
-                  headOfUnitId={subHeadOfUnit}
+                  managerOfUnitId={subHeadOfUnit}
                   name={subName}
                   subUnits={subOfUnit}
                   type={subType}
