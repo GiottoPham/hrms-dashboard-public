@@ -1,4 +1,5 @@
-import type { JobDetail } from '@frontend/types/job'
+import { useJobParams } from '@frontend/state/job-params'
+import { useJobs } from '@frontend/state/job-queries'
 import type { VacanciesEditParams } from '@frontend/types/vacancies-info'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
@@ -8,46 +9,11 @@ export const VacanciesJobSelect = ({
 }: {
   disabled?: boolean
 }) => {
-  const jobFake: JobDetail[] = [
-    {
-      id: 1,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-    {
-      id: 2,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-
-    {
-      id: 3,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-    {
-      id: 4,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-    {
-      id: 5,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-  ]
+  const { jobParams } = useJobParams()
+  const { jobs } = useJobs(jobParams)
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<VacanciesEditParams>()
+  if (!jobs) return null
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
@@ -55,7 +21,7 @@ export const VacanciesJobSelect = ({
       </InputLabel>
       <Autocomplete
         disabled={disabled}
-        options={jobFake}
+        options={jobs}
         renderOption={(props, option) => {
           return (
             <li {...props} key={option.id}>
@@ -79,7 +45,7 @@ export const VacanciesJobSelect = ({
             }}
           />
         )}
-        value={jobFake.find((job) => job.id === values?.positionId)}
+        value={jobs.find((job) => job.id === values?.positionId)}
         onChange={(_, newValue) => setFieldValue('positionId', newValue?.id)}
       />
       {!!errors.positionId && touched.positionId && (

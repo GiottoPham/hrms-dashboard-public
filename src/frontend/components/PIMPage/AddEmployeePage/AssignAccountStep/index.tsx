@@ -62,8 +62,15 @@ export const AssignAccountStep = ({
     <Formik
       initialValues={DEFAULT_ACCOUNT_DETAIL}
       onSubmit={(values, { setSubmitting }) => {
+        const newAccountValues = {
+          ...values?.newAccount,
+          status: values?.newAccount?.status?.toUpperCase(),
+        }
+        const newValues = values.newAccount
+          ? { ...values, newAccount: newAccountValues }
+          : values
         createEmployee({
-          accountDetail: values as AssignAccountInputParams,
+          accountDetail: newValues as AssignAccountInputParams,
           jobDetail: jobDetail as JobDetailInputParams,
           personalDetail: personalDetail as PersonalDetailInputParams,
         }).then(() => {

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { formatDate } from '@frontend/framework/utils/date'
-import type { Candidate, Candidates } from '@frontend/types/candidate'
+import type { Candidate } from '@frontend/types/candidate'
 import { useCandidates } from '@frontend/state/candidate-queries'
 type CreateHeaderInput = {
   headerText: string
@@ -46,89 +46,7 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 }
 
 export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
-  const candidateFake: Candidates = [
-    {
-      id: 1,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 2,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 3,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 4,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 5,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 5,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 5,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-    {
-      id: 5,
-      vacanciesId: 1,
-      name: 'Khang Nguyen',
-      jobTitle: 'Frontend Developer',
-      unitName: 'Team dev',
-      appliedDate: new Date().toISOString(),
-      email: 'giotto2015.py@gmail.com',
-      contact: '0854662633',
-    },
-  ]
-  const { candidates = candidateFake, isLoading } = useCandidates({
+  const { candidates = [], isLoading } = useCandidates({
     vacanciesId: vacanciesId,
   })
   const columns: Column<Candidate>[] = [
@@ -157,16 +75,6 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'jobTitle',
       }),
       accessor: 'jobTitle',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
-      width: 'w-[100px]',
-    },
-    {
-      id: 'UnitCell',
-      Header: createHeader({
-        headerText: 'Unit',
-        sortBy: 'unitName',
-      }),
-      accessor: 'unitName',
       Cell: ({ value }) => <p className="leading-loose">{value}</p>,
       width: 'w-[100px]',
     },

@@ -19,7 +19,6 @@ export const NumberInput = ({
   return (
     <>
       <TextInput
-        type="number"
         id={`${insurance}.${insuranceDetail}`}
         disabled={disabled}
         fullWidth

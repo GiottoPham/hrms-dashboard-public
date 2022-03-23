@@ -1,5 +1,4 @@
 import { usePayrollParams } from '@frontend/state/payroll-params'
-import type { Payroll } from '@frontend/types/payroll'
 import {
   Accordion,
   AccordionDetails,
@@ -22,31 +21,7 @@ export const EmployeePayroll = () => {
   const [show, setShow] = useState(false)
   const [showBonus, setShowBonus] = useState(false)
   const [showTax, setShowTax] = useState(false)
-
-  const payrollFake: Payroll = {
-    basicSalary: '12000',
-    monthlyInfo: {
-      actualDay: '5',
-      standardDay: '6',
-      paidLeave: '7',
-      unpaidLeave: '8',
-    },
-    totalDerivedSalary: '49000',
-    derivedSalary: '24000',
-    totalBonus: '12000',
-    bonus: [
-      { bonusName: 'Breakfast', bonusAmount: '15000' },
-      {
-        bonusName: 'Lunch',
-        bonusAmount: '10000',
-      },
-    ],
-    mandatoryInsurance: '35000',
-    taxableIncome: '16000',
-    personalIncomeTax: '20000',
-    netIncome: '30000',
-  }
-  const { payroll = payrollFake, isLoading } = usePayroll(payrollParams)
+  const { payroll, isLoading } = usePayroll(payrollParams)
   if (isLoading) return null
   return (
     <div className="flex-grow relative h-full font-nunito text-sm font-semibold">
@@ -82,7 +57,7 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>{currencyFormatter(payroll.basicSalary)}</p>
+            <p>{currencyFormatter(payroll?.basicSalary) || '--'}</p>
           </div>
         </div>
         <div className="w-full h-12 flex bg-primary-200">
@@ -94,7 +69,7 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>{currencyFormatter('0')}</p>
+            <p>{currencyFormatter('0') || '--'}</p>
           </div>
         </div>
         <Accordion
@@ -129,7 +104,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(4)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payroll.monthlyInfo.standardDay}
+                {payroll?.monthlyInfo.standardDay || '--'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -139,7 +114,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(5)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payroll.monthlyInfo.actualDay}
+                {payroll?.monthlyInfo.actualDay || '--'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -149,7 +124,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(6)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payroll.monthlyInfo.unpaidLeave}
+                {payroll?.monthlyInfo.unpaidLeave || '--'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -159,7 +134,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(7)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {payroll.monthlyInfo.paidLeave}
+                {payroll?.monthlyInfo.paidLeave || '--'}
               </div>
             </div>
           </AccordionDetails>
@@ -171,7 +146,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll.totalDerivedSalary)}
+            {currencyFormatter(payroll?.totalDerivedSalary) || '--'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -182,7 +157,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll.derivedSalary)}
+            {currencyFormatter(payroll?.derivedSalary) || '--'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -209,13 +184,13 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payroll.totalBonus)}
+                  {currencyFormatter(payroll?.totalBonus) || '--'}
                 </div>
               </div>
             </CardActionArea>
           </AccordionSummary>
           <AccordionDetails classes={{ root: 'p-0' }}>
-            {payroll.bonus.map((item, index) => (
+            {payroll?.bonus.map((item, index) => (
               <div
                 className={cx('w-full h-12 flex', {
                   'bg-white': index % 2 === 0,
@@ -242,7 +217,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll.totalDerivedSalary)}
+            {currencyFormatter(payroll?.totalDerivedSalary) || '--'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -256,7 +231,7 @@ export const EmployeePayroll = () => {
             (I)*10.5/100
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll.mandatoryInsurance)}
+            {currencyFormatter(payroll?.mandatoryInsurance) || '--'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -283,7 +258,7 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payroll.personalIncomeTax)}
+                  {currencyFormatter(payroll?.personalIncomeTax) || '--'}
                 </div>
               </div>
             </CardActionArea>
@@ -328,7 +303,7 @@ export const EmployeePayroll = () => {
                 (I)-(II.A)-(8)-(9)-(10)
               </div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(payroll.taxableIncome)}
+                {currencyFormatter(payroll?.taxableIncome) || '--'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -338,7 +313,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(12)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(payroll.personalIncomeTax)}
+                {currencyFormatter(payroll?.personalIncomeTax) || '--'}
               </div>
             </div>
           </AccordionDetails>
@@ -350,7 +325,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">(I)-(II)</div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll.netIncome)}
+            {currencyFormatter(payroll?.netIncome) || '--'}
           </div>
         </div>
       </div>

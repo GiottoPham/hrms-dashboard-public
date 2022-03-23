@@ -8,10 +8,12 @@ import cx from 'classnames'
 import { EditBasicInfo } from '@components/PIMPage/EmployeesInfoPage/EditBasicInfo'
 import { EditJobSalaryInfo } from '@components/PIMPage/EmployeesInfoPage/EditJobSalaryInfo'
 import { EditInsuranceInfo } from '@components/PIMPage/EmployeesInfoPage/EditInsuranceInfo'
+import type { Employee } from '@frontend/types/employee'
 export const EditEmployeeButton = ({
+  employee,
   renderButton,
 }: {
-  employeeId: number
+  employee: Employee
   renderButton: RenderButtonFn
 }) => {
   const employee_tab = [
@@ -80,9 +82,13 @@ export const EditEmployeeButton = ({
                 />
               ))}
             </Tabs>
-            {emPath === 'basic_info' && <EditBasicInfo />}
-            {emPath === 'job_salary' && <EditJobSalaryInfo />}
-            {emPath === 'insurance' && <EditInsuranceInfo />}
+            {emPath === 'basic_info' && <EditBasicInfo employee={employee} />}
+            {emPath === 'job_salary' && (
+              <EditJobSalaryInfo employee={employee} />
+            )}
+            {emPath === 'insurance' && (
+              <EditInsuranceInfo employee={employee} />
+            )}
           </div>
         </Modal>
       )}

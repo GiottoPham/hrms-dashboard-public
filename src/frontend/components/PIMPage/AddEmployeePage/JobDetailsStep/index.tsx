@@ -11,6 +11,7 @@ import { UnitSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/U
 import { SalaryGroupSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/SalaryGroupSelect'
 import { BonusInfo } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/BonusInfo'
 import { isEqual } from 'lodash'
+import { NumberDetailInput } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/NumberDetailInput'
 
 const bonusSchema = object().shape({
   bonusName: string(),
@@ -20,7 +21,7 @@ const newJobDetailValidationSchema = object().shape({
   joinDate: string().required('Join Date is required'),
   jobId: number().required('Select a job title'),
   pit: string().required('PIT is required'),
-  unitId: number().required('Select one of the units'),
+  departmentId: number().required('Select one of the units'),
   salaryGroup: number().required('Select one of the salary group'),
   salary: string().required('Salary is required'),
   bonus: array().of(bonusSchema),
@@ -40,7 +41,7 @@ export const JobDetailsStep = ({
     joinDate: jobDetail?.joinDate || new Date().toISOString(),
     jobId: jobDetail?.jobId,
     pit: jobDetail?.pit || '',
-    unitId: jobDetail?.unitId,
+    departmentId: jobDetail?.departmentId,
     salaryGroup: jobDetail?.salaryGroup,
     salary: jobDetail?.salary || '',
     bonus: jobDetail?.bonus || [{ bonusName: '', bonusAmount: '' }],
@@ -88,7 +89,7 @@ export const JobDetailsStep = ({
                   <SalaryGroupSelect />
                 </div>
                 <div className="w-1/3">
-                  <JobDetailsInput fieldName="salary" label="Salary" />
+                  <NumberDetailInput fieldName="salary" />
                 </div>
               </div>
             </div>

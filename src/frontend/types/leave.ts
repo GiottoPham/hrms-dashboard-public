@@ -14,8 +14,8 @@ type RowIndex = number
 type id = number
 
 export type LeaveParams = {
-  unitId: number
-  date: string
+  departmentId: number
+  applicationDate: string
   pagination: number // 1 page = 10 item
   sort: {
     sortBy: keyof LeaveDetail // string

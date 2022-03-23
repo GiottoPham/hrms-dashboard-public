@@ -51,8 +51,8 @@ export const KCBSelect = ({ disabled = false }: { disabled?: boolean }) => {
             }}
           />
         )}
-        value={kcbFake.find((kcb) => kcb.id === values.health?.kcbId)}
-        onChange={(_, newValue) => setFieldValue('health.kcbId', newValue?.id)}
+        value={kcbFake.find((kcb) => kcb.id === values.kcbId)}
+        onChange={(_, newValue) => setFieldValue('kcbId', newValue?.id)}
       />
     </>
   )

@@ -4,7 +4,7 @@ import { Table } from '@frontend/framework/Table'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import type { LeaveDetail, LeaveEmployeeList } from '@frontend/types/leave'
+import type { LeaveDetail } from '@frontend/types/leave'
 import { formatDate } from '@frontend/framework/utils/date'
 import { LeaveStatusButton } from '@components/LeavePage/LeaveStatusButton'
 import { LeaveActionButton } from '@components/LeavePage/LeaveActionButton'
@@ -70,70 +70,8 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 }
 
 export const LeaveTable = () => {
-  const leaveFake: LeaveEmployeeList = [
-    {
-      id: 1,
-      employeeName: 'Khang Nguyen',
-      unitName: 'Team dev',
-      applicationDate: new Date().toISOString(),
-      fromDate: new Date().toISOString(),
-      toDate: new Date().toISOString(),
-      total: 1,
-      status: 0,
-    },
-    {
-      id: 2,
-      employeeName: 'Gia Nguyen',
-      unitName: 'Team dev',
-      applicationDate: new Date().toISOString(),
-      fromDate: new Date().toISOString(),
-      toDate: new Date().toISOString(),
-      total: 1,
-      status: 1,
-    },
-    {
-      id: 3,
-      employeeName: 'Anh Bao',
-      unitName: 'Team dev',
-      applicationDate: new Date().toISOString(),
-      fromDate: new Date().toISOString(),
-      toDate: new Date().toISOString(),
-      total: 1,
-      status: 2,
-    },
-    {
-      id: 4,
-      employeeName: 'Khang Nguyen',
-      unitName: 'Team dev',
-      applicationDate: new Date().toISOString(),
-      fromDate: new Date().toISOString(),
-      toDate: new Date().toISOString(),
-      total: 1,
-      status: 0,
-    },
-    {
-      id: 5,
-      employeeName: 'Gia Nguyen',
-      unitName: 'Team dev',
-      applicationDate: new Date().toISOString(),
-      fromDate: new Date().toISOString(),
-      toDate: new Date().toISOString(),
-      total: 1,
-      status: 1,
-    },
-    {
-      id: 6,
-      employeeName: 'Anh Bao',
-      unitName: 'Team dev',
-      applicationDate: new Date().toISOString(),
-      fromDate: new Date().toISOString(),
-      toDate: new Date().toISOString(),
-      total: 1,
-      status: 2,
-    },
-  ]
   const { leaveParams, setLeaveParams } = useLeaveParams()
-  const { leaves = leaveFake, isLoading } = useLeaves(leaveParams)
+  const { leaves = [], isLoading } = useLeaves(leaveParams)
   const allLeave = leaves?.map((leave) => leave.id)
   const { checkedLeaveIds, setCheckedLeaveDetail } = useCheckedLeaveDetail()
   const columns: Column<LeaveDetail>[] = [

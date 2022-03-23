@@ -3,7 +3,10 @@ import {
   editEmployeeRequest,
 } from '@frontend/state/employee-api'
 import { EMPLOYEES } from '@frontend/state/query-keys'
-import type { Employee, EmployeeParams } from '@frontend/types/employee'
+import type {
+  EmployeeParams,
+  InsuranceInputParams,
+} from '@frontend/types/employee'
 import { useMutation, useQueryClient } from 'react-query'
 
 export const useCreateEmployee = () => {
@@ -29,7 +32,11 @@ export const useEditEmployee = () => {
       employeeParams,
     }: {
       id: number
-      employeeParams: Partial<Employee>
+      employeeParams: Partial<
+        Omit<EmployeeParams, 'accountDetail'> & {
+          insuranceDetail: InsuranceInputParams
+        }
+      >
     }) => editEmployeeRequest(id, employeeParams),
     onSuccess: () => {
       queryClient.refetchQueries([EMPLOYEES])

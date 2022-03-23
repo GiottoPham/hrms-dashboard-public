@@ -1,5 +1,5 @@
 export type AttendanceParams = {
   week: string
-  unitId: number
+  departmentId: number
   pagination: number
 }

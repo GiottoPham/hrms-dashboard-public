@@ -1,4 +1,8 @@
-import type { JobDetailInputParams } from '@frontend/types/employee'
+import type {
+  Bonus,
+  Employee,
+  JobDetailInputParams,
+} from '@frontend/types/employee'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
 import type { PartialDeep } from 'type-fest'
@@ -12,7 +16,10 @@ import { useState } from 'react'
 import { JoinDatePicker } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/JoinDatePicker'
 import { JobTitleSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/JobTitleSelect'
 import { useToast } from '@frontend/framework/Toast'
-export const EditJobSalaryInfo = () => {
+import { useEditEmployee } from '@frontend/state/employee-mutation'
+import { NumberDetailInput } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/NumberDetailInput'
+export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
+  const { editEmployee } = useEditEmployee()
   const [edit, setEdit] = useState(true)
   const { openToast } = useToast()
   const bonusSchema = object().shape({
@@ -23,28 +30,19 @@ export const EditJobSalaryInfo = () => {
     joinDate: string().required('Join Date is required'),
     jobId: number().required('Select a job title'),
     pit: string().required('PIT is required'),
-    unitId: number().required('Select one of the units'),
+    departmentId: number().required('Select one of the units'),
     salaryGroup: number().required('Select one of the salary group'),
     salary: string().required('Salary is required'),
     bonus: array().of(bonusSchema),
   })
-  const jobDetail = {
-    joinDate: '03/03/2022',
-    jobId: 1,
-    pit: 'hello',
-    unitId: 1,
-    salaryGroup: 1,
-    salary: '1000',
-    bonus: [{ bonusName: 'An sang', bonusAmount: '10000' }],
-  }
   const DEFAULT_PERSONAL_DETAIL: PartialDeep<JobDetailInputParams> = {
-    joinDate: jobDetail?.joinDate || new Date().toISOString(),
-    jobId: jobDetail?.jobId,
-    pit: jobDetail?.pit || '',
-    unitId: jobDetail?.unitId,
-    salaryGroup: jobDetail?.salaryGroup,
-    salary: jobDetail?.salary || '',
-    bonus: jobDetail?.bonus || [{ bonusName: '', bonusAmount: '' }],
+    joinDate: employee.jobDetail?.joinDate || new Date().toISOString(),
+    jobId: employee.jobDetail?.jobId,
+    pit: employee.jobDetail?.pit || '',
+    departmentId: employee.jobDetail?.departmentId,
+    salaryGroup: employee.jobDetail?.salaryGroup,
+    salary: employee.jobDetail?.salary || '',
+    bonus: employee.jobDetail?.bonus || [{ bonusName: '', bonusAmount: '' }],
   }
   return (
     <Formik
@@ -55,12 +53,15 @@ export const EditJobSalaryInfo = () => {
             !isEqual(item, {}) &&
             !isEqual(item, { bonusName: '', bonusAmount: '' })
         )
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({ ...values, bonus: bonusCompact })
-          }, 1000)
-        })
-        myPromise.then(() => {
+        editEmployee({
+          id: employee.id,
+          employeeParams: {
+            jobDetail: {
+              ...values,
+              bonus: bonusCompact as Bonus[],
+            } as JobDetailInputParams,
+          },
+        }).then(() => {
           setSubmitting(false)
           setEdit(true)
           openToast('Edit job info successful', {
@@ -101,11 +102,7 @@ export const EditJobSalaryInfo = () => {
                   <SalaryGroupSelect disabled={edit} />
                 </div>
                 <div className="w-1/3">
-                  <JobDetailsInput
-                    fieldName="salary"
-                    label="Salary"
-                    disabled={edit}
-                  />
+                  <NumberDetailInput fieldName="salary" disabled={edit} />
                 </div>
               </div>
             </div>

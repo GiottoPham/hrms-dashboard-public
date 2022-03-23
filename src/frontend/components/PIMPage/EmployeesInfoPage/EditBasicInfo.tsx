@@ -7,7 +7,11 @@ import { EmployeeDetailsInput } from '@components/PIMPage/AddEmployeePage/Person
 import { WardSelect } from '@components/PIMPage/AddEmployeePage/PersonalDetailsStep/WardSelect'
 import { PhoneNumberInput } from '@frontend/framework/PhoneNumberInput'
 import { useToast } from '@frontend/framework/Toast'
-import type { PersonalDetailInputParams } from '@frontend/types/employee'
+import { useEditEmployee } from '@frontend/state/employee-mutation'
+import type {
+  Employee,
+  PersonalDetailInputParams,
+} from '@frontend/types/employee'
 import { Button, CircularProgress, InputLabel } from '@mui/material'
 import { Formik } from 'formik'
 import { useEffect, useState } from 'react'
@@ -23,24 +27,30 @@ export const convertURLtoFile = async (url: string) => {
   return new File([data], filename!, metadata)
 }
 
-export const EditBasicInfo = () => {
+export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
   const { openToast } = useToast()
+  const { editEmployee } = useEditEmployee()
   const [edit, setEdit] = useState(true)
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true)
   const [avatarFile, setAvatarFile] = useState<Blob>()
-  const url =
-    'https://lh4.googleusercontent.com/-ahWlp0z8KQM/AAAAAAAAAAI/AAAAAAAAAGA/nEfC5WjfVM4/photo.jpg'
+  const avatarId = employee.personalDetail.avatar?.split('id=')[1]
+  const url = `https://corsanywhere.herokuapp.com/https://drive.google.com/uc?id=${avatarId}`
   useEffect(() => {
     const convertURLtoFile = async () => {
       await fetch(url)
         .then((res) => res.blob()) // Gets the response and returns it as a blob
         .then((blob) => {
-          setAvatarFile(blob)
+          setAvatarFile(
+            new File([blob], `new-image-${employee.id}`, {
+              lastModified: new Date().getTime(),
+              type: blob.type,
+            })
+          )
           setIsLoadingAvatar(false)
         })
     }
     convertURLtoFile()
-  }, [url])
+  }, [employee.id, url])
   if (isLoadingAvatar) return null
   const addressSchema = object().shape({
     cityId: number().required(),
@@ -58,57 +68,40 @@ export const EditBasicInfo = () => {
     permanentAddress: addressSchema,
     temporaryAddress: addressSchema,
   })
-  const personalDetail = {
-    firstName: 'Nguyen',
-    lastName: 'Pham',
-    dateOfBirth: '11/28/1999',
-    email: 'giotto2015.py@gmail.com',
-    phone: '854662633',
+  const DEFAULT_PERSONAL_DETAIL: PartialDeep<PersonalDetailInputParams> = {
+    firstName: employee.personalDetail?.firstName || '',
+    lastName: employee.personalDetail?.lastName || '',
+    dateOfBirth:
+      employee.personalDetail?.dateOfBirth || new Date().toISOString(),
+    email: employee.personalDetail?.email || '',
+    phone: employee.personalDetail?.phone || '',
     avatar: avatarFile,
     permanentAddress: {
-      cityId: 79,
-      districtId: 770,
-      wardId: 27133,
-      address: '475 Cong Hoa',
+      cityId: employee.personalDetail?.permanentAddress?.cityId,
+      districtId: employee.personalDetail?.permanentAddress?.districtId,
+      wardId: employee.personalDetail?.permanentAddress?.wardId,
+      address: employee.personalDetail?.permanentAddress?.address || '',
     },
     temporaryAddress: {
-      cityId: 79,
-      districtId: 770,
-      wardId: 27133,
-      address: '475 Cong Hoa',
+      cityId: employee.personalDetail?.temporaryAddress?.cityId,
+      districtId: employee.personalDetail?.temporaryAddress?.districtId,
+      wardId: employee.personalDetail?.temporaryAddress?.wardId,
+      address: employee.personalDetail?.temporaryAddress?.address || '',
     },
+    sex: 'male',
   }
-  const DEFAULT_PERSONAL_DETAIL: PartialDeep<PersonalDetailInputParams> = {
-    firstName: personalDetail?.firstName || '',
-    lastName: personalDetail?.lastName || '',
-    dateOfBirth: personalDetail?.dateOfBirth || new Date().toISOString(),
-    email: personalDetail?.email || '',
-    phone: personalDetail?.phone || '',
-    avatar: personalDetail?.avatar,
-    permanentAddress: {
-      cityId: personalDetail?.permanentAddress?.cityId,
-      districtId: personalDetail?.permanentAddress?.districtId,
-      wardId: personalDetail?.permanentAddress?.wardId,
-      address: personalDetail?.permanentAddress?.address || '',
-    },
-    temporaryAddress: {
-      cityId: personalDetail?.temporaryAddress?.cityId,
-      districtId: personalDetail?.temporaryAddress?.districtId,
-      wardId: personalDetail?.temporaryAddress?.wardId,
-      address: personalDetail?.temporaryAddress?.address || '',
-    },
-  }
+
   return (
     <Formik
       validateOnMount
       initialValues={DEFAULT_PERSONAL_DETAIL}
       onSubmit={(values, { setSubmitting }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 1000)
-        })
-        myPromise.then(() => {
+        editEmployee({
+          id: employee.id,
+          employeeParams: {
+            personalDetail: values as PersonalDetailInputParams,
+          },
+        }).then(() => {
           setSubmitting(false)
           setEdit(true)
           openToast('Edit basic info successful', {

@@ -13,6 +13,9 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { EmployeePayroll } from '@components/PayrollPage/EmployeePayroll'
 import cx from 'classnames'
 import { MonthPayrollFilter } from '@components/PayrollPage/MonthPayrollFilter'
+import { useEmployeeParams } from '@frontend/state/employee-params'
+import { useEmployees } from '@frontend/state/employee-queries'
+import { useUnits } from '@frontend/state/unit-queries'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -63,165 +66,10 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 export const PayrollTable = () => {
   const { showPayroll, setShowPayroll } = useShowPayroll()
   const { setPayrollParams } = usePayrollParams()
-  const employeesFake: PartialDeep<Employee>[] = [
-    {
-      id: 1,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 2,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 3,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 4,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 5,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-  ]
-  const LIST_UNIT = [
-    {
-      id: 1,
-      name: 'CEO',
-      type: 'head',
-      peopleNumber: 20,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Gia Nguyen',
-    },
-    {
-      id: 2,
-      name: 'ALO',
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Khang Nguyen',
-    },
-    {
-      id: 3,
-      name: 'BLE',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-    {
-      id: 4,
-      name: 'BLE2',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-
-    {
-      id: 5,
-      name: 'ALO2',
-      subUnit: null,
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-
-    {
-      id: 6,
-      name: 'CEO',
-      type: 'head',
-      peopleNumber: 20,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Gia Nguyen',
-    },
-    {
-      id: 7,
-      name: 'CEO',
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Khang Nguyen',
-    },
-    {
-      id: 8,
-      name: 'CEO',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-    {
-      id: 9,
-      name: 'CEO',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-
-    {
-      id: 10,
-      name: 'CEO',
-      subUnit: null,
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-  ]
+  const { employeeParams } = useEmployeeParams()
+  const { employees = [], isLoading: employeeLoading } =
+    useEmployees(employeeParams)
+  const { units = [], isLoading: unitLoading } = useUnits(false)
   const columns: Column<PartialDeep<Employee>>[] = [
     {
       Header: createHeader({ headerText: 'ID', sortBy: 'id' }),
@@ -255,10 +103,10 @@ export const PayrollTable = () => {
     },
     {
       id: 'Unit',
-      Header: createHeader({ headerText: 'Unit', sortBy: 'unitId' }),
+      Header: createHeader({ headerText: 'Unit', sortBy: 'departmentId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{LIST_UNIT.find((unit) => unit.id === value?.unitId)?.name}</p>
+        <p>{units.find((unit) => unit.id === value?.departmentId)?.name}</p>
       ),
       width: 'w-[150px]',
     },
@@ -310,9 +158,10 @@ export const PayrollTable = () => {
           })}
         >
           <Table<PartialDeep<Employee>>
-            data={employeesFake}
+            data={employees as Employee[]}
             columns={columns}
             rowCount={5}
+            isLoading={employeeLoading && unitLoading}
           />
           <div className="self-end mt-5">
             <Button

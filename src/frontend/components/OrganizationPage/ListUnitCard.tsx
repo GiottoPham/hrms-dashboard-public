@@ -20,13 +20,7 @@ export const ListUnitCard = ({
         peopleNumber={peopleNumber}
         managerOfUnitId={managerOfUnitId}
         name={name}
-        label={
-          type === 'head'
-            ? 'Head Unit'
-            : type === 'sub-head'
-            ? 'Head of sub unit'
-            : 'Sub unit'
-        }
+        label={type === 'head' ? 'Head Unit' : 'Sub unit'}
         handleClick={() => setToggle(!toggle)}
       />
       <div className="ml-20 flex flex-col">

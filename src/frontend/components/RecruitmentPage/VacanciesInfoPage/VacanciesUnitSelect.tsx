@@ -1,3 +1,4 @@
+import { useUnits } from '@frontend/state/unit-queries'
 import type { VacanciesEditParams } from '@frontend/types/vacancies-info'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
@@ -7,95 +8,10 @@ export const VacanciesUnitSelect = ({
 }: {
   disabled?: boolean
 }) => {
-  const LIST_UNIT = [
-    {
-      id: 1,
-      name: 'CEO',
-      type: 'head',
-      peopleNumber: 20,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Gia Nguyen',
-    },
-    {
-      id: 2,
-      name: 'ALO',
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Khang Nguyen',
-    },
-    {
-      id: 3,
-      name: 'BLE',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-    {
-      id: 4,
-      name: 'BLE2',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-
-    {
-      id: 5,
-      name: 'ALO2',
-      subUnit: null,
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-
-    {
-      id: 6,
-      name: 'CEO',
-      type: 'head',
-      peopleNumber: 20,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Gia Nguyen',
-    },
-    {
-      id: 7,
-      name: 'CEO',
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Pham Khang Nguyen',
-    },
-    {
-      id: 8,
-      name: 'CEO',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-    {
-      id: 9,
-      name: 'CEO',
-      type: 'sub',
-      peopleNumber: 5,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-
-    {
-      id: 10,
-      name: 'CEO',
-      subUnit: null,
-      type: 'sub-head',
-      peopleNumber: 10,
-      description: 'abcxyz',
-      headOfUnit: 'Truong Anh Bao',
-    },
-  ]
+  const { units } = useUnits(false)
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<VacanciesEditParams>()
+  if (!units) return null
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
@@ -103,7 +19,7 @@ export const VacanciesUnitSelect = ({
       </InputLabel>
       <Autocomplete
         disabled={disabled}
-        options={LIST_UNIT}
+        options={units}
         renderOption={(props, option) => {
           return (
             <li {...props} key={option.id}>
@@ -127,7 +43,7 @@ export const VacanciesUnitSelect = ({
             }}
           />
         )}
-        value={LIST_UNIT.find((unit) => unit.id === values?.departmentId)}
+        value={units.find((unit) => unit.id === values?.departmentId)}
         onChange={(_, newValue) => setFieldValue('departmentId', newValue?.id)}
       />
       {!!errors.departmentId && touched.departmentId && (

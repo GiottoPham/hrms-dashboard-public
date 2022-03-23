@@ -30,13 +30,13 @@ export const UnitCard = ({
   return (
     <div className="relative rounded-full font-nunito normal-case bg-white flex items-center p-4 w-full">
       <PimIcon className="w-6 h-6 mr-4" />
-      <p className="mr-4">{name}</p>
-      <p>{label}</p>
+      <p className="mr-4 font-bold text-lg">{name}</p>
+      <p className="text-sm">{label}</p>
 
       <div className="absolute right-4 flex items-center space-x-4">
         <div className="flex items-center space-x-4">
           <RecruitmentIcon className="w-5 h-5 text-primary" />
-          <p className="font-nunito text-sm">{peopleNumber} people</p>
+          <p className="font-nunito text-sm">{peopleNumber || 0} people</p>
         </div>
         <ButtonWithPopover
           renderButton={({ openPopover }) => (

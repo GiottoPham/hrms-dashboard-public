@@ -39,7 +39,7 @@ export const deleteUnitRequest = (id: number): Promise<void> => {
   return axios
     .request({
       method: 'DELETE',
-      url: `/api/units/${id}`,
+      url: `/api/v1/department/${id}`,
     })
     .then((res) => res.data)
 }

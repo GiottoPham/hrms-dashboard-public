@@ -6,7 +6,7 @@ export const JobDetailsInput = ({
   label,
   disabled = false,
 }: {
-  fieldName: keyof Pick<JobDetailInputParams, 'pit' | 'salary'>
+  fieldName: keyof Pick<JobDetailInputParams, 'pit'>
   label: string
   disabled?: boolean
 }) => {
@@ -19,7 +19,7 @@ export const JobDetailsInput = ({
         required
         fullWidth
         id={fieldName}
-        type={fieldName === 'salary' ? 'number' : fieldName}
+        type={fieldName === 'pit' ? 'number' : fieldName}
         label={label}
         name={fieldName}
         onBlur={handleBlur}

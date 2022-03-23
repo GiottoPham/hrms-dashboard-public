@@ -1,46 +1,12 @@
+import { useUserParams } from '@frontend/state/user-params'
+import { useUsers } from '@frontend/state/user-queries'
 import type { AssignAccountInputParams } from '@frontend/types/employee'
-import { UserDetail, UserStatus } from '@frontend/types/user'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
 
 export const AccountSelect = () => {
-  const userFake: UserDetail[] = [
-    {
-      id: 1,
-      username: 'khoaideptrai',
-      roleid: 1,
-      status: UserStatus.Enable,
-      password: 'abcdxyz',
-    },
-    {
-      id: 2,
-      username: 'khoaideptrai1',
-      roleid: 2,
-      status: UserStatus.Enable,
-      password: 'abcdxyz1',
-    },
-    {
-      id: 3,
-      username: 'khoaideptrai3',
-      roleid: 3,
-      status: UserStatus.Enable,
-      password: 'abcdxyz3',
-    },
-    {
-      id: 4,
-      username: 'khoaideptrai4',
-      roleid: 1,
-      status: UserStatus.Enable,
-      password: 'abcdxyz4',
-    },
-    {
-      id: 5,
-      username: 'khoaideptrai5',
-      roleid: 2,
-      status: UserStatus.Enable,
-      password: 'abcdxyz5',
-    },
-  ]
+  const { userParams } = useUserParams()
+  const { users } = useUsers(userParams)
   const roleFake = [
     {
       id: 1,
@@ -57,13 +23,14 @@ export const AccountSelect = () => {
   ]
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<AssignAccountInputParams>()
+  if (!users) return null
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
         Available account
       </InputLabel>
       <Autocomplete
-        options={userFake}
+        options={users}
         renderOption={(props, option) => {
           return (
             <li {...props} key={option.id}>
@@ -90,7 +57,7 @@ export const AccountSelect = () => {
             }}
           />
         )}
-        value={userFake.find((user) => user.id === values?.accountId)}
+        value={users.find((user) => user.id === values?.accountId)}
         onChange={(_, newValue) => setFieldValue('accountId', newValue?.id)}
       />
       {!!errors.accountId && touched.accountId && (

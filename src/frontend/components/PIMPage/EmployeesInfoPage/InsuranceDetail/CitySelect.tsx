@@ -19,10 +19,10 @@ export const CitySelect = ({
       </InputLabel>
       <Select
         disabled={disabled}
-        name={'health.cityId'}
+        name={'cityId'}
         fullWidth
-        value={values.health.cityId}
-        onChange={(e) => setFieldValue('health.cityId', e.target.value)}
+        value={values.cityId}
+        onChange={(e) => setFieldValue('cityId', e.target.value)}
         componentsProps={{
           root: {
             className: 'font-nunito text-sm rounded-lg h-10 ',

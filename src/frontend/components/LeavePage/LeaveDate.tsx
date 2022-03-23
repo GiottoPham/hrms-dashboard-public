@@ -13,12 +13,12 @@ export const LeaveDate = () => {
       </InputLabel>
       <DesktopDatePicker
         autoFocus={false}
-        value={leaveParams.date}
+        value={leaveParams.applicationDate}
         onChange={(newValue) => {
           if (newValue)
             setLeaveParams((prev) => ({
               ...prev!,
-              week: newValue,
+              applicationDate: newValue,
             }))
         }}
         renderInput={(params) => (

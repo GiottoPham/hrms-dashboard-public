@@ -8,7 +8,10 @@ export const fetchLeaves = (
     .request({
       method: 'GET',
       url: '/api/v1/leaves',
-      params: { departmentId: leaveParams.unitId },
+      params: {
+        departmentId: leaveParams.departmentId,
+        applicationDate: leaveParams.applicationDate,
+      },
     })
     .then((res) => res.data.leaveEmployeeList)
 }
@@ -16,7 +19,7 @@ export const updateLeaveStatusRequest = (listIds: number[], status: number) => {
   return axios
     .request({
       method: 'POST',
-      url: `/api/leaves/status`,
+      url: `/api/v1/leaves/status`,
       data: {
         listIds,
         status,

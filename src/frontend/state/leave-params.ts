@@ -63,8 +63,8 @@ export const useLeaveParams = () => {
 }
 export const defaultLeave: LeaveParams = {
   pagination: 1,
-  unitId: 1,
-  date: new Date().toISOString(),
+  departmentId: 1,
+  applicationDate: new Date().toISOString(),
   sort: {
     sortBy: 'employeeName',
     sortOrder: 'asc',

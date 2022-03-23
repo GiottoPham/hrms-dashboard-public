@@ -18,6 +18,10 @@ import { VacanciesHiringManagerSelect } from '@components/RecruitmentPage/Vacanc
 import { VacanciesJobSelect } from '@components/RecruitmentPage/VacanciesInfoPage/VacanciesJobSelect'
 import cx from 'classnames'
 import { useToast } from '@frontend/framework/Toast'
+import {
+  useCreateVacancies,
+  useEditVacancies,
+} from '@frontend/state/vacancies-mutation'
 export const EditVacanciesButton = ({
   renderButton,
   vacanciesInfo,
@@ -50,16 +54,19 @@ export const EditVacanciesButton = ({
     postContent: string().required(),
     status: number().required(),
   })
+  const { editVacancies } = useEditVacancies()
+  const { createVacancies } = useCreateVacancies()
   return (
     <Formik
       initialValues={DEFAULT_VACANCIES}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 2000)
-        })
-        myPromise.then(() => {
+        const promise = isEdit
+          ? editVacancies({
+              id: vacanciesInfo?.id as number,
+              vacancies: values as VacanciesEditParams,
+            })
+          : createVacancies(values as VacanciesEditParams)
+        promise.then(() => {
           setSubmitting(false)
           if (isEdit) setEdit(true)
           resetForm()

@@ -1,88 +1,19 @@
-import type { Employee } from '@frontend/types/employee'
+import { useEmployeeParams } from '@frontend/state/employee-params'
+import { useEmployees } from '@frontend/state/employee-queries'
 import type { UnitInputParams } from '@frontend/types/unit'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
-import type { PartialDeep } from 'type-fest'
 
 export const HeadOfUnitSelect = ({
   disabled = false,
 }: {
   disabled?: boolean
 }) => {
-  const employeesFake: PartialDeep<Employee>[] = [
-    {
-      id: 1,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 2,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 3,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 4,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 5,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-  ]
+  const { employeeParams } = useEmployeeParams()
+  const { employees = [] } = useEmployees(employeeParams)
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<UnitInputParams>()
+  if (!employees) return null
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
@@ -90,7 +21,7 @@ export const HeadOfUnitSelect = ({
       </InputLabel>
       <Autocomplete
         disabled={disabled}
-        options={employeesFake}
+        options={employees}
         renderOption={(props, option) => {
           return (
             <li {...props} key={option.id}>
@@ -119,7 +50,7 @@ export const HeadOfUnitSelect = ({
             }}
           />
         )}
-        value={employeesFake.find((emp) => emp.id === values?.managerOfUnitId)}
+        value={employees.find((emp) => emp.id === values?.managerOfUnitId)}
         onChange={(_, newValue) =>
           setFieldValue('managerOfUnitId', newValue?.id)
         }

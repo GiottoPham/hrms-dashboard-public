@@ -1,4 +1,4 @@
-import type { Employee } from '@frontend/types/employee'
+import type { Employee, InsuranceInputParams } from '@frontend/types/employee'
 import type { EmployeeParams } from '@frontend/types/employee-params'
 import type { EmployeeParams as EmployeeInputParams } from '@frontend/types/employee'
 import axios from 'axios'
@@ -33,13 +33,23 @@ export const createEmployeeRequest = (
 }
 export const editEmployeeRequest = (
   id: number,
-  employeeParams: Partial<Employee>
+  employeeParams: PartialDeep<
+    Omit<EmployeeInputParams, 'accountDetail'> & {
+      insuranceDetail: InsuranceInputParams
+    }
+  >
 ): Promise<void> => {
+  const employeeAvatar = employeeParams.personalDetail?.avatar
+  const formData = new FormData()
+  if (employeeAvatar)
+    formData.append('avatar', employeeAvatar as File, employeeAvatar.name)
+  delete employeeParams.personalDetail?.avatar
+  formData.append('data', JSON.stringify(employeeParams))
   return axios
     .request({
       method: 'PUT',
-      url: `/api/employees/${id}`,
-      data: employeeParams,
+      url: `/api/v1/employee/${id}`,
+      data: formData,
     })
     .then((res) => res.data)
 }

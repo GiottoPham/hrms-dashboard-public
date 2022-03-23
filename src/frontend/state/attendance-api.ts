@@ -10,7 +10,7 @@ export const fetchAttendances = (
       method: 'GET',
       url: '/api/v1/attendances',
       params: {
-        departmentId: attendanceParams.unitId,
+        departmentId: attendanceParams.departmentId,
         week: attendanceParams.week,
       },
     })

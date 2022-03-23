@@ -3,56 +3,61 @@ import { DateInput } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetail
 import { KCBSelect } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetail/KCBSelect'
 import { NumberInput } from '@components/PIMPage/EmployeesInfoPage/InsuranceDetail/NumberInput'
 import { useToast } from '@frontend/framework/Toast'
-import type { InsuranceInputParams } from '@frontend/types/employee'
+import { useEditEmployee } from '@frontend/state/employee-mutation'
+import type { Employee, InsuranceInputParams } from '@frontend/types/employee'
 import { Button, CircularProgress } from '@mui/material'
 import { Formik } from 'formik'
 import { useState } from 'react'
 import type { PartialDeep } from 'type-fest'
 import { object, string, number } from 'yup'
-export const EditInsuranceInfo = () => {
-  const insurance: PartialDeep<InsuranceInputParams | undefined> = {
-    id: 1,
-    health: {},
-    social: {},
-    unemployment: {},
-  }
+export const EditInsuranceInfo = ({ employee }: { employee: Employee }) => {
+  const { editEmployee } = useEditEmployee()
   const DEFAULT_INSURANCE_DETAIL: PartialDeep<InsuranceInputParams> = {
+    cityId: employee.insuranceDetail?.cityId,
+    kcbId: employee.insuranceDetail?.kcbId,
     health: {
-      number: insurance?.health?.number || '',
-      issueDate: insurance?.health?.issueDate || '',
-      toDate: insurance?.health?.issueDate || '',
-      fromDate: insurance?.health?.issueDate || '',
-      cityId: insurance?.health?.cityId,
-      kcbId: insurance?.health?.kcbId,
+      number: employee.insuranceDetail?.health?.number || '',
+      issue_date:
+        employee.insuranceDetail?.health?.issue_date ||
+        new Date().toISOString(),
+      to_date:
+        employee.insuranceDetail?.health?.to_date || new Date().toISOString(),
+      from_date:
+        employee.insuranceDetail?.health?.from_date || new Date().toISOString(),
     },
     social: {
-      number: insurance?.social?.number || '',
-      issueDate: insurance?.social?.issueDate || '',
-      toDate: insurance?.social?.issueDate || '',
-      fromDate: insurance?.social?.issueDate || '',
+      number: employee.insuranceDetail?.social?.number || '',
+      issue_date:
+        employee.insuranceDetail?.social?.issue_date ||
+        new Date().toISOString(),
+      to_date:
+        employee.insuranceDetail?.social?.to_date || new Date().toISOString(),
+      from_date:
+        employee.insuranceDetail?.social?.from_date || new Date().toISOString(),
     },
     unemployment: {
-      number: insurance?.unemployment?.number || '',
-      issueDate: insurance?.unemployment?.issueDate || '',
-      toDate: insurance?.unemployment?.issueDate || '',
-      fromDate: insurance?.unemployment?.issueDate || '',
+      number: employee.insuranceDetail?.unemployment?.number || '',
+      issue_date:
+        employee.insuranceDetail?.unemployment?.issue_date ||
+        new Date().toISOString(),
+      to_date:
+        employee.insuranceDetail?.unemployment?.to_date ||
+        new Date().toISOString(),
+      from_date:
+        employee.insuranceDetail?.unemployment?.from_date ||
+        new Date().toISOString(),
     },
   }
   const insuranceSchema = object().shape({
     number: string(),
-    issueDate: string(),
-    toDate: string(),
-    fromDate: string(),
+    issue_date: string(),
+    to_date: string(),
+    from_date: string(),
   })
   const newInsuranceDetailValidationSchema = object().shape({
-    health: object().shape({
-      number: string(),
-      issueDate: string(),
-      toDate: string(),
-      fromDate: string(),
-      cityId: number(),
-      kcbId: number(),
-    }),
+    health: insuranceSchema,
+    cityId: number(),
+    kcbId: number(),
     social: insuranceSchema,
     unemployment: insuranceSchema,
   })
@@ -62,12 +67,12 @@ export const EditInsuranceInfo = () => {
     <Formik
       initialValues={DEFAULT_INSURANCE_DETAIL}
       onSubmit={(values, { setSubmitting }) => {
-        const myPromise = new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(values)
-          }, 1000)
-        })
-        myPromise.then(() => {
+        editEmployee({
+          id: employee.id,
+          employeeParams: {
+            insuranceDetail: values as InsuranceInputParams,
+          },
+        }).then(() => {
           setSubmitting(false)
           setEdit(true)
           openToast('Edit insurance info successful', {
@@ -100,7 +105,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="health"
-                    insuranceDetail="issueDate"
+                    insuranceDetail="issue_date"
                     label="Issue Date"
                     disabled={edit}
                   />
@@ -110,7 +115,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="health"
-                    insuranceDetail="fromDate"
+                    insuranceDetail="from_date"
                     label="From Date"
                     disabled={edit}
                   />
@@ -118,7 +123,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="health"
-                    insuranceDetail="toDate"
+                    insuranceDetail="to_date"
                     label="To Date"
                     disabled={edit}
                   />
@@ -154,7 +159,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="social"
-                    insuranceDetail="issueDate"
+                    insuranceDetail="issue_date"
                     label="Issue Date"
                     disabled={edit}
                   />
@@ -164,7 +169,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="social"
-                    insuranceDetail="fromDate"
+                    insuranceDetail="from_date"
                     label="From Date"
                     disabled={edit}
                   />
@@ -172,7 +177,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="social"
-                    insuranceDetail="toDate"
+                    insuranceDetail="to_date"
                     label="To Date"
                     disabled={edit}
                   />
@@ -195,7 +200,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="unemployment"
-                    insuranceDetail="issueDate"
+                    insuranceDetail="issue_date"
                     label="Issue Date"
                     disabled={edit}
                   />
@@ -205,7 +210,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="unemployment"
-                    insuranceDetail="fromDate"
+                    insuranceDetail="from_date"
                     label="From Date"
                     disabled={edit}
                   />
@@ -213,7 +218,7 @@ export const EditInsuranceInfo = () => {
                 <div className="w-1/2">
                   <DateInput
                     insurance="unemployment"
-                    insuranceDetail="toDate"
+                    insuranceDetail="to_date"
                     label="To Date"
                     disabled={edit}
                   />

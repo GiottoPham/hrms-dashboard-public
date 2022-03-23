@@ -6,10 +6,10 @@ export type Employee = {
     avatar: string
   }
   jobDetail: JobDetailInputParams
-  insurance: InsuranceInputParams
+  insuranceDetail: InsuranceInputParams
 }
 export type PersonalDetailInputParams = {
-  avatar: File | Blob
+  avatar: File
   firstName: string
   lastName: string
   dateOfBirth: string
@@ -17,12 +17,13 @@ export type PersonalDetailInputParams = {
   phone: string
   permanentAddress: Address
   temporaryAddress: Address
+  sex: string
 }
 export type JobDetailInputParams = {
   joinDate: string
   jobId: number
   pit: string
-  unitId: number
+  departmentId: number
   salaryGroup: number
   salary: string
   bonus: Bonus[]
@@ -49,17 +50,15 @@ export type EmployeeParams = {
 }
 
 export type InsuranceInputParams = {
-  id: number
-  health: InsuranceCommon & {
-    cityId: number
-    kcbId: number
-  }
+  cityId: number
+  kcbId: number
+  health: InsuranceCommon
   social: InsuranceCommon
   unemployment: InsuranceCommon
 }
 export type InsuranceCommon = {
   number: string
-  issueDate: string
-  toDate: string
-  fromDate: string
+  issue_date: string
+  to_date: string
+  from_date: string
 }

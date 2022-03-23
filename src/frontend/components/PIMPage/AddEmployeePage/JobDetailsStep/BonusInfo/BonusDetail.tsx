@@ -1,8 +1,11 @@
 import { FormikErrors, useFormikContext } from 'formik'
 import type { Bonus, JobDetailInputParams } from '@frontend/types/employee'
 import { TextInput } from '@frontend/framework/TextInput'
-import { IconButton } from '@mui/material'
+import { IconButton, InputLabel } from '@mui/material'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
+import NumberFormat from 'react-number-format'
+import type { ChangeEvent } from 'react'
+import { TextInputNumber } from '@frontend/framework/TextInputNumber'
 export type BonusDetailProps = {
   onRemoveClick: () => void
   bonusId: number
@@ -57,13 +60,12 @@ export const BonusDetail = ({
           )}
       </div>
       <div className="w-1/2 mr-1">
-        <TextInput
+        <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
+          Bonus Amount
+        </InputLabel>
+        <NumberFormat
           disabled={disabled}
-          required
-          type="number"
-          fullWidth
           id={`bonus[${bonusId}].bonusAmount`}
-          label={'Bonus Amount'}
           name={`bonus[${bonusId}].bonusAmount`}
           onBlur={handleBlur}
           placeholder={'Bonus Amount'}
@@ -72,17 +74,21 @@ export const BonusDetail = ({
             !!(bonusError as FormikErrors<Bonus>[] | undefined)?.[bonusId]
               ?.bonusAmount && bonusTouched?.[bonusId]?.bonusAmount
           }
-          onChange={(e) =>
-            setFieldValue(`bonus[${bonusId}].bonusAmount`, e.target.value)
+          onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+            setFieldValue(
+              `bonus[${bonusId}].bonusAmount`,
+              e.target.value.replaceAll(',', '').replace(' VND', '')
+            )
           }
-          InputProps={{
-            classes: { root: 'h-10 rounded-lg font-nunito bg-white text-sm' },
-          }}
+          thousandSeparator
+          isNumericString
+          suffix=" VND"
+          customInput={TextInputNumber}
         />
       </div>
       {bonusId !== 0 ? (
         <div className="self-end w-10">
-          <IconButton onClick={onRemoveClick}>
+          <IconButton onClick={onRemoveClick} disabled={disabled}>
             <RemoveCircleOutlineIcon className="w-6 h-6 text-danger" />
           </IconButton>
         </div>

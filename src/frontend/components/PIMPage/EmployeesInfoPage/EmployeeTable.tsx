@@ -7,7 +7,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import type { Employee } from '@frontend/types/employee'
 import { EditEmployeeButton } from '@components/PIMPage/EmployeesInfoPage/EditEmployeeButton'
-import type { JobDetail } from '@frontend/types/job'
 import type { PartialDeep } from 'type-fest'
 import { useEmployeeParams } from '@frontend/state/employee-params'
 import { useEmployees } from '@frontend/state/employee-queries'
@@ -70,121 +69,11 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 }
 
 export const EmployeeTable = () => {
-  const employeesFake: PartialDeep<Employee>[] = [
-    {
-      id: 1,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 2,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 3,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 4,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-    {
-      id: 5,
-      personalDetail: {
-        avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        firstName: 'Nguyen',
-        lastName: 'Pham',
-        email: 'giotto2015.py@gmail.com',
-        phone: '0854662633',
-      },
-      jobDetail: {
-        jobId: 1,
-        unitId: 2,
-      },
-    },
-  ]
-  const jobFake: JobDetail[] = [
-    {
-      id: 1,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-    {
-      id: 2,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-
-    {
-      id: 3,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-    {
-      id: 4,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-    {
-      id: 5,
-      title: 'Art Director',
-      description:
-        'Art directors typically oversee the work of other designers and artists who produce images for television, film, live performances, advertisements, or video games. They determine the overall style in which a message is communicated visually to its audience.',
-      note: 'abc',
-    },
-  ]
   const { employeeParams } = useEmployeeParams()
-  const { employees = employeesFake, isLoading: employeeLoading } =
+  const { employees = [], isLoading: employeeLoading } =
     useEmployees(employeeParams)
   const { jobParams } = useJobParams()
-  const { jobs = jobFake, isLoading: jobLoading } = useJobs(jobParams)
+  const { jobs = [], isLoading: jobLoading } = useJobs(jobParams)
   const { units, isLoading: unitLoading } = useUnits(false)
   const columns: Column<PartialDeep<Employee>>[] = [
     {
@@ -228,10 +117,10 @@ export const EmployeeTable = () => {
     },
     {
       id: 'Unit',
-      Header: createHeader({ headerText: 'Unit', sortBy: 'unitId' }),
+      Header: createHeader({ headerText: 'Unit', sortBy: 'departmentId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{units?.find((unit) => unit.id === value?.unitId)?.name}</p>
+        <p>{units?.find((unit) => unit.id === value?.departmentId)?.name}</p>
       ),
       width: 'w-[250px]',
     },
@@ -252,10 +141,10 @@ export const EmployeeTable = () => {
     {
       id: 'actionCell',
       accessor: 'id',
-      Cell: ({ value }) => (
+      Cell: ({ row }) => (
         <div className="flex justify-end">
           <EditEmployeeButton
-            employeeId={value as number}
+            employee={row.original as Employee}
             renderButton={({ openModal }) => (
               <IconButton onClick={openModal}>
                 <EditIcon className="w-5 h-5" />
