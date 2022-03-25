@@ -14,5 +14,5 @@ export const fetchAttendances = (
         week: attendanceParams.week,
       },
     })
-    .then((res) => res.data)
+    .then((res) => res.data.attendanceList)
 }

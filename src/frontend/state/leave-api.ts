@@ -10,7 +10,7 @@ export const fetchLeaves = (
       url: '/api/v1/leaves',
       params: {
         departmentId: leaveParams.departmentId,
-        applicationDate: leaveParams.applicationDate,
+        date: leaveParams.date,
       },
     })
     .then((res) => res.data.leaveEmployeeList)

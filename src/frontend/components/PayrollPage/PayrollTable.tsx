@@ -135,7 +135,7 @@ export const PayrollTable = () => {
                 ...prev!,
                 employeeId: value as number,
               }))
-              setShowPayroll(true)
+              setShowPayroll(!showPayroll)
             }}
           >
             <RemoveRedEyeIcon className="w-5 h-5 text-black" />

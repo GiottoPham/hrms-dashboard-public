@@ -15,7 +15,7 @@ type id = number
 
 export type LeaveParams = {
   departmentId: number
-  applicationDate: string
+  date: string
   pagination: number // 1 page = 10 item
   sort: {
     sortBy: keyof LeaveDetail // string

@@ -21,8 +21,8 @@ export const EmployeePayroll = () => {
   const [show, setShow] = useState(false)
   const [showBonus, setShowBonus] = useState(false)
   const [showTax, setShowTax] = useState(false)
-  const { payroll, isLoading } = usePayroll(payrollParams)
-  if (isLoading) return null
+  const { payroll } = usePayroll(payrollParams)
+  if (!payroll) return null
   return (
     <div className="flex-grow relative h-full font-nunito text-sm font-semibold">
       <div className="absolute left-0 top-0 -mt-5 -mr-2">

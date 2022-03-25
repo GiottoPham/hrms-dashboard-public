@@ -9,356 +9,355 @@ import { Tooltip } from '@mui/material'
 import cx from 'classnames'
 export const AttendanceTable = () => {
   const getRandomColor = () => 'hsl(' + Math.random() * 360 + ', 100%, 75%)'
-  const attendanceList: AttendanceList = [
-    {
-      name: 'Gia Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Backend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-    {
-      name: 'Khang Nguyen',
-      unitName: 'Team dev',
-      jobTitle: 'Frontend Engineer',
-      listCheckin: [
-        {
-          timeIn: '2022-02-28T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 0,
-          date: '2022-02-28T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-01T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-01T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-02T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-03T02:09:45.788Z',
-        },
-        {
-          timeIn: '2022-03-04T02:09:45.788Z',
-          timeOut: '2022-03-28T10:09:45.788Z',
-          status: 1,
-          date: '2022-03-04T02:09:45.788Z',
-        },
-        {
-          timeIn: null,
-          timeOut: null,
-          status: 2,
-          date: '2022-03-05T02:09:45.788Z',
-        },
-      ],
-    },
-  ]
+  // const attendanceList: AttendanceList = [
+  //   {
+  //     name: 'Gia Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Backend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: 'Khang Nguyen',
+  //     unitName: 'Team dev',
+  //     jobTitle: 'Frontend Engineer',
+  //     listCheckin: [
+  //       {
+  //         timeIn: '2022-02-28T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 0,
+  //         date: '2022-02-28T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-01T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-01T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-02T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-03T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: '2022-03-04T02:09:45.788Z',
+  //         timeOut: '2022-03-28T10:09:45.788Z',
+  //         status: 1,
+  //         date: '2022-03-04T02:09:45.788Z',
+  //       },
+  //       {
+  //         timeIn: null,
+  //         timeOut: null,
+  //         status: 2,
+  //         date: '2022-03-05T02:09:45.788Z',
+  //       },
+  //     ],
+  //   },
+  // ]
   const { attendanceParams } = useAttendanceParams()
-  const { attendances = attendanceList, isLoading } =
-    useAttendances(attendanceParams)
-  if (isLoading) return null
+  const { attendances = [] } = useAttendances(attendanceParams)
+  if (attendances.length === 0) return null
   const listDate =
     attendances.length > 0
       ? attendances[0].listCheckin.map((attendance) => attendance.date)
@@ -394,7 +393,7 @@ export const AttendanceTable = () => {
           className={cx(
             'flex flex-row flex-wrap overflow-hidden border-r border-l border-b border-primary',
             {
-              'rounded-b-lg': index === attendanceList.length - 1,
+              'rounded-b-lg': index === attendances.length - 1,
             }
           )}
         >
