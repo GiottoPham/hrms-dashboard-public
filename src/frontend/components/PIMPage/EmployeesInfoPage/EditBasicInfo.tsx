@@ -14,7 +14,7 @@ import type {
 } from '@frontend/types/employee'
 import { Button, CircularProgress, InputLabel } from '@mui/material'
 import { Formik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { PartialDeep } from 'type-fest'
 import { mixed, number, object, string } from 'yup'
 
@@ -31,27 +31,6 @@ export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
   const { openToast } = useToast()
   const { editEmployee } = useEditEmployee()
   const [edit, setEdit] = useState(true)
-  const [isLoadingAvatar, setIsLoadingAvatar] = useState(true)
-  const [avatarFile, setAvatarFile] = useState<Blob>()
-  const avatarId = employee.personalDetail.avatar?.split('id=')[1]
-  const url = `https://corsanywhere.herokuapp.com/https://drive.google.com/uc?id=${avatarId}`
-  useEffect(() => {
-    const convertURLtoFile = async () => {
-      await fetch(url)
-        .then((res) => res.blob()) // Gets the response and returns it as a blob
-        .then((blob) => {
-          setAvatarFile(
-            new File([blob], `new-image-${employee.id}`, {
-              lastModified: new Date().getTime(),
-              type: blob.type,
-            })
-          )
-          setIsLoadingAvatar(false)
-        })
-    }
-    convertURLtoFile()
-  }, [employee.id, url])
-  if (isLoadingAvatar) return null
   const addressSchema = object().shape({
     cityId: number().required(),
     districtId: number().required(),
@@ -75,7 +54,6 @@ export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
       employee.personalDetail?.dateOfBirth || new Date().toISOString(),
     email: employee.personalDetail?.email || '',
     phone: employee.personalDetail?.phone || '',
-    avatar: avatarFile,
     permanentAddress: {
       cityId: employee.personalDetail?.permanentAddress?.cityId,
       districtId: employee.personalDetail?.permanentAddress?.districtId,
@@ -130,7 +108,10 @@ export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
             <div className="border-b border-gray-500 flex-grow mt-2 py-5 px-2 overflow-y-auto">
               <div className="flex space-x-10">
                 <div className="w-1/4 flex justify-center items-center">
-                  <AvatarInput disabled={edit} />
+                  <AvatarInput
+                    disabled={edit}
+                    avatarId={employee.personalDetail.avatar?.split('id=')[1]}
+                  />
                 </div>
                 <div className="flex flex-grow flex-col space-y-5">
                   <div className="w-full flex">

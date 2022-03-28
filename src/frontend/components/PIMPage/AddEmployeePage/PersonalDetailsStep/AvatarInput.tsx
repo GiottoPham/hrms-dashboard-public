@@ -1,11 +1,40 @@
 import type { PersonalDetailInputParams } from '@frontend/types/employee'
-import { Avatar, Button, Badge } from '@mui/material'
+import { Avatar, Button, Badge, Skeleton } from '@mui/material'
 import { useFormikContext } from 'formik'
 import EditIcon from '@mui/icons-material/Edit'
+import { useEffect, useState } from 'react'
 
-export const AvatarInput = ({ disabled = false }: { disabled?: boolean }) => {
+export const AvatarInput = ({
+  disabled = false,
+  avatarId,
+}: {
+  disabled?: boolean
+  avatarId?: string
+}) => {
   const { setFieldValue, values } =
     useFormikContext<PersonalDetailInputParams>()
+  const [isLoading, setIsLoading] = useState(false)
+  const url = `https://arcane-taiga-55468.herokuapp.com/https://drive.google.com/uc?id=${avatarId}`
+  useEffect(() => {
+    const convertURLtoFile = async () => {
+      await fetch(url)
+        .then((res) => res.blob()) // Gets the response and returns it as a blob
+        .then((blob) => {
+          setFieldValue(
+            'avatar',
+            new File([blob], `new-image-${avatarId}`, {
+              lastModified: new Date().getTime(),
+              type: blob.type,
+            })
+          )
+          setIsLoading(false)
+        })
+    }
+    if (avatarId) {
+      setIsLoading(true)
+      convertURLtoFile()
+    }
+  }, [avatarId, setFieldValue, url])
   return (
     <>
       <Badge
@@ -32,10 +61,14 @@ export const AvatarInput = ({ disabled = false }: { disabled?: boolean }) => {
           </Button>
         }
       >
-        <Avatar
-          classes={{ root: 'h-40 w-40 text-lg bg-primary' }}
-          src={values.avatar ? URL.createObjectURL(values.avatar) : ''}
-        />
+        {isLoading ? (
+          <Skeleton variant="circular" width={160} height={160} />
+        ) : (
+          <Avatar
+            classes={{ root: 'h-40 w-40 text-lg bg-primary' }}
+            src={values.avatar ? URL.createObjectURL(values.avatar) : ''}
+          />
+        )}
       </Badge>
     </>
   )
