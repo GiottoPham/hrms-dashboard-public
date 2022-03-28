@@ -53,3 +53,18 @@ export const editEmployeeRequest = (
     })
     .then((res) => res.data)
 }
+
+export const loadImageEmployee = (id?: string) => {
+  if (!id) return Promise.resolve({} as File)
+  return fetch(
+    `https://arcane-taiga-55468.herokuapp.com/https://drive.google.com/uc?id=${id}`
+  )
+    .then((res) => res.blob())
+    .then(
+      (blob) =>
+        new File([blob], `new-image-${id}`, {
+          lastModified: new Date().getTime(),
+          type: blob.type,
+        })
+    )
+}

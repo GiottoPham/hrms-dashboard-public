@@ -2,7 +2,8 @@ import type { PersonalDetailInputParams } from '@frontend/types/employee'
 import { Avatar, Button, Badge, Skeleton } from '@mui/material'
 import { useFormikContext } from 'formik'
 import EditIcon from '@mui/icons-material/Edit'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useGetImage } from '@frontend/state/employee-queries'
 
 export const AvatarInput = ({
   disabled = false,
@@ -13,28 +14,10 @@ export const AvatarInput = ({
 }) => {
   const { setFieldValue, values } =
     useFormikContext<PersonalDetailInputParams>()
-  const [isLoading, setIsLoading] = useState(false)
-  const url = `https://arcane-taiga-55468.herokuapp.com/https://drive.google.com/uc?id=${avatarId}`
+  const { avatar, isLoading } = useGetImage(avatarId)
   useEffect(() => {
-    const convertURLtoFile = async () => {
-      await fetch(url)
-        .then((res) => res.blob()) // Gets the response and returns it as a blob
-        .then((blob) => {
-          setFieldValue(
-            'avatar',
-            new File([blob], `new-image-${avatarId}`, {
-              lastModified: new Date().getTime(),
-              type: blob.type,
-            })
-          )
-          setIsLoading(false)
-        })
-    }
-    if (avatarId) {
-      setIsLoading(true)
-      convertURLtoFile()
-    }
-  }, [avatarId, setFieldValue, url])
+    if (avatar && avatarId) setFieldValue('avatar', avatar)
+  }, [avatar, avatarId, setFieldValue])
   return (
     <>
       <Badge
