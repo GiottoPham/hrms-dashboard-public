@@ -22,7 +22,7 @@ export const JoinDatePicker = ({
         value={values.joinDate}
         onChange={(newValue) => {
           if (newValue)
-            setFieldValue('dateOfBirth', new Date(newValue).toISOString())
+            setFieldValue('joinDate', new Date(newValue).toISOString())
         }}
         renderInput={(params) => (
           <TextField

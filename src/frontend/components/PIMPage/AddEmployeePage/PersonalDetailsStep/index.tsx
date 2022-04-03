@@ -25,7 +25,7 @@ const newPersonalDetailValidationSchema = object().shape({
   dateOfBirth: string().required(),
   email: string().email().required('Email is required'),
   phone: string().required().required('Phone is required'),
-  avatar: mixed(),
+  avatar: mixed().required(),
   permanentAddress: addressSchema,
   temporaryAddress: addressSchema,
 })
