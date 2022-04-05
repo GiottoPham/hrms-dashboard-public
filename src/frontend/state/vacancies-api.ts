@@ -29,7 +29,7 @@ export const createVacanciesRequest = (
 ): Promise<void> => {
   return axios
     .request({
-      method: 'PUT',
+      method: 'POST',
       url: `/api/v1/job_recruitment`,
       data: vacancies,
     })

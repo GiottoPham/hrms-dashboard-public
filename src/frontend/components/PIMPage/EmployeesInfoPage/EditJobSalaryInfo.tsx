@@ -41,8 +41,8 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
     pit: employee.jobDetail?.pit || '',
     departmentId: employee.jobDetail?.departmentId,
     salaryGroup: employee.jobDetail?.salaryGroup,
-    salary: employee.jobDetail?.salary || '',
-    bonus: employee.jobDetail?.bonus || [{ bonusName: '', bonusAmount: '' }],
+    salary: employee.jobDetail?.salary,
+    bonus: employee.jobDetail?.bonus || [],
   }
   return (
     <Formik
@@ -78,7 +78,7 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
       {({ isSubmitting, isValid, submitForm, setFieldTouched }) => {
         return (
           <div className="flex flex-col h-full">
-            <div className="py-5 overflow-y-auto">
+            <div className="py-5 overflow-y-auto h-1/2">
               <div className="flex space-x-10">
                 <div className="w-1/3">
                   <JoinDatePicker label="Join Date" disabled={edit} />

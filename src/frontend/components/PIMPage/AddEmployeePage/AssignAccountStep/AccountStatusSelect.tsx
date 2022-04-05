@@ -14,7 +14,7 @@ export const AccountStatusSelect = () => {
           const DEFAULT_ACCOUNT_DETAIL: PartialDeep<AssignAccountInputParams> =
             {
               type: e.target.value as 'available' | 'new',
-              accountId: e.target.value === 'available' ? undefined : null,
+              id: e.target.value === 'available' ? undefined : null,
               newAccount: e.target.value === 'available' ? null : undefined,
             }
           resetForm({ values: DEFAULT_ACCOUNT_DETAIL })

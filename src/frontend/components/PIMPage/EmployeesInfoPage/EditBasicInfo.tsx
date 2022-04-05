@@ -18,15 +18,6 @@ import { useState } from 'react'
 import type { PartialDeep } from 'type-fest'
 import { mixed, number, object, string } from 'yup'
 
-export const convertURLtoFile = async (url: string) => {
-  const response = await fetch(url, { mode: 'no-cors' })
-  const data = await response.blob()
-  const ext = url.split('.').pop()
-  const filename = url.split('/').pop()
-  const metadata = { type: `image/${ext}` }
-  return new File([data], filename!, metadata)
-}
-
 export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
   const { openToast } = useToast()
   const { editEmployee } = useEditEmployee()

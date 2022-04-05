@@ -19,7 +19,6 @@ export const JobDetailsInput = ({
         required
         fullWidth
         id={fieldName}
-        type={fieldName === 'pit' ? 'number' : fieldName}
         label={label}
         name={fieldName}
         onBlur={handleBlur}

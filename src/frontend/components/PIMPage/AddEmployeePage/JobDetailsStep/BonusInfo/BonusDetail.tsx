@@ -77,7 +77,7 @@ export const BonusDetail = ({
           onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
             setFieldValue(
               `bonus[${bonusId}].bonusAmount`,
-              e.target.value.replaceAll(',', '').replace(' VND', '')
+              Number(e.target.value.replaceAll(',', '').replace(' VND', ''))
             )
           }
           thousandSeparator

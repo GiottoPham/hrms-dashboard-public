@@ -75,7 +75,7 @@ export const EditEmployeeButton = ({
                       'text-sm normal-case font-nunito px-0 min-w-min font-semibold w-1/3',
                       {
                         'text-primary': emPath === path,
-                        'text-blue-500': emPath !== path,
+                        'text-gray-600': emPath !== path,
                       }
                     ),
                   }}

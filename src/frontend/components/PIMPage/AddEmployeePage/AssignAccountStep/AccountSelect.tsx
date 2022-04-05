@@ -46,9 +46,9 @@ export const AccountSelect = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            name="accountId"
+            name="id"
             onBlur={handleBlur}
-            error={!!errors.accountId && touched.accountId}
+            error={!!errors.id && touched.id}
             InputProps={{
               classes: {
                 root: 'h-10 rounded-lg font-nunito bg-white text-sm pt-1',
@@ -57,11 +57,11 @@ export const AccountSelect = () => {
             }}
           />
         )}
-        value={users.find((user) => user.id === values?.accountId)}
-        onChange={(_, newValue) => setFieldValue('accountId', newValue?.id)}
+        value={users.find((user) => user.id === values?.id)}
+        onChange={(_, newValue) => setFieldValue('id', newValue?.id)}
       />
-      {!!errors.accountId && touched.accountId && (
-        <p className="text-danger text-sm font-semibold">{errors.accountId}</p>
+      {!!errors.id && touched.id && (
+        <p className="text-danger text-sm font-semibold">{errors.id}</p>
       )}
     </>
   )

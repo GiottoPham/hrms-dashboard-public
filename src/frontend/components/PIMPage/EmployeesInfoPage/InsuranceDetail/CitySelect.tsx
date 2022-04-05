@@ -18,7 +18,7 @@ export const CitySelect = ({
         {label}
       </InputLabel>
       <Select
-        disabled={disabled}
+        disabled={disabled || !cities}
         name={'cityId'}
         fullWidth
         value={values.cityId}

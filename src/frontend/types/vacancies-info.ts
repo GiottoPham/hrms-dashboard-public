@@ -11,3 +11,9 @@ export type VacanciesInfo = {
   postContent: string
 }
 export type VacanciesEditParams = Omit<VacanciesInfo, 'id'>
+export type NewVacanciesInfo = {
+  id: number
+  positionTitle: string
+  departmentName: string
+  postContent: string
+}

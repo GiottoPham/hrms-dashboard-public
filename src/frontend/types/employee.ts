@@ -25,12 +25,12 @@ export type JobDetailInputParams = {
   pit: string
   departmentId: number
   salaryGroup: number
-  salary: string
+  salary: number
   bonus: Bonus[]
 }
 export type AssignAccountInputParams = {
   type: 'available' | 'new'
-  accountId: number | null
+  id: number | null
   newAccount: UserInputParams | null
 }
 export type Address = {
@@ -41,7 +41,7 @@ export type Address = {
 }
 export type Bonus = {
   bonusName: string
-  bonusAmount: string
+  bonusAmount: number
 }
 export type EmployeeParams = {
   jobDetail: JobDetailInputParams

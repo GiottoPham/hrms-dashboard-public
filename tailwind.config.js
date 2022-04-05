@@ -94,6 +94,10 @@ module.exports = {
       width: {
         140: '35rem',
       },
+      boxShadow: {
+        search:
+          '0px -1px 2px rgba(48, 49, 51, 0.08), 0px 8px 16px rgba(48, 49, 51, 0.08)',
+      },
     },
   },
   variants: {

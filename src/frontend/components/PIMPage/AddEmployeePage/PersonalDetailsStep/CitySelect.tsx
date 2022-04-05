@@ -32,7 +32,7 @@ export const CitySelect = ({
         {label}
       </InputLabel>
       <Select
-        disabled={disabled}
+        disabled={disabled || !cities}
         name={permanent ? `permanentAddress.cityId` : `temporaryAddress.cityId`}
         error={
           permanent

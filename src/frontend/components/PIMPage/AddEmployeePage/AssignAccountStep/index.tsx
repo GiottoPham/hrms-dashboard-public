@@ -27,7 +27,7 @@ const newUserValidationSchema = object()
 
 const newAccountValidationSchema = object().shape({
   type: string().required(),
-  accountId: mixed()
+  id: mixed()
     .nullable()
     .test('heho', 'Please choose an account', (accountId) => {
       return accountId === null || accountId !== undefined
@@ -47,10 +47,10 @@ export const AssignAccountStep = ({
   } = useAddEmployeeForm()
   const DEFAULT_ACCOUNT_DETAIL: PartialDeep<AssignAccountInputParams> = {
     type: accountDetail?.type || 'available',
-    accountId:
+    id:
       accountDetail?.type || 'available' === 'available'
-        ? accountDetail?.accountId
-        : accountDetail?.accountId || null,
+        ? accountDetail?.id
+        : accountDetail?.id || null,
     newAccount:
       accountDetail?.type || 'available' === 'available'
         ? accountDetail?.newAccount || null

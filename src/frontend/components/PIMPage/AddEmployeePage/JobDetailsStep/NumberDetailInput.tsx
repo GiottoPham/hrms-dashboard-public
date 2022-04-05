@@ -11,7 +11,7 @@ export const NumberDetailInput = ({
   fieldName: keyof Pick<JobDetailInputParams, 'pit' | 'salary'>
   disabled?: boolean
 }) => {
-  const { errors, setFieldValue, touched, handleBlur } =
+  const { errors, setFieldValue, touched, handleBlur, values } =
     useFormikContext<JobDetailInputParams>()
   return (
     <>
@@ -21,7 +21,7 @@ export const NumberDetailInput = ({
       <NumberFormat
         disabled={disabled}
         id="number-format"
-        name="salary"
+        value={values[fieldName]}
         thousandSeparator
         isNumericString
         suffix=" VND"
@@ -30,7 +30,7 @@ export const NumberDetailInput = ({
         onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
           setFieldValue(
             fieldName,
-            e.target.value.replaceAll(',', '').replace(' VND', '')
+            Number(e.target.value.replaceAll(',', '').replace(' VND', ''))
           )
         }
         onBlur={handleBlur}

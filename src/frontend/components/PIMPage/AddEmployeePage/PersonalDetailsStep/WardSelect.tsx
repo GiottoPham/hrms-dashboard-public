@@ -34,7 +34,7 @@ export const WardSelect = ({
         {label}
       </InputLabel>
       <Select
-        disabled={disabled}
+        disabled={disabled || !wards}
         displayEmpty
         error={
           permanent

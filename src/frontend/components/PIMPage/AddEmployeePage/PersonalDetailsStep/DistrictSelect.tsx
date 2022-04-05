@@ -34,7 +34,7 @@ export const DistrictSelect = ({
         {label}
       </InputLabel>
       <Select
-        disabled={disabled}
+        disabled={disabled || !districts}
         displayEmpty
         error={
           permanent
