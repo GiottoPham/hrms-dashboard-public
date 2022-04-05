@@ -43,8 +43,8 @@ export const JobDetailsStep = ({
     pit: jobDetail?.pit || '',
     departmentId: jobDetail?.departmentId,
     salaryGroup: jobDetail?.salaryGroup,
-    salary: jobDetail?.salary || '',
-    bonus: jobDetail?.bonus || [{ bonusName: '', bonusAmount: '' }],
+    salary: jobDetail?.salary,
+    bonus: jobDetail?.bonus || [{ bonusName: '', bonusAmount: 0 }],
   }
   return (
     <Formik
