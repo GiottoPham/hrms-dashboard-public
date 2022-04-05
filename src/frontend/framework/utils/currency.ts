@@ -1,6 +1,6 @@
-export const currencyFormatter = (number?: string) => {
+export const currencyFormatter = (number?: number) => {
   if (!number) return ''
-  return parseInt(number).toLocaleString('it-IT', {
+  return number.toLocaleString('it-IT', {
     style: 'currency',
     currency: 'VND',
   })

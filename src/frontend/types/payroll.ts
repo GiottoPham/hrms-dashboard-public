@@ -1,19 +1,19 @@
 import type { Bonus } from '@frontend/types/employee'
 
 export type Payroll = {
-  basicSalary: string
+  basicSalary: number
   monthlyInfo: {
-    actualDay: string
-    standardDay: string
-    paidLeave: string
-    unpaidLeave: string
+    actualDay: number
+    standardDay: number
+    paidLeave: number
+    unpaidLeave: number
   }
-  totalDerivedSalary: string
-  derivedSalary: string
+  totalDerivedSalary: number
+  derivedSalary: number
   bonus: Bonus[]
-  totalBonus: string
-  mandatoryInsurance: string
-  taxableIncome: string
-  personalIncomeTax: string
-  netIncome: string
+  totalBonus: number
+  mandatoryInsurance: number
+  taxableIncome: number
+  personalIncomeTax: number
+  netIncome: number
 }

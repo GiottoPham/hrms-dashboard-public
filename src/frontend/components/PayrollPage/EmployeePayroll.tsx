@@ -69,7 +69,7 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>{currencyFormatter('0') || '--'}</p>
+            <p>{currencyFormatter(0) || '--'}</p>
           </div>
         </div>
         <Accordion
@@ -271,7 +271,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(8)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter('730000')}
+                {currencyFormatter(730000)}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -281,7 +281,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(9)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter('11000000')}
+                {currencyFormatter(11000000)}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -291,7 +291,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(10)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter('0')}
+                {currencyFormatter(0)}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
