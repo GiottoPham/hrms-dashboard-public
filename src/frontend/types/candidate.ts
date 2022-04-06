@@ -8,3 +8,12 @@ export type Candidate = {
   email: string
   contact: string
 }
+export type CandidateInputParams = {
+  jobRecruitmentId: number
+  firstName: string
+  lastName: string
+  dateOfBirth: string
+  email: string
+  contact: string
+  file: File
+}

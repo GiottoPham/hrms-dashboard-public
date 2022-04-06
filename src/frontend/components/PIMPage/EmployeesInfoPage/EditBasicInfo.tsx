@@ -164,26 +164,30 @@ export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
                     Permanent Address
                   </p>
                 </div>
-                <div className="flex flex-row space-x-10 w-full">
-                  <div className="w-1/4">
-                    <CitySelect label="City" disabled={edit} />
+                <div className="flex flex-col w-full">
+                  <div className="flex space-x-3">
+                    <div className="w-1/2">
+                      <CitySelect label="City" disabled={edit} />
+                    </div>
+                    <div className="w-1/2">
+                      <DistrictSelect
+                        label="District"
+                        cityId={values.permanentAddress?.cityId}
+                        disabled={edit}
+                      />
+                    </div>
                   </div>
-                  <div className="w-1/4">
-                    <DistrictSelect
-                      label="District"
-                      cityId={values.permanentAddress?.cityId}
-                      disabled={edit}
-                    />
-                  </div>
-                  <div className="w-1/4">
-                    <WardSelect
-                      label="Ward"
-                      districtId={values.permanentAddress?.districtId}
-                      disabled={edit}
-                    />
-                  </div>
-                  <div className="w-1/4">
-                    <AddressInput label="Address" disabled={edit} />
+                  <div className="flex space-x-3">
+                    <div className="w-1/2">
+                      <WardSelect
+                        label="Ward"
+                        districtId={values.permanentAddress?.districtId}
+                        disabled={edit}
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <AddressInput label="Address" disabled={edit} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -193,36 +197,40 @@ export const EditBasicInfo = ({ employee }: { employee: Employee }) => {
                     Temporary Address
                   </p>
                 </div>
-                <div className="flex flex-row space-x-10 w-full">
-                  <div className="w-1/4">
-                    <CitySelect
-                      label="City"
-                      permanent={false}
-                      disabled={edit}
-                    />
+                <div className="flex flex-col w-full">
+                  <div className="flex space-x-3">
+                    <div className="w-1/2">
+                      <CitySelect
+                        label="City"
+                        permanent={false}
+                        disabled={edit}
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <DistrictSelect
+                        label="District"
+                        cityId={values.temporaryAddress?.cityId}
+                        permanent={false}
+                        disabled={edit}
+                      />
+                    </div>
                   </div>
-                  <div className="w-1/4">
-                    <DistrictSelect
-                      label="District"
-                      cityId={values.temporaryAddress?.cityId}
-                      permanent={false}
-                      disabled={edit}
-                    />
-                  </div>
-                  <div className="w-1/4">
-                    <WardSelect
-                      label="Ward"
-                      permanent={false}
-                      districtId={values.temporaryAddress?.districtId}
-                      disabled={edit}
-                    />
-                  </div>
-                  <div className="w-1/4">
-                    <AddressInput
-                      label="Address"
-                      permanent={false}
-                      disabled={edit}
-                    />
+                  <div className="flex space-x-3">
+                    <div className="w-1/2">
+                      <WardSelect
+                        label="Ward"
+                        permanent={false}
+                        districtId={values.temporaryAddress?.districtId}
+                        disabled={edit}
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <AddressInput
+                        label="Address"
+                        permanent={false}
+                        disabled={edit}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

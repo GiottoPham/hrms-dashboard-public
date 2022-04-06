@@ -42,7 +42,7 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
     departmentId: employee.jobDetail?.departmentId,
     salaryGroup: employee.jobDetail?.salaryGroup,
     salary: employee.jobDetail?.salary,
-    bonus: employee.jobDetail?.bonus || [],
+    bonus: employee.jobDetail?.bonus || [{ bonusName: '', bonusAmount: 0 }],
   }
   return (
     <Formik
@@ -51,7 +51,7 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
         const bonusCompact = values.bonus?.filter(
           (item) =>
             !isEqual(item, {}) &&
-            !isEqual(item, { bonusName: '', bonusAmount: '' })
+            !isEqual(item, { bonusName: '', bonusAmount: 0 })
         )
         editEmployee({
           id: employee.id,

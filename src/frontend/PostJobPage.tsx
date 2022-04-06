@@ -1,3 +1,4 @@
+import { ApplyButton } from '@components/PostJobPage/ApplyButton'
 import { LocationIcon } from '@frontend/framework/icons/LocationIcon'
 import { LogoIcon2 } from '@frontend/framework/icons/LogoIcon2'
 import type { NewVacanciesInfo } from '@frontend/types/vacancies-info'
@@ -14,21 +15,21 @@ export const PostJobPage = () => {
     },
     {
       id: 1,
-      positionTitle: 'Frontend Engineer',
-      departmentName: 'Dev Frontend Team',
+      positionTitle: 'Backend Engineer',
+      departmentName: 'Dev Backend Team',
       postContent:
         'We need you guys We need you guys We need you guys We need you guys We need you guys We need you guys We need you guys',
     },
     {
       id: 1,
-      positionTitle: 'Frontend Engineer',
-      departmentName: 'Dev Frontend Team',
+      positionTitle: 'Product Manager',
+      departmentName: 'Managers',
       postContent: 'We need you guys',
     },
     {
       id: 1,
-      positionTitle: 'Frontend Engineer',
-      departmentName: 'Dev Frontend Team',
+      positionTitle: 'Testing Engineer',
+      departmentName: 'Testing Team',
       postContent: 'We need you guys',
     },
   ]
@@ -77,9 +78,17 @@ export const JobCard = ({ vacancies }: { vacancies: NewVacanciesInfo }) => {
           <p>Ho Chi Minh City</p>
         </div>
         <div>
-          <Button className="rounded-full bg-black text-xs normal-case font-bold">
-            Apply Here
-          </Button>
+          <ApplyButton
+            vacancies={vacancies}
+            renderButton={({ openModal }) => (
+              <Button
+                className="rounded-full bg-black text-xs normal-case font-bold"
+                onClick={openModal}
+              >
+                Apply Here
+              </Button>
+            )}
+          />
         </div>
       </div>
       <div>

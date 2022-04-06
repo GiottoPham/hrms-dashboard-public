@@ -6,15 +6,18 @@ import { useAttendances } from '@frontend/state/attendance-queries'
 import { Avatar } from '@mui/material'
 import { Tooltip } from '@mui/material'
 import cx from 'classnames'
-import { startOfWeek, endOfWeek } from 'date-fns'
+import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 export const AttendanceTable = () => {
   const getRandomColor = () => 'hsl(' + Math.random() * 360 + ', 100%, 75%)'
   const { attendanceParams } = useAttendanceParams()
   const { attendances = [] } = useAttendances(attendanceParams)
+  const start = startOfWeek(new Date(), { weekStartsOn: 1 })
+  const end = endOfWeek(new Date(), { weekStartsOn: 0 })
+  const dateArray = eachDayOfInterval({ start: start, end: end })
   const listDate =
     attendances && attendances.length > 0
       ? attendances[0].listCheckin.map((attendance) => attendance.date)
-      : []
+      : dateArray.map((d) => d.toISOString())
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="mb-5 flex self-start space-x-10 ml-36 w-1/2">
