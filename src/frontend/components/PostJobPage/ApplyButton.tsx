@@ -79,6 +79,7 @@ export const ApplyButton = ({
               open={isOpen}
               onClose={() => {
                 closeModal()
+                resetForm()
               }}
               closeAfterTransition
               disableScrollLock
@@ -137,7 +138,7 @@ export const ApplyButton = ({
                     </div>
                     <div className="w-1/2"></div>
                   </div>
-                  <div className=" mt-5 h-28">
+                  <div className=" mt-5">
                     <FileUpload
                       value={values.file ? ([values.file] as File[]) : []}
                       onChange={(files) => setFieldValue('file', files[0])}
