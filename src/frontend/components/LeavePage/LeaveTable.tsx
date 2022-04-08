@@ -118,9 +118,9 @@ export const LeaveTable = () => {
       id: 'UnitCell',
       Header: createHeader({
         headerText: 'Unit',
-        sortBy: 'unitName',
+        sortBy: 'departmentName',
       }),
-      accessor: 'unitName',
+      accessor: 'departmentName',
       Cell: ({ value }) => <p className="leading-loose">{value}</p>,
       width: 'w-[120px]',
     },

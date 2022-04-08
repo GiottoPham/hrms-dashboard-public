@@ -2,7 +2,7 @@ export type LeaveEmployeeList = LeaveDetail[]
 export type LeaveDetail = {
   id: number
   employeeName: string
-  unitName: string
+  departmentName: string
   applicationDate: string
   fromDate: string
   toDate: string
