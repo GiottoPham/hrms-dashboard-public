@@ -1,4 +1,5 @@
 import type {
+  NewVacanciesInfo,
   VacanciesEditParams,
   VacanciesInfos,
 } from '@frontend/types/vacancies-info'
@@ -32,6 +33,14 @@ export const createVacanciesRequest = (
       method: 'POST',
       url: `/api/v1/job_recruitment`,
       data: vacancies,
+    })
+    .then((res) => res.data)
+}
+export const fetchVacanciesUnauth = (): Promise<NewVacanciesInfo[]> => {
+  return axios
+    .request({
+      method: 'GET',
+      url: '/api/unauthorized/job_recruitments',
     })
     .then((res) => res.data)
 }

@@ -1,38 +1,13 @@
 import { ApplyButton } from '@components/PostJobPage/ApplyButton'
 import { LocationIcon } from '@frontend/framework/icons/LocationIcon'
 import { LogoIcon2 } from '@frontend/framework/icons/LogoIcon2'
+import { useVacanciesUnauth } from '@frontend/state/vacancies-queries'
 import type { NewVacanciesInfo } from '@frontend/types/vacancies-info'
 import { Button } from '@mui/material'
 import Image from 'next/image'
 import PictureJob from '../assets/images/picture_job.png'
 export const PostJobPage = () => {
-  const vacanciesList = [
-    {
-      id: 1,
-      positionTitle: 'Frontend Engineer',
-      departmentName: 'Dev Frontend Team',
-      postContent: 'We need you guys',
-    },
-    {
-      id: 1,
-      positionTitle: 'Backend Engineer',
-      departmentName: 'Dev Backend Team',
-      postContent:
-        'We need you guys We need you guys We need you guys We need you guys We need you guys We need you guys We need you guys',
-    },
-    {
-      id: 1,
-      positionTitle: 'Product Manager',
-      departmentName: 'Managers',
-      postContent: 'We need you guys',
-    },
-    {
-      id: 1,
-      positionTitle: 'Testing Engineer',
-      departmentName: 'Testing Team',
-      postContent: 'We need you guys',
-    },
-  ]
+  const { vacancies } = useVacanciesUnauth()
   return (
     <div className="min-h-screen flex flex-row justify-between relative">
       <div className="w-1/2 h-full flex-grow flex flex-col">
@@ -52,7 +27,7 @@ export const PostJobPage = () => {
             </p>
           </div>
 
-          {vacanciesList.map((vacancies) => (
+          {vacancies?.map((vacancies) => (
             <JobCard key={vacancies.id} vacancies={vacancies} />
           ))}
         </div>

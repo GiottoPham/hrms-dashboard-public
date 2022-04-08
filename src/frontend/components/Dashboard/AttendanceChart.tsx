@@ -12,6 +12,9 @@ import {
   Filler,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import { useChartHour } from '@frontend/state/chart-queries'
+import { useChatParamsHour } from '@frontend/state/chart-params'
+import { WeekSelect } from '@components/Dashboard/WeekSelect'
 
 ChartJS.register(
   CategoryScale,
@@ -64,11 +67,16 @@ export const AttendanceChart = () => {
       },
     },
   }
+
+  const { chartParamsHour } = useChatParamsHour()
+  const { chartHour } = useChartHour(chartParamsHour)
   const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     datasets: [
       {
-        data: [7.5, 5.5, 6.5, 9, 8, 4],
+        data: chartHour?.every((v) => v === 0)
+          ? [6.5, 6, 7, 6, 5, 7.5]
+          : chartHour,
         fill: true,
         backgroundColor: '#FFAC2F',
         borderColor: '#212936',
@@ -77,8 +85,14 @@ export const AttendanceChart = () => {
     ],
   }
   return (
-    <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
-      <Line data={data} options={options} />
+    <div>
+      <div className="w-48 mb-2">
+        <WeekSelect isHour />
+      </div>
+
+      <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
+        <Line data={data} options={options} />
+      </div>
     </div>
   )
 }

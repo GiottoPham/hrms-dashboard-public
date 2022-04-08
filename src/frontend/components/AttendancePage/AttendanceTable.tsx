@@ -17,7 +17,7 @@ export const AttendanceTable = () => {
   const dateArray = eachDayOfInterval({ start: start, end: end })
   const listDate =
     attendances && attendances.length > 0
-      ? attendances[0].listCheckin.map((attendance) => attendance.date)
+      ? attendances[0].checkins.map((attendance) => attendance.date)
       : dateArray.map((d) => d.toISOString())
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -60,7 +60,7 @@ export const AttendanceTable = () => {
               <div className="flex flex-col">
                 <p>{attendance.name}</p>
                 <div className="w-full border-b my-1"></div>
-                <p>{attendance.unitName}</p>
+                <p>{attendance.departmentName}</p>
                 <p>{attendance.jobTitle}</p>
               </div>
             }
@@ -81,7 +81,7 @@ export const AttendanceTable = () => {
               <p>{attendance.name}</p>
             </div>
           </Tooltip>
-          {attendance.listCheckin.map((checkin, index) => (
+          {attendance.checkins.map((checkin, index) => (
             <div
               className="w-40 h-16 bg-white flex items-center border-l justify-center font-nunito border-l-primary p-2"
               key={index}

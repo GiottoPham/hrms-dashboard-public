@@ -1,9 +1,9 @@
 export type AttendanceList = Attendance[]
 export type Attendance = {
   name: string
-  unitName: string
+  departmentName: string
   jobTitle: string
-  listCheckin: Checkin[]
+  checkins: Checkin[]
 }
 export type Checkin = {
   status: number

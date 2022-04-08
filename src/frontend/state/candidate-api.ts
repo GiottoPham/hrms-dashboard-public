@@ -24,13 +24,13 @@ export const createCandidatesRequest = (
   const candidateFile = candidateParams.file
   const formData = new FormData()
   if (candidateFile)
-    formData.append('file', candidateFile as File, candidateFile.name)
+    formData.append('avatar', candidateFile as File, candidateFile.name)
   delete candidateParams.file
   formData.append('data', JSON.stringify(candidateParams))
   return axios
     .request({
       method: 'POST',
-      url: '/api/v1/candidate',
+      url: '/api/unauthorized/candidate',
       data: formData,
     })
     .then((res) => res.data.candidates)
