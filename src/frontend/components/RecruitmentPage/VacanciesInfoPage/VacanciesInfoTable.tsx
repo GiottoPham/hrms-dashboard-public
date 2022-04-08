@@ -214,7 +214,7 @@ export const VacanciesInfoTable = () => {
         data={vacancies}
         columns={columns}
         rowCount={5}
-        isLoading={isLoading && employeeLoading && unitLoading && jobLoading}
+        isLoading={isLoading || employeeLoading || unitLoading || jobLoading}
       />
       <div className="self-end mt-5">
         <Button

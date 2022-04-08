@@ -1,5 +1,6 @@
 import { AttendanceWeek } from '@components/AttendancePage/AttendanceWeek'
 import { UnitSelect } from '@components/AttendancePage/UnitSelect'
+import { NoDataModal } from '@frontend/framework/NoDataModal'
 import { formatDate } from '@frontend/framework/utils/date'
 import { useAttendanceParams } from '@frontend/state/attendance-params'
 import { useAttendances } from '@frontend/state/attendance-queries'
@@ -10,7 +11,7 @@ import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 export const AttendanceTable = () => {
   const getRandomColor = () => 'hsl(' + Math.random() * 360 + ', 100%, 75%)'
   const { attendanceParams } = useAttendanceParams()
-  const { attendances = [] } = useAttendances(attendanceParams)
+  const { attendances = [], isLoading } = useAttendances(attendanceParams)
   const start = startOfWeek(new Date(), { weekStartsOn: 1 })
   const end = endOfWeek(new Date(), { weekStartsOn: 0 })
   const dateArray = eachDayOfInterval({ start: start, end: end })
@@ -43,6 +44,7 @@ export const AttendanceTable = () => {
           </div>
         ))}
       </div>
+      {!isLoading && attendances.length === 0 && <NoDataModal isAttendance />}
       {attendances.map((attendance, index) => (
         <div
           key={index}

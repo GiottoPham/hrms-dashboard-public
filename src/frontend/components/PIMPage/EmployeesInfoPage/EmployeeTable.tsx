@@ -162,7 +162,7 @@ export const EmployeeTable = () => {
         data={employees}
         columns={columns}
         rowCount={5}
-        isLoading={jobLoading && employeeLoading && unitLoading}
+        isLoading={jobLoading || employeeLoading || unitLoading}
       />
       <div className="self-end mt-5">
         <Button

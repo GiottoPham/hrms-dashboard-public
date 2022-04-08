@@ -66,10 +66,16 @@ export const JobTable = () => {
 
   const columns: Column<JobDetail>[] = [
     {
+      Header: createHeader({ headerText: 'Id', sortBy: 'id' }),
+      accessor: 'id',
+      Cell: ({ value }) => <p>{value}</p>,
+      width: 'w-[50px]',
+    },
+    {
       Header: createHeader({ headerText: 'Job Title', sortBy: 'title' }),
       accessor: 'title',
       Cell: ({ value }) => <p>{value}</p>,
-      width: 'w-[68px]',
+      width: 'w-[100px]',
     },
     {
       Header: createHeader({
@@ -77,10 +83,17 @@ export const JobTable = () => {
         sortBy: 'description',
       }),
       accessor: 'description',
-      Cell: ({ value }) => <p className="leading-loose p-2">{value}</p>,
-      width: 'w-[400px]',
+      Cell: ({ value }) => (
+        <p className="leading-loose line-clamp-1">{value}</p>
+      ),
+      width: 'w-[200px]',
     },
-
+    {
+      Header: createHeader({ headerText: 'Note', sortBy: 'note' }),
+      accessor: 'note',
+      Cell: ({ value }) => <p className="line-clamp-1">{value}</p>,
+      width: 'w-[200px]',
+    },
     {
       id: 'actionCell',
       accessor: 'title',

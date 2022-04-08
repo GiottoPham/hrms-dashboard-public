@@ -1,3 +1,4 @@
+import { NoDataModal } from '@frontend/framework/NoDataModal'
 import { Skeleton } from '@mui/lab'
 import cx from 'classnames'
 import { isEmpty } from 'lodash'
@@ -109,6 +110,7 @@ export const Table = <T extends Record<string, unknown>>({
             </tbody>
           </table>
         </div>
+        {!isLoading && (!data || data.length === 0) && <NoDataModal />}
       </div>
     </div>
   )
