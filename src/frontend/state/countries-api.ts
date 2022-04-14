@@ -20,37 +20,35 @@ export const fetchCities = (): Promise<City[]> => {
       }))
     )
 }
-export const fetchDistricts = (provinceId: number): Promise<District[]> => {
+export const fetchDistricts = (): Promise<District[]> => {
   return axiosWithCountries
     .request({
       method: 'GET',
       url: `/d`,
     })
     .then((res) =>
-      res.data
-        .filter(
-          (dist: { province_code: number }) => dist.province_code === provinceId
-        )
-        .map((dist: { name: string; code: number }) => ({
+      res.data.map(
+        (dist: { name: string; code: number; province_code: number }) => ({
           district_name: dist.name,
           district_id: dist.code,
-        }))
+          province_code: dist.province_code,
+        })
+      )
     )
 }
-export const fetchWards = (districtId: number): Promise<Ward[]> => {
+export const fetchWards = (): Promise<Ward[]> => {
   return axiosWithCountries
     .request({
       method: 'GET',
       url: `w`,
     })
     .then((res) =>
-      res.data
-        .filter(
-          (ward: { district_code: number }) => ward.district_code === districtId
-        )
-        .map((ward: { name: string; code: number }) => ({
+      res.data.map(
+        (ward: { name: string; code: number; district_code: number }) => ({
+          district_code: ward.district_code,
           ward_name: ward.name,
           ward_id: ward.code,
-        }))
+        })
+      )
     )
 }

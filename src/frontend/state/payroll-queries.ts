@@ -1,5 +1,5 @@
-import { fetchPayroll } from '@frontend/state/payroll-api'
-import { PAYROLL } from '@frontend/state/query-keys'
+import { fetchPayroll, fetchPayrollPdf } from '@frontend/state/payroll-api'
+import { PAYROLL, PAYROLLPDF } from '@frontend/state/query-keys'
 import type { PayrollParams } from '@frontend/types/payroll-params'
 import type { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
@@ -13,4 +13,13 @@ export const usePayroll = (payrollParams: PayrollParams) => {
   })
 
   return { payroll, ...rest }
+}
+export const usePayrollPdf = (payrollParams: PayrollParams) => {
+  const { data: payrollPdf, ...rest } = useQuery<string, AxiosError>({
+    queryKey: [PAYROLLPDF, payrollParams],
+    queryFn: () => fetchPayrollPdf(payrollParams),
+    retry: false,
+  })
+
+  return { payrollPdf, ...rest }
 }

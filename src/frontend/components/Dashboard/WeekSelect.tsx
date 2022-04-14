@@ -53,6 +53,7 @@ export const WeekSelect = ({ isHour }: { isHour?: boolean }) => {
         inputFormat="'Week of' MMM d"
         autoFocus={false}
         value={attendanceParams.week}
+        maxDate={new Date()}
         onChange={(newValue) => {
           if (newValue)
             setAttendanceParams((prev) => ({

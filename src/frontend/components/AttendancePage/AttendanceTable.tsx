@@ -19,6 +19,10 @@ export const AttendanceTable = () => {
     attendances && attendances.length > 0
       ? attendances[0].checkins.map((attendance) => attendance.date)
       : dateArray.map((d) => d.toISOString())
+  const splitSecond = (time: string) => {
+    const timeArr = time.split(':')
+    return `${timeArr[0]}:${timeArr[1]}`
+  }
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="mb-5 flex self-start space-x-10 ml-36 w-1/2">
@@ -81,29 +85,31 @@ export const AttendanceTable = () => {
               <p>{attendance.name}</p>
             </div>
           </Tooltip>
-          {attendance.checkins.map((checkin, index) => (
-            <div
-              className="w-40 h-16 bg-white flex items-center border-l justify-center font-nunito border-l-primary p-2"
-              key={index}
-            >
+          {attendance.checkins.map((checkin, index) => {
+            return (
               <div
-                className={cx(
-                  'items-center justify-center flex flex-col  w-full h-full border-2 rounded-lg',
-                  {
-                    'bg-ontime/[0.1] border-ontime': checkin.status === 0,
-                    'bg-late/[0.1] border-late': checkin.status === 1,
-                    'bg-leave/[0.1] border-leave': checkin.status === 2,
-                  }
-                )}
+                className="w-40 h-16 bg-white flex items-center border-l justify-center font-nunito border-l-primary p-2"
+                key={index}
               >
-                <p className="text-black text-sm">Ca hành chính</p>
-                <p className="text-black text-sm">
-                  {formatDate(checkin.timeIn, 'HH:mm') || '-:- '} -{' '}
-                  {formatDate(checkin.timeOut, 'HH:mm') || ' -:-'}
-                </p>
+                <div
+                  className={cx(
+                    'items-center justify-center flex flex-col  w-full h-full border-2 rounded-lg',
+                    {
+                      'bg-ontime/[0.1] border-ontime': checkin.status === 0,
+                      'bg-late/[0.1] border-late': checkin.status === 1,
+                      'bg-leave/[0.1] border-leave': checkin.status === 2,
+                    }
+                  )}
+                >
+                  <p className="text-black text-sm">Ca hành chính</p>
+                  <p className="text-black text-sm">
+                    {checkin.time_in ? splitSecond(checkin.time_in) : '-:- '} -{' '}
+                    {checkin.time_out ? splitSecond(checkin.time_out) : ' -:-'}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       ))}
     </div>

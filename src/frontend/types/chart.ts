@@ -1,7 +1,7 @@
 export type AttendStatus = {
   onTime: number[]
-  late: number[]
-  onLeave: number[]
+  lateEarly: number[]
+  off: number[]
 }
 export type AverageWorkingHour = number[]
 export type ChartParams = {

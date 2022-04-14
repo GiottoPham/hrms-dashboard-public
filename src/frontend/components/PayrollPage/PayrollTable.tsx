@@ -16,6 +16,7 @@ import { MonthPayrollFilter } from '@components/PayrollPage/MonthPayrollFilter'
 import { useEmployeeParams } from '@frontend/state/employee-params'
 import { useEmployees } from '@frontend/state/employee-queries'
 import { useUnits } from '@frontend/state/unit-queries'
+import { usePayrollPdf } from '@frontend/state/payroll-queries'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -65,7 +66,7 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 
 export const PayrollTable = () => {
   const { showPayroll, setShowPayroll } = useShowPayroll()
-  const { setPayrollParams } = usePayrollParams()
+  const { setPayrollParams, payrollParams } = usePayrollParams()
   const { employeeParams } = useEmployeeParams()
   const { employees = [], isLoading: employeeLoading } =
     useEmployees(employeeParams)
@@ -145,11 +146,24 @@ export const PayrollTable = () => {
       width: 'w-[50px]',
     },
   ]
+  const { payrollPdf } = usePayrollPdf(payrollParams)
   return (
     <div className="rounded px-10 py-5 flex flex-col w-full justify-center">
-      <div className="w-60 mb-5">
-        <MonthPayrollFilter />
+      <div className="flex space-x-3 items-center">
+        <div className="w-60 mb-5">
+          <MonthPayrollFilter />
+        </div>
+        <Button
+          href={payrollPdf}
+          classes={{
+            root: 'bg-white h-10 normal-case font-bold rounded-lg border-2',
+          }}
+          variant="outlined"
+        >
+          Download PDF
+        </Button>
       </div>
+
       <div className="flex space-x-10">
         <div
           className={cx('overflow-auto flex flex-col', {

@@ -62,26 +62,23 @@ export const AttendanceColumnChart = () => {
     datasets: [
       {
         label: 'Ontime',
-        data:
-          typeof chartNumber?.onTime === 'number'
-            ? [1, 3, 5, 7, 8, 9]
-            : chartNumber?.onTime,
+        data: chartNumber?.onTime.every((v) => v === 0)
+          ? [1, 3, 5, 7, 8, 9]
+          : chartNumber?.onTime,
         backgroundColor: '#FFAC2F',
       },
       {
         label: 'Late/Early',
-        data:
-          typeof chartNumber?.late === 'number'
-            ? [9, 6, 8, 4, 3, 2]
-            : chartNumber?.late,
+        data: chartNumber?.lateEarly.every((v) => v === 0)
+          ? [9, 6, 8, 4, 3, 2]
+          : chartNumber?.lateEarly,
         backgroundColor: '#fef6e7',
       },
       {
         label: 'Leave',
-        data:
-          typeof chartNumber?.late === 'number'
-            ? [3, 2, 7, 4, 1, 6]
-            : chartNumber?.onLeave,
+        data: chartNumber?.off.every((v) => v === 0)
+          ? [3, 2, 7, 4, 1, 6]
+          : chartNumber?.off,
         backgroundColor: '#FFBE5C',
       },
     ],

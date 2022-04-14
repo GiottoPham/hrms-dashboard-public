@@ -18,7 +18,7 @@ export const LeaveDate = () => {
           if (newValue)
             setLeaveParams((prev) => ({
               ...prev!,
-              date: newValue,
+              date: newValue.toISOString(),
             }))
         }}
         renderInput={(params) => (
@@ -33,6 +33,7 @@ export const LeaveDate = () => {
             }}
           />
         )}
+        maxDate={new Date()}
       />
     </LocalizationProvider>
   )

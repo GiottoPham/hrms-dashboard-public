@@ -27,6 +27,6 @@ export const useAttendanceParams = () => {
 }
 export const defaultAttendace: AttendanceParams = {
   pagination: 1,
-  departmentId: 1,
+  departmentId: 10,
   week: new Date().toISOString(),
 }

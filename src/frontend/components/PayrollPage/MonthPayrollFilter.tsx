@@ -20,9 +20,10 @@ export const MonthPayrollFilter = () => {
           if (newValue)
             setPayrollParams((prev) => ({
               ...prev!,
-              month: newValue,
+              month: newValue.toISOString(),
             }))
         }}
+        maxDate={new Date()}
         inputFormat="MMMM yyyy"
         renderInput={(params) => (
           <TextField

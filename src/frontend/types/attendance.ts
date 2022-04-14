@@ -7,7 +7,7 @@ export type Attendance = {
 }
 export type Checkin = {
   status: number
-  timeIn: string | null
-  timeOut: string | null
+  time_in: string | null
+  time_out: string | null
   date: string
 }

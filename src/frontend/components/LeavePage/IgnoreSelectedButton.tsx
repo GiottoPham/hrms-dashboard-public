@@ -10,7 +10,7 @@ export const IgnoreSelectedButton = () => {
       disabled={checkedLeaveIds.length === 0}
       variant="outlined"
       classes={{
-        root: 'w-48 h-10 text-sm rounded-lg font-nunito normal-case shadow-none w-28 mr-5 text-danger bg-white font-bold border-danger border-2',
+        root: 'h-10 text-sm rounded-lg font-nunito normal-case shadow-none mr-5 text-danger bg-white font-bold border-danger border-2',
         disabled: 'opacity-60',
       }}
       startIcon={
