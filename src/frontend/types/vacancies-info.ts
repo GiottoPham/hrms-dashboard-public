@@ -1,4 +1,9 @@
-export type VacanciesInfos = VacanciesInfo[]
+export type VacanciesInfos = {
+  empty: boolean
+  last: boolean
+  first: boolean
+  vacanciesInfos: VacanciesInfo[]
+}
 export type VacanciesInfo = {
   id: number
   hiringManagerId: number

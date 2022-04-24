@@ -7,6 +7,8 @@ import { usePayrollParams } from '@frontend/state/payroll-params'
 
 export const MonthPayrollFilter = () => {
   const { setPayrollParams, payrollParams } = usePayrollParams()
+  const now = new Date()
+  now.setMonth(now.getMonth() - 1)
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
@@ -23,7 +25,7 @@ export const MonthPayrollFilter = () => {
               month: newValue.toISOString(),
             }))
         }}
-        maxDate={new Date()}
+        maxDate={now}
         inputFormat="MMMM yyyy"
         renderInput={(params) => (
           <TextField

@@ -69,7 +69,7 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>{currencyFormatter(0) || '--'}</p>
+            <p>0 VND</p>
           </div>
         </div>
         <Accordion
@@ -146,7 +146,9 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.totalDerivedSalary) || '--'}
+            {payroll.totalDerivedIncome
+              ? currencyFormatter(payroll.totalDerivedIncome)
+              : '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -157,7 +159,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.derivedSalary) || '--'}
+            {currencyFormatter(payroll?.derivedSalary) || '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -184,7 +186,7 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payroll?.totalBonus) || '--'}
+                  {currencyFormatter(payroll?.totalBonus) || '0 VND'}
                 </div>
               </div>
             </CardActionArea>
@@ -217,7 +219,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.totalDerivedSalary) || '--'}
+            {currencyFormatter(payroll?.totalDeduction) || '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -228,10 +230,10 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            (I)*10.5/100
+            (I)*11.5/100
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.mandatoryInsurance) || '--'}
+            {currencyFormatter(payroll?.mandatoryInsurance) || '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -258,7 +260,9 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payroll?.personalIncomeTax) || '--'}
+                  {payroll.personalIncomeTax
+                    ? currencyFormatter(payroll.personalIncomeTax)
+                    : '0 VND'}
                 </div>
               </div>
             </CardActionArea>
@@ -271,7 +275,9 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(8)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(730000)}
+                {payroll?.allowanceNotSubjectedToTax
+                  ? currencyFormatter(payroll.allowanceNotSubjectedToTax)
+                  : '0 VND'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -281,7 +287,9 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(9)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(11000000)}
+                {payroll?.personalRelief
+                  ? currencyFormatter(payroll.personalRelief)
+                  : '0 VND'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -291,7 +299,9 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(10)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(0)}
+                {payroll.dependentRelief
+                  ? currencyFormatter(payroll.dependentRelief)
+                  : '0 VND'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-primary-200">
@@ -303,7 +313,9 @@ export const EmployeePayroll = () => {
                 (I)-(II.A)-(8)-(9)-(10)
               </div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(payroll?.taxableIncome) || '--'}
+                {payroll.taxableIncome
+                  ? currencyFormatter(payroll?.taxableIncome)
+                  : '0 VND'}
               </div>
             </div>
             <div className="w-full h-12 flex bg-white">
@@ -313,7 +325,9 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-10 items-center h-full">(12)</div>
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
-                {currencyFormatter(payroll?.personalIncomeTax) || '--'}
+                {payroll.personalIncomeTax
+                  ? currencyFormatter(payroll.personalIncomeTax)
+                  : '0 VND'}
               </div>
             </div>
           </AccordionDetails>
@@ -325,7 +339,9 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">(I)-(II)</div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.netIncome) || '--'}
+            {payroll?.netIncome
+              ? currencyFormatter(payroll.netIncome)
+              : '0 VND'}
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ export const CandidateVacanciesButton = ({
             e.stopPropagation()
           }}
         >
-          <div className="flex h-[400px] w-2/3 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-lg overflow-y-auto">
+          <div className="flex h-[400px] w-2/3 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-lg">
             <CandidatesTable vacanciesId={id} />
           </div>
         </Modal>

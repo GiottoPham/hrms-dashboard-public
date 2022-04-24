@@ -25,7 +25,7 @@ type CreateHeaderInput = {
 const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
   const Header = () => {
     const {
-      leaveParams: { sort },
+      leaveParams: { sortBy: sortByParams, sortOrder },
       setLeaveParams,
     } = useLeaveParams()
 
@@ -35,30 +35,31 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
         <IconButton
           classes={{ root: 'p-1 w-8 h-8' }}
           onClick={() => {
-            if (sort.sortBy === sortBy) {
-              if (sort.sortOrder === 'asc') {
+            if (sortByParams === sortBy) {
+              if (sortOrder === 'asc') {
                 setLeaveParams((prev) => ({
                   ...prev!,
-                  sort: { ...sort, sortOrder: 'desc' },
+                  sortOrder: 'desc',
                 }))
               } else
                 setLeaveParams((prev) => ({
                   ...prev!,
-                  sort: { ...sort, sortOrder: 'asc' },
+                  sortOrder: 'asc',
                 }))
             } else if (sortBy) {
               setLeaveParams((prev) => ({
                 ...prev!,
-                sort: { sortBy: sortBy, sortOrder: 'asc' },
+                sortBy: sortBy,
+                sortOrder: 'desc',
               }))
             }
           }}
         >
-          {sort?.sortBy !== sortBy && <UpDownIcon />}
-          {sort?.sortBy === sortBy && sort.sortOrder === 'asc' && (
+          {sortByParams !== sortBy && <UpDownIcon />}
+          {sortByParams === sortBy && sortOrder === 'asc' && (
             <UpDownIcon isUp={true} />
           )}
-          {sort?.sortBy === sortBy && sort.sortOrder === 'desc' && (
+          {sortByParams === sortBy && sortOrder === 'desc' && (
             <UpDownIcon isUp={false} />
           )}
         </IconButton>
@@ -71,7 +72,8 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 
 export const LeaveTable = () => {
   const { leaveParams, setLeaveParams } = useLeaveParams()
-  const { leaves = [], isLoading } = useLeaves(leaveParams)
+  const { leaves: leavesList, isLoading } = useLeaves(leaveParams)
+  const leaves = leavesList?.leaveEmployeeList || []
   const allLeave = leaves?.map((leave) => leave.id)
   const { checkedLeaveIds, setCheckedLeaveDetail } = useCheckedLeaveDetail()
   const columns: Column<LeaveDetail>[] = [
@@ -209,10 +211,12 @@ export const LeaveTable = () => {
       <div className="self-end mt-5">
         <Button
           classes={{
-            root: 'min-w-0 w-10 h-10 bg-white border border-primary',
+            root: 'min-w-0 w-10 h-10 bg-white border border-primary hover:bg-gray-100',
+            disabled: 'bg-gray-200',
           }}
           color="inherit"
           variant="outlined"
+          disabled={leavesList?.first}
           onClick={() => {
             if (leaveParams.pagination && leaveParams.pagination > 1)
               setLeaveParams((prev) => ({
@@ -225,10 +229,12 @@ export const LeaveTable = () => {
         </Button>
         <Button
           classes={{
-            root: 'min-w-0 w-10 h-10 bg-white border border-primary ml-5',
+            root: 'min-w-0 w-10 h-10 bg-white border border-primary ml-5 hover:bg-gray-100',
+            disabled: 'bg-gray-200',
           }}
           color="inherit"
           variant="outlined"
+          disabled={leavesList?.last}
           onClick={() => {
             if (leaveParams.pagination)
               setLeaveParams((prev) => ({

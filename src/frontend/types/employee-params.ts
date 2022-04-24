@@ -7,4 +7,5 @@ export type EmployeeParams = {
       Employee['personalDetail'] & { id: number })
     sortOrder: 'asc' | 'desc'
   }
+  isHavingDepartment?: boolean
 }

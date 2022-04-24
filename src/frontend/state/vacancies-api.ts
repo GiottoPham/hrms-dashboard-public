@@ -3,13 +3,17 @@ import type {
   VacanciesEditParams,
   VacanciesInfos,
 } from '@frontend/types/vacancies-info'
+import type { VacanciesParams } from '@frontend/types/vacancies-params'
 import axios from 'axios'
 
-export const fetchVacancies = (): Promise<VacanciesInfos> => {
+export const fetchVacancies = (
+  params: VacanciesParams
+): Promise<VacanciesInfos> => {
   return axios
     .request({
       method: 'GET',
       url: '/api/v1/job_recruitments',
+      params,
     })
     .then((res) => res.data)
 }

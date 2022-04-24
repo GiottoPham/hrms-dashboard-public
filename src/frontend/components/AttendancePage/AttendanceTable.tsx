@@ -4,21 +4,25 @@ import { NoDataModal } from '@frontend/framework/NoDataModal'
 import { formatDate } from '@frontend/framework/utils/date'
 import { useAttendanceParams } from '@frontend/state/attendance-params'
 import { useAttendances } from '@frontend/state/attendance-queries'
-import { Avatar } from '@mui/material'
+import { Avatar, Button } from '@mui/material'
 import { Tooltip } from '@mui/material'
 import cx from 'classnames'
 import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 export const AttendanceTable = () => {
   const getRandomColor = () => 'hsl(' + Math.random() * 360 + ', 100%, 75%)'
-  const { attendanceParams } = useAttendanceParams()
-  const { attendances = [], isLoading } = useAttendances(attendanceParams)
+  const { attendanceParams, setAttendanceParams } = useAttendanceParams()
+  const { attendances: attendanceList, isLoading } =
+    useAttendances(attendanceParams)
+  const attendances = attendanceList?.attendanceList || []
   const start = startOfWeek(new Date(), { weekStartsOn: 1 })
-  const end = endOfWeek(new Date(), { weekStartsOn: 0 })
+  const end = endOfWeek(new Date(), { weekStartsOn: 1 })
   const dateArray = eachDayOfInterval({ start: start, end: end })
   const listDate =
     attendances && attendances.length > 0
       ? attendances[0].checkins.map((attendance) => attendance.date)
-      : dateArray.map((d) => d.toISOString())
+      : dateArray.slice(0, 6).map((d) => d.toISOString())
   const splitSecond = (time: string) => {
     const timeArr = time.split(':')
     return `${timeArr[0]}:${timeArr[1]}`
@@ -112,6 +116,41 @@ export const AttendanceTable = () => {
           })}
         </div>
       ))}
+      <div className="flex self-end mr-36 mt-5">
+        <Button
+          classes={{
+            root: 'min-w-0 w-10 h-10 bg-white border border-primary hover:bg-gray-100',
+            disabled: 'bg-gray-200',
+          }}
+          color="inherit"
+          variant="outlined"
+          disabled={attendanceList?.first}
+          onClick={() =>
+            setAttendanceParams((prev) => ({
+              ...prev!,
+              pagination: attendanceParams.pagination - 1,
+            }))
+          }
+        >
+          <ChevronLeftIcon className="w-7 h-7 text-primary" />
+        </Button>
+        <Button
+          classes={{
+            root: 'min-w-0 w-10 h-10 bg-white border border-primary ml-5 hover:bg-gray-100',
+            disabled: 'bg-gray-200',
+          }}
+          variant="outlined"
+          disabled={attendanceList?.last}
+          onClick={() =>
+            setAttendanceParams((prev) => ({
+              ...prev!,
+              pagination: attendanceParams.pagination + 1,
+            }))
+          }
+        >
+          <ChevronRightIcon className="w-7 h-7 text-primary" />
+        </Button>
+      </div>
     </div>
   )
 }

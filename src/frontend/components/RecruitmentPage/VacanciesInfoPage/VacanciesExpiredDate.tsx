@@ -17,11 +17,12 @@ export const VacanciesExpiredDate = ({
         Expired Date
       </InputLabel>
       <DesktopDatePicker
+        minDate={new Date()}
         disabled={disabled}
         autoFocus={false}
         value={values.expiredDate}
         onChange={(newValue) => {
-          if (newValue) setFieldValue('expiredDate', newValue)
+          if (newValue) setFieldValue('expiredDate', newValue.toISOString())
         }}
         renderInput={(params) => (
           <TextField

@@ -9,10 +9,7 @@ export const fetchAttendances = (
     .request({
       method: 'GET',
       url: '/api/v1/attendances',
-      params: {
-        departmentId: attendanceParams.departmentId,
-        week: attendanceParams.week,
-      },
+      params: attendanceParams,
     })
-    .then((res) => res.data.attendanceList)
+    .then((res) => res.data)
 }

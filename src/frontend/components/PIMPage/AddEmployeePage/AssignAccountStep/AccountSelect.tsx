@@ -6,7 +6,7 @@ import { useFormikContext } from 'formik'
 
 export const AccountSelect = () => {
   const { userParams } = useUserParams()
-  const { users } = useUsers(userParams)
+  const { users } = useUsers({ ...userParams, available: true })
   const roleFake = [
     {
       id: 1,

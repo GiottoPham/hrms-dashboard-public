@@ -13,6 +13,9 @@ export const fetchUsers = (
     .request({
       method: 'GET',
       url: '/api/v1/accounts',
+      params: {
+        avaiable: userParams.available,
+      },
     })
     .then((res) => res.data)
 }

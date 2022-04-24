@@ -22,5 +22,5 @@ export const fetchPayrollPdf = (
       url: '/api/v1/link',
       params: { month: payrollParams.month },
     })
-    .then((res) => res.data)
+    .then((res) => res.data.contentLink)
 }

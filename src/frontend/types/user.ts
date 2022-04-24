@@ -16,4 +16,5 @@ export type UserDetailParams = {
     sortBy: keyof UserDetail // string
     sortOrder: 'asc' | 'desc'
   }
+  available?: boolean
 }

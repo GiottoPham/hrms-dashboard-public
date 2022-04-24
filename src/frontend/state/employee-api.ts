@@ -12,6 +12,9 @@ export const fetchEmployee = (
     .request({
       method: 'GET',
       url: '/api/v1/employees',
+      params: {
+        isHavingDepartment: employeeParams.isHavingDepartment,
+      },
     })
     .then((res) => res.data)
 }

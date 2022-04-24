@@ -3,6 +3,7 @@ import { useEmployees } from '@frontend/state/employee-queries'
 import type { VacanciesEditParams } from '@frontend/types/vacancies-info'
 import { Autocomplete, InputLabel, TextField } from '@mui/material'
 import { useFormikContext } from 'formik'
+import { useEffect } from 'react'
 
 export const VacanciesHiringManagerSelect = ({
   disabled = false,
@@ -10,17 +11,24 @@ export const VacanciesHiringManagerSelect = ({
   disabled?: boolean
 }) => {
   const { employeeParams } = useEmployeeParams()
-  const { employees = [] } = useEmployees(employeeParams)
+  const { employees: employeeList } = useEmployees(employeeParams)
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<VacanciesEditParams>()
-  if (!employees) return null
+  const employees =
+    employeeList?.filter(
+      (emp) => emp.jobDetail.departmentId === values?.departmentId
+    ) || []
+  const val = employees.find((emp) => emp.id === values?.hiringManagerId)
+  useEffect(() => {
+    setFieldValue('hiringManagerId', undefined)
+  }, [setFieldValue, values.departmentId])
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
         Hiring Manager
       </InputLabel>
       <Autocomplete
-        disabled={disabled}
+        disabled={disabled || !values.departmentId}
         options={employees}
         renderOption={(props, option) => {
           return (
@@ -32,10 +40,11 @@ export const VacanciesHiringManagerSelect = ({
             </li>
           )
         }}
-        isOptionEqualToValue={(option, value) => option.id === value?.id}
-        getOptionLabel={(option) =>
-          `${option.personalDetail?.firstName} ${option.personalDetail?.lastName}`
-        }
+        getOptionLabel={(option) => {
+          if (option.jobDetail.departmentId === values.departmentId)
+            return `${option.personalDetail?.firstName} ${option.personalDetail?.lastName}`
+          else return ''
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -50,7 +59,7 @@ export const VacanciesHiringManagerSelect = ({
             }}
           />
         )}
-        value={employees.find((emp) => emp.id === values?.hiringManagerId)}
+        value={val}
         onChange={(_, newValue) =>
           setFieldValue('hiringManagerId', newValue?.id)
         }

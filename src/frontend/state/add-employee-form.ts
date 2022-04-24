@@ -12,7 +12,7 @@ export const useAddEmployeeForm = () => {
     queryKey: EMPLOYEE_PARAMS,
     queryFn: () => defaultEmployeeParams,
   })
-  const { data: addStep = 0 } = useQuery(ADD_EMPLOYEE_STEP, () => 0)
+  const { data: addStep = 2 } = useQuery(ADD_EMPLOYEE_STEP, () => 2)
   const setEmployeeParams = useCallback(
     (
       updater: Updater<

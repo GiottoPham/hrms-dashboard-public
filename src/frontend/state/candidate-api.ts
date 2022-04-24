@@ -12,11 +12,9 @@ export const fetchCandidates = (
     .request({
       method: 'GET',
       url: '/api/v1/candidates',
-      params: {
-        jobRecruitmentId: candidateParams.vacanciesId,
-      },
+      params: candidateParams,
     })
-    .then((res) => res.data.candidates)
+    .then((res) => res.data)
 }
 export const createCandidatesRequest = (
   candidateParams: Partial<CandidateInputParams>
@@ -24,7 +22,7 @@ export const createCandidatesRequest = (
   const candidateFile = candidateParams.file
   const formData = new FormData()
   if (candidateFile)
-    formData.append('avatar', candidateFile as File, candidateFile.name)
+    formData.append('file', candidateFile as File, candidateFile.name)
   delete candidateParams.file
   formData.append('data', JSON.stringify(candidateParams))
   return axios
@@ -33,5 +31,5 @@ export const createCandidatesRequest = (
       url: '/api/unauthorized/candidate',
       data: formData,
     })
-    .then((res) => res.data.candidates)
+    .then((res) => res.data)
 }

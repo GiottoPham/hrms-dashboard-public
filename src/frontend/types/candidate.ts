@@ -1,4 +1,9 @@
-export type Candidates = Candidate[]
+export type Candidates = {
+  empty: boolean
+  last: boolean
+  first: boolean
+  candidates: Candidate[]
+}
 export type Candidate = {
   id: number
   vacanciesId: number

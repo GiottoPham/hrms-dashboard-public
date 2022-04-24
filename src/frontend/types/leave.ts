@@ -17,8 +17,11 @@ export type LeaveParams = {
   departmentId: number
   date: string
   pagination: number // 1 page = 10 item
-  sort: {
-    sortBy: keyof LeaveDetail // string
-    sortOrder: 'asc' | 'desc'
-  }
+  sortBy: keyof LeaveDetail // string
+  sortOrder: 'asc' | 'desc'
+}
+export type LeaveDetails = {
+  first: boolean
+  last: boolean
+  leaveEmployeeList: LeaveDetail[]
 }

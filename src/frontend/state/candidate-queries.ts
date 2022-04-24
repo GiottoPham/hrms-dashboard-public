@@ -9,7 +9,7 @@ import { fetchCandidates } from '@frontend/state/candidate-api'
 
 export const useCandidates = (candidateParams: CandidateParams) => {
   const { data: candidates, ...rest } = useQuery<Candidates, AxiosError>({
-    queryKey: [CANDIDATES],
+    queryKey: [CANDIDATES, candidateParams],
     queryFn: () => fetchCandidates(candidateParams),
     retry: false,
   })

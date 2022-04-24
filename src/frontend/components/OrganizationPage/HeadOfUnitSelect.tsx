@@ -10,7 +10,9 @@ export const HeadOfUnitSelect = ({
   disabled?: boolean
 }) => {
   const { employeeParams } = useEmployeeParams()
-  const { employees } = useEmployees(employeeParams)
+  const { employees } = useEmployees({
+    ...employeeParams,
+  })
   const { values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<UnitInputParams>()
   if (!employees) return null

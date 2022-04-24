@@ -1,4 +1,8 @@
-export type AttendanceList = Attendance[]
+export type AttendanceList = {
+  first: boolean
+  last: boolean
+  attendanceList: Attendance[]
+}
 export type Attendance = {
   name: string
   departmentName: string

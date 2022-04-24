@@ -8,7 +8,8 @@ export type Payroll = {
     paidLeave: number
     unpaidLeave: number
   }
-  totalDerivedSalary: number
+  totalDerivedIncome: number
+  totalDeduction: number
   derivedSalary: number
   bonus: Bonus[]
   totalBonus: number
@@ -16,4 +17,8 @@ export type Payroll = {
   taxableIncome: number
   personalIncomeTax: number
   netIncome: number
+  dependentRelief: number
+  allowanceNotSubjectedToTax: number
+  anotherIncome: number
+  personalRelief: number
 }

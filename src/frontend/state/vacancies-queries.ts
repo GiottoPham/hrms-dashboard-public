@@ -11,11 +11,12 @@ import {
   fetchVacancies,
   fetchVacanciesUnauth,
 } from '@frontend/state/vacancies-api'
+import type { VacanciesParams } from '@frontend/types/vacancies-params'
 
-export const useVacancies = () => {
+export const useVacancies = (vacanciesParams: VacanciesParams) => {
   const { data: vacancies, ...rest } = useQuery<VacanciesInfos, AxiosError>({
-    queryKey: [VACANCIES],
-    queryFn: () => fetchVacancies(),
+    queryKey: [VACANCIES, vacanciesParams],
+    queryFn: () => fetchVacancies(vacanciesParams),
     retry: false,
   })
 
