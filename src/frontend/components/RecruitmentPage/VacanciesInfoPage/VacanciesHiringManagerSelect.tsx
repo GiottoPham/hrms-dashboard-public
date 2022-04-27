@@ -12,7 +12,7 @@ export const VacanciesHiringManagerSelect = ({
 }) => {
   const { employeeParams } = useEmployeeParams()
   const { employees: employeeList } = useEmployees(employeeParams)
-  const { values, setFieldValue, handleBlur, errors, touched } =
+  const { initialValues, values, setFieldValue, handleBlur, errors, touched } =
     useFormikContext<VacanciesEditParams>()
   const employees =
     employeeList?.filter(
@@ -20,8 +20,9 @@ export const VacanciesHiringManagerSelect = ({
     ) || []
   const val = employees.find((emp) => emp.id === values?.hiringManagerId)
   useEffect(() => {
-    setFieldValue('hiringManagerId', undefined)
-  }, [setFieldValue, values.departmentId])
+    if (!initialValues.hiringManagerId)
+      setFieldValue('hiringManagerId', undefined)
+  }, [initialValues.hiringManagerId, setFieldValue, values.departmentId])
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
