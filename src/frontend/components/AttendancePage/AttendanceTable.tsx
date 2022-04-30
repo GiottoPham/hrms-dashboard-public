@@ -11,7 +11,12 @@ import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 export const AttendanceTable = () => {
-  const getRandomColor = () => 'hsl(' + Math.random() * 360 + ', 100%, 75%)'
+  const getRandomColor = () =>
+    '#' +
+    Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, '0')
+      .toUpperCase()
   const { attendanceParams, setAttendanceParams } = useAttendanceParams()
   const { attendances: attendanceList, isLoading } =
     useAttendances(attendanceParams)
@@ -82,7 +87,7 @@ export const AttendanceTable = () => {
                 classes={{ root: 'h-8 w-8 text-2xl mr-2' }}
                 style={{ backgroundColor: getRandomColor() }}
               >
-                <p className="text-lg text-black font-nunito font-semibold">
+                <p className="text-lg text-white font-nunito font-semibold">
                   {attendance.name[0]}
                 </p>
               </Avatar>
