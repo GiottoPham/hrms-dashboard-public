@@ -97,13 +97,13 @@ export const ApplyButton = ({
                 <div className="py-2 h-full">
                   <div className="flex space-x-10 mt-2 ">
                     <div className="w-1/2">
-                      <ApplyTextInput label="Last Name" fieldName="lastName" />
-                    </div>
-                    <div className="w-1/2">
                       <ApplyTextInput
                         label="First Name"
                         fieldName="firstName"
                       />
+                    </div>
+                    <div className="w-1/2">
+                      <ApplyTextInput label="Last Name" fieldName="lastName" />
                     </div>
                   </div>
                   <div className="flex space-x-10 mt-2">
