@@ -1,5 +1,6 @@
 import { AttendanceChart } from '@components/Dashboard/AttendanceChart'
 import { AttendanceColumnChart } from '@components/Dashboard/AttendanceColumnChart'
+import { AttendancePieChart } from '@components/Dashboard/AttendancePieChart'
 import { Layout } from '@components/Layout/Layout'
 import { AuthGuard } from '@frontend/framework/AuthGuard'
 
@@ -11,12 +12,13 @@ export const HomePage = () => {
           <h1 className="font-bold text-2xl uppercase">Dashboard</h1>
         )}
       >
-        <div className="flex pt-20 space-x-5 w-full items-center justify-center h-full">
-          <div className="w-5/12 right-5 bottom-5 absolute">
-            <AttendanceChart />
-          </div>
-          <div className="w-1/2 absolute left-15 top-20">
+        <div className="w-full p-5 flex space-x-10">
+          <div className="w-7/12 ">
             <AttendanceColumnChart />
+          </div>
+          <div className="w-5/12 space-y-10 flex flex-col">
+            <AttendanceChart />
+            <AttendancePieChart />
           </div>
         </div>
       </Layout>

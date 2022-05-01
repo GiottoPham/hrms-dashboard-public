@@ -26,6 +26,7 @@ ChartJS.register(
   Legend,
   Filler
 )
+
 export const AttendanceChart = () => {
   const options = {
     elements: {
@@ -42,6 +43,9 @@ export const AttendanceChart = () => {
         display: true,
         text: 'Average working Time of employee in week',
         color: '#fef6e7',
+      },
+      datalabels: {
+        display: false,
       },
     },
     scales: {
