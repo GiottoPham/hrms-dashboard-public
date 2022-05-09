@@ -55,11 +55,16 @@ export const WeekSelect = ({ isHour }: { isHour?: boolean }) => {
         value={attendanceParams.week}
         maxDate={new Date()}
         onChange={(newValue) => {
-          if (newValue)
+          if (newValue) {
             setAttendanceParams((prev) => ({
               ...prev!,
               week: newValue.toISOString(),
             }))
+            setChatParamsHour((prev) => ({
+              ...prev!,
+              week: newValue.toISOString(),
+            }))
+          }
         }}
         renderDay={renderWeekPickerDay}
         renderInput={(params) => (

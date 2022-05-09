@@ -11,7 +11,6 @@ import {
 import { Bar } from 'react-chartjs-2'
 import { useChartNumber } from '@frontend/state/chart-queries'
 import { useChatParamsNumber } from '@frontend/state/chart-params'
-import { WeekSelect } from '@components/Dashboard/WeekSelect'
 import { useEmployeeParams } from '@frontend/state/employee-params'
 import { useEmployees } from '@frontend/state/employee-queries'
 import { randomNumbersWithFixedSum } from '@components/Dashboard/utils'
@@ -27,7 +26,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Number of employees on-time/leave-early/off in week',
+      text: 'Number of employees on-time/late-early/off in week',
       color: '#fef6e7',
     },
     datalabels: {
@@ -95,13 +94,8 @@ export const AttendanceColumnChart = () => {
     ],
   }
   return (
-    <div>
-      <div className="w-48 mb-2">
-        <WeekSelect />
-      </div>
-      <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
-        <Bar options={options} data={data} />
-      </div>
+    <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
+      <Bar options={options} data={data} />
     </div>
   )
 }

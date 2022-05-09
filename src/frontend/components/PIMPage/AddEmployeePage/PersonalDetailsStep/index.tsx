@@ -74,7 +74,7 @@ export const PersonalDetailsStep = ({ goNext }: { goNext: () => void }) => {
         touched,
       }) => {
         return (
-          <div className="flex flex-col font-nunito bg-white h-full px-8 py-2 w-9/12 transform rounded-xl md:overflow-y-auto">
+          <div className="flex flex-col font-nunito bg-white h-full px-8 py-4 border-2 border-primary w-9/12 transform rounded-xl md:overflow-y-auto">
             <div className="border-b border-gray-500 text-gray-500 text-xl">
               Personal Details
             </div>

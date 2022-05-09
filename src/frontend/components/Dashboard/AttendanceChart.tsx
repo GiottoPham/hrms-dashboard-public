@@ -14,7 +14,6 @@ import {
 import { Line } from 'react-chartjs-2'
 import { useChartHour } from '@frontend/state/chart-queries'
 import { useChatParamsHour } from '@frontend/state/chart-params'
-import { WeekSelect } from '@components/Dashboard/WeekSelect'
 
 ChartJS.register(
   CategoryScale,
@@ -89,14 +88,8 @@ export const AttendanceChart = () => {
     ],
   }
   return (
-    <div>
-      <div className="w-48 mb-2">
-        <WeekSelect isHour />
-      </div>
-
-      <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
-        <Line data={data} options={options} />
-      </div>
+    <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
+      <Line data={data} options={options} />
     </div>
   )
 }

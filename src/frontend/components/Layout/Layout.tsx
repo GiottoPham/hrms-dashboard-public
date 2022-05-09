@@ -2,7 +2,8 @@ import type { ReactNode } from 'react'
 import { SideBarNavigations } from './SideBarNavigations'
 import { AppBarContent } from './AppBarContent'
 import { APP_HEADER_HEIGHT, SIDEBAR_WIDTH } from './constants'
-
+import ScreenImage from '../../../assets/images/Screen.jpg'
+import Image from 'next/image'
 type LayoutProps = {
   children: ReactNode
   renderHeader?: () => JSX.Element
@@ -29,10 +30,14 @@ export const Layout = ({ children, renderHeader }: LayoutProps) => {
         style={{
           paddingTop: APP_HEADER_HEIGHT,
           paddingLeft: SIDEBAR_WIDTH,
+          paddingBottom: '50px',
         }}
-        className="min-h-screen w-full bg-primary-200 relative h-full overflow-y-auto"
+        className="w-full bg-primary-200 overflow-y-auto relative min-h-screen"
       >
-        {children}
+        <div className="relative h-full z-10">{children}</div>
+        <div className="absolute bottom-0 flex flex-col justify-end">
+          <Image src={ScreenImage} alt="picture-job" />
+        </div>
       </main>
     </div>
   )

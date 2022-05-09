@@ -58,8 +58,8 @@ export const AttendancePieChart = () => {
         color: 'black',
         display: 'auto',
         formatter: (value: number) => {
-          const ratio = value / values.reduce((a, b) => a + b)
-          return Number(ratio.toFixed(3)) * 100 + '%'
+          const ratio = (value / values.reduce((a, b) => a + b)) * 100
+          return ratio.toFixed(2) + '%'
         },
       },
     },
@@ -74,7 +74,7 @@ export const AttendancePieChart = () => {
     ],
   }
   return (
-    <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg w-3/4">
+    <div className="bg-secondary-600 border-2 border-primary p-5 rounded-lg">
       <Pie options={options} data={data} />
     </div>
   )

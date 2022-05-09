@@ -89,7 +89,7 @@ export const AssignAccountStep = ({
     >
       {({ isSubmitting, isValid, submitForm, values }) => {
         return (
-          <div className="flex flex-col font-nunito bg-white h-full px-8 py-2 w-1/2 transform rounded-xl md:overflow-y-auto">
+          <div className="flex flex-col font-nunito bg-white h-full px-8 py-4 border-2 border-primary w-1/2 transform rounded-xl md:overflow-y-auto">
             <div className="border-b border-gray-500 text-gray-500 text-xl">
               Assign Account
             </div>
