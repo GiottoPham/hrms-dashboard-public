@@ -23,7 +23,7 @@ export const HomePage = () => {
               <div className="bg-white p-5 rounded-lg border-primary border mb-5">
                 <h1 className="text-2xl font-bold">Attendance Column Chart</h1>
                 <p className="font-nunito">
-                  This chart is used to illustrate number of all employees whom
+                  This chart is used to illustrate number of all employees who
                   go to work either on time, late-early or off in the week
                 </p>
               </div>
