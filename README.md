@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# HRMS Dashboard for Admin and HR
 
-## TailwindCSS + ReactQuery
+This is a Thesis project to create dashboard for human resource mangamenet system using [Next.js](https://nextjs.org/), [TailwindCSS](https://tailwindcss.com/), [ReactQuery](https://react-query.tanstack.com/)
 
 ## Getting Started
 
@@ -12,25 +12,29 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### This application provides many features for HR and admin to manage organization's employees.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- View charts
+    
+- Add, edit user accounts
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Add, edit jobs (position)
 
-## Learn More
+- Add, edit, delete organization units (departments)
+    
+- Add, edit employees's info
 
-To learn more about Next.js, take a look at the following resources:
+- Manage leaves
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Check attendances status of all employeess
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Manage job recruitments and candidate
 
-## Deploy on Vercel
+- View payrolls of add employees
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Development Team:
+    Pham Gia Nguyen
+    Pham Khang Nguyen
+    Truong Anh Bao
