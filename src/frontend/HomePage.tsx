@@ -24,7 +24,7 @@ export const HomePage = () => {
                 <h1 className="text-2xl font-bold">Attendance Column Chart</h1>
                 <p className="font-nunito">
                   This chart is used to illustrate number of all employees who
-                  go to work either on time, late-early or off in the week
+                  go to work either on-time, late-early or off in the week
                 </p>
               </div>
               <AttendanceColumnChart />
