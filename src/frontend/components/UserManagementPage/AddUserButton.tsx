@@ -51,22 +51,28 @@ export const AddUserButton = ({
               id: userDetail?.id as number,
               userParams: values as UserInputParams,
             })
-        myPromise.finally(() => {
-          setSubmitting(false)
-          if (isEdit) setEdit(true)
-          resetForm()
-          openToast(
-            isEdit ? 'Edit user successful' : 'Add new user successful',
-            {
-              variant: 'success',
-              anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'right',
-              },
-            }
-          )
-          refModal.current?.click()
-        })
+        myPromise
+          .then(() => {
+            openToast(
+              isEdit ? 'Edit user successful' : 'Add new user successful',
+              {
+                variant: 'success',
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                },
+              }
+            )
+          })
+          .catch(() => {
+            openToast(isEdit ? 'Edit user failed' : 'Add new user failed')
+          })
+          .finally(() => {
+            setSubmitting(false)
+            if (isEdit) setEdit(true)
+            resetForm()
+            refModal.current?.click()
+          })
       }}
       validationSchema={newUserValidationSchema}
     >
