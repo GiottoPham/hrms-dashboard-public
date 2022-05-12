@@ -151,7 +151,7 @@ export const ApplyButton = ({
                       accept={['.pdf', '.docx']}
                       maxFiles={1}
                       onDropRejected={() =>
-                        openToast('File types incorrect', {
+                        openToast('Incorrect files', {
                           variant: 'error',
                           anchorOrigin: {
                             vertical: 'bottom',
