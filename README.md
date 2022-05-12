@@ -1,5 +1,10 @@
 # HRMS Dashboard for Admin and HR
+## Website: [nbn-hrms.vercel.app](https://nbn-hrms.vercel.app)
 
+## How to use website:
+After go to website, choose Change site setting -> Insecure content -> Allow -> Refresh page
+
+## Introduction
 This is a Thesis project to create dashboard for human resource mangamenet system using [Next.js](https://nextjs.org/), [TailwindCSS](https://tailwindcss.com/), [ReactQuery](https://react-query.tanstack.com/)
 
 ## Getting Started
