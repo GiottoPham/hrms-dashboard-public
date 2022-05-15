@@ -47,18 +47,24 @@ export const ApplyButton = ({
     <Formik
       initialValues={DEFAULT_CANDIDATE}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        createCandidate(values as CandidateInputParams).finally(() => {
-          setSubmitting(false)
-          resetForm()
-          openToast('Apply successful', {
-            variant: 'success',
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'right',
-            },
+        createCandidate(values as CandidateInputParams)
+          .then(() => {
+            openToast('Apply successful', {
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'right',
+              },
+            })
           })
-          closeRef.current?.click()
-        })
+          .catch(() => {
+            openToast('Apply failed')
+          })
+          .finally(() => {
+            setSubmitting(false)
+            resetForm()
+            closeRef.current?.click()
+          })
       }}
       validationSchema={newCandidateValidationSchema}
     >

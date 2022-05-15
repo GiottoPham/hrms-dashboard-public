@@ -58,16 +58,22 @@ export const DeleteUnitButton = ({
                 variant="contained"
                 disabled={isLoading}
                 onClick={() =>
-                  deleteUnit(id).finally(() => {
-                    openToast('Delete sub-unit successful', {
-                      variant: 'success',
-                      anchorOrigin: {
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                      },
+                  deleteUnit(id)
+                    .then(() => {
+                      openToast('Delete sub-unit successful', {
+                        variant: 'success',
+                        anchorOrigin: {
+                          vertical: 'bottom',
+                          horizontal: 'right',
+                        },
+                      })
                     })
-                    closeModal()
-                  })
+                    .catch(() => {
+                      openToast('Delete sub-unit failed')
+                    })
+                    .finally(() => {
+                      closeModal()
+                    })
                 }
                 startIcon={
                   isLoading && (

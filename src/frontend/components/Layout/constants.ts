@@ -5,12 +5,13 @@ import { LeaveIcon } from '@frontend/framework/icons/LeaveIcon'
 import { AttendanceIcon } from '@frontend/framework/icons/AttendanceIcon'
 import { RecruitmentIcon } from '@frontend/framework/icons/RecruitmentIcon'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import { SettingIcon } from '@frontend/framework/icons/SettingIcon'
 /**
  * Layout Component
  */
 export const APP_HEADER_HEIGHT = '64px'
 export const SIDEBAR_WIDTH = '64px'
-export const SIDEBAR_NAVIGATIONS = () => [
+export const SIDEBAR_NAVIGATIONS = [
   {
     Icon: DashBoardIcon,
     label: 'Dashboard',
@@ -62,5 +63,14 @@ export const SIDEBAR_NAVIGATIONS = () => [
     href: '/payroll',
     label: 'Payroll',
     subNavs: [{ label: 'Payroll', href: '/payroll' }],
+  },
+  {
+    Icon: SettingIcon,
+    label: 'Setting',
+    href: '',
+    subNavs: [
+      { label: 'Location', href: '/setting/location' },
+      { label: 'Time', href: '/setting/time' },
+    ],
   },
 ]

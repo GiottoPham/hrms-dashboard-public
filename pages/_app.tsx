@@ -5,7 +5,6 @@ import '@styles/react-phone-number-input.css'
 import type { AppProps } from 'next/app'
 import { useState } from 'react'
 import { Hydrate } from 'react-query/hydration'
-import { ReactQueryDevtools } from 'react-query/devtools'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from '@frontend/framework/ThemeProvider'
 import axios from 'axios'
@@ -39,7 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </ThemeProvider>
         </SnackbarProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </Hydrate>
     </QueryClientProvider>
   )

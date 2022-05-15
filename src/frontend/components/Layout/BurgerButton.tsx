@@ -32,7 +32,7 @@ export const BurgerButton = () => {
       )}
       renderDrawer={({ Drawer, isDrawerOpen, closeDrawer }) => (
         <Drawer anchor="left" open={isDrawerOpen} onClose={closeDrawer}>
-          <div className="bg-secondary-600 h-full w-72 overflow-y-auto">
+          <div className="bg-secondary-600 h-full w-72 overflow-y-auto flex flex-col">
             <header className="relative flex items-center px-5 py-2">
               <Link href="/" passHref>
                 <MiniLogoIcon className="" />
@@ -46,12 +46,15 @@ export const BurgerButton = () => {
               </IconButton>
             </header>
 
-            <nav className="px-1 py-4">
-              <ul>
-                {SIDEBAR_NAVIGATIONS().map(({ Icon, label, href, subNavs }) => {
+            <nav className="px-1 py-4 flex-grow h-full">
+              <ul className="flex flex-col h-full">
+                {SIDEBAR_NAVIGATIONS.map(({ Icon, label, href, subNavs }) => {
                   if (subNavs.length <= 1) {
                     return (
-                      <li key={label}>
+                      <li
+                        key={label}
+                        className={cx({ 'flex-grow': label === 'Payroll' })}
+                      >
                         <Link href={href} passHref>
                           <Button
                             fullWidth

@@ -46,19 +46,28 @@ export const AddJobButton = ({
               id: jobDetail?.id as number,
               jobParams: values as JobInputParams,
             })
-        myPromise.finally(() => {
-          setSubmitting(false)
-          if (isEdit) setEdit(true)
-          resetForm()
-          openToast(isEdit ? 'Edit job successful' : 'Add new job successful', {
-            variant: 'success',
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'right',
-            },
+        myPromise
+          .then(() => {
+            openToast(
+              isEdit ? 'Edit job successful' : 'Add new job successful',
+              {
+                variant: 'success',
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                },
+              }
+            )
           })
-          closeRef.current?.click()
-        })
+          .catch(() => {
+            openToast(isEdit ? 'Edit job failed' : 'Add new job failed')
+          })
+          .finally(() => {
+            setSubmitting(false)
+            if (isEdit) setEdit(true)
+            resetForm()
+            closeRef.current?.click()
+          })
       }}
       validationSchema={newJobValidationSchema}
     >

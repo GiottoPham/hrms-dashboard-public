@@ -38,7 +38,7 @@ export const TextInput = ({
   const handleChange = useMemo(
     () =>
       debounceable
-        ? debounce(onChange || voidFn, 500, { trailing: true })
+        ? debounce(onChange || voidFn, 1000, { trailing: true })
         : onChange,
     [debounceable, onChange]
   )

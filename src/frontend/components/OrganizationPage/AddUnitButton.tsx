@@ -40,18 +40,24 @@ export const AddUnitButton = ({
     <Formik
       initialValues={DEFAULT_UNIT}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        createUnit(values as UnitInputParams).finally(() => {
-          setSubmitting(false)
-          resetForm()
-          openToast('Add new sub-unit successful', {
-            variant: 'success',
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'right',
-            },
+        createUnit(values as UnitInputParams)
+          .then(() => {
+            openToast('Add new sub-unit successful', {
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'right',
+              },
+            })
           })
-          closeRef.current?.click()
-        })
+          .catch(() => {
+            openToast('Add new sub-unit failed')
+          })
+          .finally(() => {
+            setSubmitting(false)
+            resetForm()
+            closeRef.current?.click()
+          })
       }}
       validationSchema={newUnitValidationSchema}
     >
