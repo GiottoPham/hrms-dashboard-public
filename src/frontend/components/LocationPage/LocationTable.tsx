@@ -26,12 +26,16 @@ export const LocationTable = () => {
   return (
     <div className="px-10 py-5">
       <div></div>
-      <div className="flex items-end space-x-5">
-        <div className="flex-shrink-0">
+      <div className="flex flex-col">
+        <div className="flex flex-col mb-2">
           <p className="font-nunito text-sm font-bold mb-1">Current Location</p>
-          <div className="bg-white p-2 h-10 rounded-lg border border-primary flex items-center">
-            <LocationOnIcon className="text-primary mr-2" />
-            <p className="font-nunito font-bold">{coordinates.label}</p>
+          <div className="flex">
+            <div className="bg-white p-2 rounded-lg border border-primary flex items-center">
+              <LocationOnIcon className="text-primary mr-2" />
+              <p className="font-nunito font-bold line-clamp-2">
+                {coordinates.label}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex w-full items-end space-x-5">
@@ -69,7 +73,7 @@ export const LocationTable = () => {
         )}
         <div className={cx({ 'opacity-50': loadingLocationReverse })}>
           <Map
-            height={500}
+            height={400}
             defaultCenter={[la || 0, lo || 0]}
             defaultZoom={15}
             onClick={(e) => {
