@@ -111,7 +111,7 @@ export const BurgerButton = () => {
                                 <span className="pl-3">{label}</span>
                               </span>
 
-                              {isCollapsed ? (
+                              {!isCollapsed ? (
                                 <KeyboardArrowUpIcon className="h-5 w-5" />
                               ) : (
                                 <KeyboardArrowDownIcon className="h-5 w-5" />
