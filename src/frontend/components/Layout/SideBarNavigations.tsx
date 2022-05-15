@@ -5,10 +5,11 @@ import { ButtonWithPopover } from '@frontend/framework/ButtonWithPopover'
 import { useRouter } from 'next/dist/client/router'
 import { Button } from '@mui/material'
 import { BurgerButton } from '@components/Layout/BurgerButton'
+import { useCurrentUser } from '@frontend/state/auth-queries'
 
 export const SideBarNavigations = () => {
   const { pathname } = useRouter()
-
+  const { currentUser } = useCurrentUser()
   return (
     <div className="bg-secondary-600 h-full font-nunito flex flex-col">
       <div className="flex items-center justify-center">
@@ -30,6 +31,7 @@ export const SideBarNavigations = () => {
                 key={label}
                 className={cx('px-2 flex', {
                   'flex-grow': label === 'Payroll',
+                  'hidden': label === 'Setting' && currentUser?.roleid === 2,
                 })}
               >
                 <div>

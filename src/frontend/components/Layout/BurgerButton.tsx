@@ -10,10 +10,11 @@ import { useRouter } from 'next/dist/client/router'
 import MenuIcon from '@mui/icons-material/Menu'
 import { SIDEBAR_NAVIGATIONS, APP_HEADER_HEIGHT } from './constants'
 import { MiniLogoIcon } from '@frontend/framework/icons/MiniLogoIcon'
+import { useCurrentUser } from '@frontend/state/auth-queries'
 
 export const BurgerButton = () => {
   const { pathname } = useRouter()
-
+  const { currentUser } = useCurrentUser()
   return (
     <ButtonWithDrawer
       renderButton={({ openDrawer }) => (
@@ -88,7 +89,13 @@ export const BurgerButton = () => {
                     )
                       isFocus = false
                     return (
-                      <li key={label}>
+                      <li
+                        key={label}
+                        className={cx({
+                          hidden:
+                            label === 'Setting' && currentUser?.roleid === 2,
+                        })}
+                      >
                         <ButtonWithCollapse
                           isInitialCollapse={isFocus}
                           renderButton={({ isCollapsed, toggleCollapse }) => (
