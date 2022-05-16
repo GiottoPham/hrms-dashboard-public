@@ -8,6 +8,7 @@ import { formatDate } from '@frontend/framework/utils/date'
 import type { Candidate } from '@frontend/types/candidate'
 import { useCandidates } from '@frontend/state/candidate-queries'
 import { useCandidateParams } from '@frontend/state/candidate-params'
+import LinkIcon from '@mui/icons-material/Link'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Candidate
@@ -121,6 +122,30 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
       Cell: ({ value }) => <p className="leading-loose">{value}</p>,
       width: 'w-[100px]',
     },
+    {
+      id: 'url',
+      Header: createHeader({
+        headerText: 'CV',
+        sortBy: 'url',
+      }),
+      accessor: 'url',
+      Cell: ({ value, row }) =>
+        value ? (
+          <a
+            href={value}
+            download={`CV of ${row.original.name}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <IconButton className="leading-loose">
+              <LinkIcon className="w-6 h-6" />
+            </IconButton>
+          </a>
+        ) : (
+          <p>No Link</p>
+        ),
+      width: 'w-[50px]',
+    },
   ]
   const columnsWithId: Column<Candidate>[] = [
     {
@@ -130,7 +155,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
       }),
       accessor: 'name',
       Cell: ({ value }) => <p className="leading-loose">{value}</p>,
-      width: 'w-[50px]',
+      width: 'w-[60px]',
     },
 
     {
@@ -163,6 +188,30 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
       }),
       accessor: 'contact',
       Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      width: 'w-[50px]',
+    },
+    {
+      id: 'url',
+      Header: createHeader({
+        headerText: 'CV',
+        sortBy: 'url',
+      }),
+      accessor: 'url',
+      Cell: ({ value, row }) =>
+        value ? (
+          <a
+            href={value}
+            download={`CV of ${row.original.name}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <IconButton className="leading-loose">
+              <LinkIcon className="w-6 h-6" />
+            </IconButton>
+          </a>
+        ) : (
+          <p>No Link</p>
+        ),
       width: 'w-[50px]',
     },
   ]

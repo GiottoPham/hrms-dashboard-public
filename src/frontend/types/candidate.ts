@@ -12,6 +12,7 @@ export type Candidate = {
   appliedDate: string
   email: string
   contact: string
+  url: string
 }
 export type CandidateInputParams = {
   jobRecruitmentId: number
