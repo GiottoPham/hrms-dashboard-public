@@ -22,32 +22,37 @@ export const ListUnitCard = ({
         name={name}
         label={type === 'head' ? 'Head Unit' : 'Sub unit'}
         handleClick={() => setToggle(!toggle)}
+        noMore={subUnits?.length === 0}
       />
       <div className="ml-20 flex flex-col">
         {toggle &&
-          subUnits?.map(
-            ({
-              id: subId,
-              name: subName,
-              subUnits: subOfUnit,
-              type: subType,
-              managerOfUnitId: subHeadOfUnit,
-              peopleNumber: subPeopleNumber,
-              description: subDescription,
-            }) => (
-              <div key={subId} className="mt-5">
-                <ListUnitCard
-                  id={subId}
-                  peopleNumber={subPeopleNumber}
-                  description={subDescription}
-                  managerOfUnitId={subHeadOfUnit}
-                  name={subName}
-                  subUnits={subOfUnit}
-                  type={subType}
-                />
-              </div>
+          subUnits
+            ?.sort((a, b) =>
+              a.name.toLowerCase().localeCompare(b.name.toLowerCase())
             )
-          )}
+            .map(
+              ({
+                id: subId,
+                name: subName,
+                subUnits: subOfUnit,
+                type: subType,
+                managerOfUnitId: subHeadOfUnit,
+                peopleNumber: subPeopleNumber,
+                description: subDescription,
+              }) => (
+                <div key={subId} className="mt-5">
+                  <ListUnitCard
+                    id={subId}
+                    peopleNumber={subPeopleNumber}
+                    description={subDescription}
+                    managerOfUnitId={subHeadOfUnit}
+                    name={subName}
+                    subUnits={subOfUnit}
+                    type={subType}
+                  />
+                </div>
+              )
+            )}
       </div>
     </>
   )

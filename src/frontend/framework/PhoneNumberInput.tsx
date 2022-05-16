@@ -14,6 +14,7 @@ export const PhoneNumberInput = (
         {
           'focus-within:border-primary': !props.isError,
           'focus-within:border-danger border-danger': props.isError,
+          'text-gray-500': props.disabled,
         }
       )}
     >

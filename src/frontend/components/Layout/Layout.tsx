@@ -4,6 +4,8 @@ import { AppBarContent } from './AppBarContent'
 import { APP_HEADER_HEIGHT, SIDEBAR_WIDTH } from './constants'
 import ScreenImage from '../../../assets/images/Screen.jpg'
 import Image from 'next/image'
+import Head from 'next/head'
+
 type LayoutProps = {
   children: ReactNode
   renderHeader?: () => JSX.Element
@@ -12,6 +14,9 @@ type LayoutProps = {
 export const Layout = ({ children, renderHeader }: LayoutProps) => {
   return (
     <div className="min-h-screen w-full min-w-[1366px]">
+      <Head>
+        <title>NBN-HRMS Dashboard</title>
+      </Head>
       <header
         style={{ height: APP_HEADER_HEIGHT, paddingLeft: SIDEBAR_WIDTH }}
         className="fixed top-0 w-full z-40"

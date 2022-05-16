@@ -29,7 +29,7 @@ export const VacanciesHiringManagerSelect = ({
         Hiring Manager
       </InputLabel>
       <Autocomplete
-        disabled={disabled || !values.departmentId}
+        disabled={disabled || (disabled && !values.departmentId)}
         options={employees}
         renderOption={(props, option) => {
           return (

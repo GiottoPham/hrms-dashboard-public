@@ -9,6 +9,8 @@ import type { Candidate } from '@frontend/types/candidate'
 import { useCandidates } from '@frontend/state/candidate-queries'
 import { useCandidateParams } from '@frontend/state/candidate-params'
 import LinkIcon from '@mui/icons-material/Link'
+import { formatPhoneNumberIntl } from 'react-phone-number-input'
+
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Candidate
@@ -77,7 +79,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'name',
       }),
       accessor: 'name',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => <p className="leading-loose truncate">{value}</p>,
       width: 'w-[100px]',
     },
     {
@@ -87,7 +89,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'jobTitle',
       }),
       accessor: 'jobTitle',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => <p className="leading-loose truncate">{value}</p>,
       width: 'w-[100px]',
     },
     {
@@ -109,7 +111,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'email',
       }),
       accessor: 'email',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => <p className="leading-loose truncate">{value}</p>,
       width: 'w-[150px]',
     },
     {
@@ -119,7 +121,11 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'contact',
       }),
       accessor: 'contact',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => (
+        <p className="leading-loose">
+          {value ? formatPhoneNumberIntl(value) || '--' : '--'}
+        </p>
+      ),
       width: 'w-[100px]',
     },
     {
@@ -154,7 +160,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'name',
       }),
       accessor: 'name',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => <p className="leading-loose truncate">{value}</p>,
       width: 'w-[60px]',
     },
 
@@ -177,7 +183,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'email',
       }),
       accessor: 'email',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => <p className="leading-loose truncate">{value}</p>,
       width: 'w-[120px]',
     },
     {
@@ -187,7 +193,12 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
         sortBy: 'contact',
       }),
       accessor: 'contact',
-      Cell: ({ value }) => <p className="leading-loose">{value}</p>,
+      Cell: ({ value }) => (
+        <p className="leading-loose">
+          {' '}
+          {value ? formatPhoneNumberIntl(value) || '--' : '--'}
+        </p>
+      ),
       width: 'w-[50px]',
     },
     {

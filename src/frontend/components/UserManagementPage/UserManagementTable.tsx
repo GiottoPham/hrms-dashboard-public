@@ -82,13 +82,19 @@ export const UserManagementTable = () => {
       Header: createHeader({ headerText: 'ID', sortBy: 'id' }),
       accessor: 'id',
       Cell: ({ value }) => <p>{value}</p>,
-      width: 'w-[68px]',
+      width: 'w-[60px]',
+    },
+    {
+      Header: createHeader({ headerText: 'Employee ID', sortBy: 'eid' }),
+      accessor: 'eid',
+      Cell: ({ value }) => <p>{value ? value : 'Not Assigned Yet'}</p>,
+      width: 'w-[150px]',
     },
     {
       Header: createHeader({ headerText: 'Username', sortBy: 'username' }),
       accessor: 'username',
-      Cell: ({ value }) => <p>{value}</p>,
-      width: 'w-[250px]',
+      Cell: ({ value }) => <p className="truncate">{value}</p>,
+      width: 'w-[150px]',
     },
     {
       Header: createHeader({ headerText: 'Role', sortBy: 'roleid' }),
@@ -96,13 +102,13 @@ export const UserManagementTable = () => {
       Cell: ({ value }) => (
         <p>{roleFake.find((role) => role.id === value)?.name}</p>
       ),
-      width: 'w-[250px]',
+      width: 'w-[150px]',
     },
     {
       Header: createHeader({ headerText: 'Status', sortBy: 'status' }),
       accessor: 'status',
       Cell: ({ value }) => <p>{capitalize(value)}</p>,
-      width: 'w-[250px]',
+      width: 'w-[150px]',
     },
     {
       id: 'actionCell',

@@ -144,7 +144,9 @@ export const EmployeePayroll = () => {
             <p>I. Total Derived Income</p>
           </div>
           <div className="w-1/4 flex px-10 items-center h-full"></div>
-          <div className="w-1/4 flex px-5 items-center h-full"></div>
+          <div className="w-1/4 flex px-5 items-center h-full">
+            (I.A) + (I.B)
+          </div>
           <div className="w-1/4 flex px-5 items-center h-full">
             {payroll.totalDerivedIncome
               ? currencyFormatter(payroll.totalDerivedIncome)
@@ -157,7 +159,9 @@ export const EmployeePayroll = () => {
             <p>A. Derived Salary</p>
           </div>
           <div className="w-1/4 flex px-10 items-center h-full"></div>
-          <div className="w-1/4 flex px-5 items-center h-full"></div>
+          <div className="w-1/4 flex px-5 items-center h-full">
+            ((1) + (2))*((5) + (7))/(4)
+          </div>
           <div className="w-1/4 flex px-5 items-center h-full">
             {currencyFormatter(payroll?.derivedSalary) || '0 VND'}
           </div>
@@ -217,7 +221,9 @@ export const EmployeePayroll = () => {
             <p>II. Total Deduction</p>
           </div>
           <div className="w-1/4 flex px-10 items-center h-full"></div>
-          <div className="w-1/4 flex px-5 items-center h-full"></div>
+          <div className="w-1/4 flex px-5 items-center h-full">
+            (II.A) + (II.B)
+          </div>
           <div className="w-1/4 flex px-5 items-center h-full">
             {currencyFormatter(payroll?.totalDeduction) || '0 VND'}
           </div>

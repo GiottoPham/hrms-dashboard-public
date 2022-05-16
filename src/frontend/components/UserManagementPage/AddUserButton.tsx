@@ -33,7 +33,11 @@ export const AddUserButton = ({
   const DEFAULT_USER: PartialDeep<UserInputParams> = {
     username: userDetail?.username || '',
     password: userDetail?.password || '',
-    status: UserStatus.Enable,
+    status: userDetail?.status
+      ? userDetail.status.toString() === 'ENABLE'
+        ? UserStatus.Enable
+        : UserStatus.Disable
+      : UserStatus.Enable,
     roleid: userDetail?.roleid,
   }
   const [edit, setEdit] = useState(isEdit)

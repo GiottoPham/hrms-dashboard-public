@@ -8,29 +8,33 @@ export const UnitTable = () => {
       {isLoading ? (
         <UnitCardSkeleton />
       ) : (
-        units.map(
-          ({
-            id,
-            name,
-            type,
-            subUnits,
-            peopleNumber,
-            description,
-            managerOfUnitId,
-          }) => (
-            <div key={id} className="mt-5">
-              <ListUnitCard
-                id={id}
-                name={name}
-                type={type}
-                subUnits={subUnits}
-                peopleNumber={peopleNumber}
-                description={description}
-                managerOfUnitId={managerOfUnitId}
-              />
-            </div>
+        units
+          .sort((a, b) =>
+            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
           )
-        )
+          .map(
+            ({
+              id,
+              name,
+              type,
+              subUnits,
+              peopleNumber,
+              description,
+              managerOfUnitId,
+            }) => (
+              <div key={id} className="mt-5">
+                <ListUnitCard
+                  id={id}
+                  name={name}
+                  type={type}
+                  subUnits={subUnits}
+                  peopleNumber={peopleNumber}
+                  description={description}
+                  managerOfUnitId={managerOfUnitId}
+                />
+              </div>
+            )
+          )
       )}
     </div>
   )

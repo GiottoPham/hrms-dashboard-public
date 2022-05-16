@@ -17,6 +17,7 @@ export const UnitCard = ({
   handleClick,
   description,
   managerOfUnitId,
+  noMore,
 }: {
   id: number
   name: string
@@ -25,6 +26,7 @@ export const UnitCard = ({
   description: string
   handleClick: () => void
   managerOfUnitId: number
+  noMore?: boolean
 }) => {
   const [toggle, setToggle] = useState(false)
   return (
@@ -136,18 +138,22 @@ export const UnitCard = ({
             </Popover>
           )}
         />
-        <IconButton
-          onClick={() => {
-            setToggle(!toggle)
-            handleClick()
-          }}
-        >
-          {toggle ? (
-            <KeyboardArrowDownIcon className="w-6 h-6" />
-          ) : (
-            <KeyboardArrowUpIcon className="w-6 h-6" />
-          )}
-        </IconButton>
+        {!noMore ? (
+          <IconButton
+            onClick={() => {
+              setToggle(!toggle)
+              handleClick()
+            }}
+          >
+            {toggle ? (
+              <KeyboardArrowDownIcon className="w-6 h-6" />
+            ) : (
+              <KeyboardArrowUpIcon className="w-6 h-6" />
+            )}
+          </IconButton>
+        ) : (
+          <div className="w-10"></div>
+        )}
       </div>
     </div>
   )

@@ -74,8 +74,8 @@ export const JobTable = () => {
     {
       Header: createHeader({ headerText: 'Job Title', sortBy: 'title' }),
       accessor: 'title',
-      Cell: ({ value }) => <p>{value}</p>,
-      width: 'w-[100px]',
+      Cell: ({ value }) => <p className="truncate">{value}</p>,
+      width: 'w-[150px]',
     },
     {
       Header: createHeader({
@@ -84,14 +84,14 @@ export const JobTable = () => {
       }),
       accessor: 'description',
       Cell: ({ value }) => (
-        <p className="leading-loose line-clamp-1">{value}</p>
+        <p className="leading-loose line-clamp-2">{value}</p>
       ),
       width: 'w-[200px]',
     },
     {
       Header: createHeader({ headerText: 'Note', sortBy: 'note' }),
       accessor: 'note',
-      Cell: ({ value }) => <p className="line-clamp-1">{value}</p>,
+      Cell: ({ value }) => <p className="line-clamp-2">{value}</p>,
       width: 'w-[200px]',
     },
     {

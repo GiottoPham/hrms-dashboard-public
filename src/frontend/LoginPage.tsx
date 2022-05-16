@@ -10,6 +10,7 @@ import { useLogin } from '@frontend/state/auth-mutation'
 import { useToast } from '@frontend/framework/Toast'
 import LoginImage from '../assets/images/HomePage.png'
 import Image from 'next/image'
+import Head from 'next/head'
 
 export const LoginPage = () => {
   const { login } = useLogin()
@@ -43,6 +44,9 @@ export const LoginPage = () => {
   const [showPass, setShowPass] = useState(false)
   return (
     <div className="min-h-screen w-full min-w-[1366px] grid place-items-center relative">
+      <Head>
+        <title>NBN-HRMS Dashboard</title>
+      </Head>
       <div className="absolute top-0 left-0 w-full h-full">
         <Image src={LoginImage} alt="picture-job" layout="fill" />
       </div>

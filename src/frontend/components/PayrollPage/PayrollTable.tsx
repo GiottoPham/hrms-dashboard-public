@@ -17,6 +17,8 @@ import { useEmployeeParams } from '@frontend/state/employee-params'
 import { useEmployees } from '@frontend/state/employee-queries'
 import { useUnits } from '@frontend/state/unit-queries'
 import { usePayrollPdf } from '@frontend/state/payroll-queries'
+import { formatPhoneNumberIntl } from 'react-phone-number-input'
+
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -96,7 +98,7 @@ export const PayrollTable = () => {
       Header: createHeader({ headerText: 'Name', sortBy: 'firstName' }),
       accessor: 'personalDetail',
       Cell: ({ value }) => (
-        <p>
+        <p className="truncate">
           {value?.firstName || ''} {value?.lastName || ''}
         </p>
       ),
@@ -107,7 +109,9 @@ export const PayrollTable = () => {
       Header: createHeader({ headerText: 'Unit', sortBy: 'departmentId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{units.find((unit) => unit.id === value?.departmentId)?.name}</p>
+        <p className="truncate">
+          {units.find((unit) => unit.id === value?.departmentId)?.name}
+        </p>
       ),
       width: 'w-[150px]',
     },
@@ -115,14 +119,18 @@ export const PayrollTable = () => {
       id: 'email',
       Header: createHeader({ headerText: 'Email', sortBy: 'email' }),
       accessor: 'personalDetail',
-      Cell: ({ value }) => <p>{value?.email || ''}</p>,
+      Cell: ({ value }) => <p className="truncate">{value?.email || ''}</p>,
       width: 'w-[250px]',
     },
     {
       id: 'phone',
       Header: createHeader({ headerText: 'Contact', sortBy: 'phone' }),
       accessor: 'personalDetail',
-      Cell: ({ value }) => <p>{value?.phone || ''}</p>,
+      Cell: ({ value }) => (
+        <p>
+          {value?.phone ? formatPhoneNumberIntl(value.phone) || '--' : '--'}
+        </p>
+      ),
       width: 'w-[150px]',
     },
     {

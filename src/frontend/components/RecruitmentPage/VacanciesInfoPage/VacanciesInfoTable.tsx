@@ -92,7 +92,7 @@ export const VacanciesInfoTable = () => {
       }),
       accessor: 'hiringManagerId',
       Cell: ({ value }) => (
-        <p className="leading-loose">
+        <p className="leading-loose truncate">
           {
             employees.find((emp) => emp?.id === value)?.personalDetail
               ?.firstName
@@ -110,7 +110,7 @@ export const VacanciesInfoTable = () => {
       }),
       accessor: 'positionId',
       Cell: ({ value }) => (
-        <p className="leading-loose">
+        <p className="leading-loose truncate">
           {jobs.find((job) => job.id === value)?.title}
         </p>
       ),
@@ -124,7 +124,7 @@ export const VacanciesInfoTable = () => {
       }),
       accessor: 'departmentId',
       Cell: ({ value }) => (
-        <p className="leading-loose">
+        <p className="leading-loose truncate">
           {units.find((unit) => unit.id === value)?.name}
         </p>
       ),

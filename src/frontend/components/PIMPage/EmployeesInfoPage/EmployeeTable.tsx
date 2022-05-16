@@ -13,6 +13,7 @@ import { useEmployees } from '@frontend/state/employee-queries'
 import { useJobs } from '@frontend/state/job-queries'
 import { useJobParams } from '@frontend/state/job-params'
 import { useUnits } from '@frontend/state/unit-queries'
+import { formatPhoneNumberIntl } from 'react-phone-number-input'
 
 type CreateHeaderInput = {
   headerText: string
@@ -100,7 +101,7 @@ export const EmployeeTable = () => {
       Header: createHeader({ headerText: 'Name', sortBy: 'firstName' }),
       accessor: 'personalDetail',
       Cell: ({ value }) => (
-        <p>
+        <p className="truncate">
           {value?.firstName || ''} {value?.lastName || ''}
         </p>
       ),
@@ -111,7 +112,9 @@ export const EmployeeTable = () => {
       Header: createHeader({ headerText: 'Job Title', sortBy: 'jobId' }),
       accessor: 'jobDetail',
       Cell: ({ value }) => (
-        <p>{jobs.find((job) => job.id === value?.jobId)?.title}</p>
+        <p className="truncate">
+          {jobs.find((job) => job.id === value?.jobId)?.title}
+        </p>
       ),
       width: 'w-[250px]',
     },
@@ -128,14 +131,16 @@ export const EmployeeTable = () => {
       id: 'email',
       Header: createHeader({ headerText: 'Email', sortBy: 'email' }),
       accessor: 'personalDetail',
-      Cell: ({ value }) => <p>{value?.email || ''}</p>,
+      Cell: ({ value }) => <p className="truncate">{value?.email || ''}</p>,
       width: 'w-[250px]',
     },
     {
       id: 'phone',
       Header: createHeader({ headerText: 'Contact', sortBy: 'phone' }),
       accessor: 'personalDetail',
-      Cell: ({ value }) => <p>{value?.phone || ''}</p>,
+      Cell: ({ value }) => (
+        <p>{value?.phone ? formatPhoneNumberIntl(value.phone) : ''}</p>
+      ),
       width: 'w-[150px]',
     },
     {

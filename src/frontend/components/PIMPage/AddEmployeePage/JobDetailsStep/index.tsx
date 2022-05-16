@@ -69,7 +69,7 @@ export const JobDetailsStep = ({
             <div className="border-b border-gray-500 text-gray-500 text-xl">
               Job Details
             </div>
-            <div className="mt-2 py-5 overflow-y-auto">
+            <div className="mt-2 py-5 overflow-y-auto space-y-2">
               <div className="flex space-x-10">
                 <div className="w-1/3">
                   <JoinDatePicker label="Join Date" />
