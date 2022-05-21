@@ -1,4 +1,8 @@
-import type { LeaveDetails, LeaveParams } from '@frontend/types/leave'
+import type {
+  LeaveDetails,
+  LeaveNotification,
+  LeaveParams,
+} from '@frontend/types/leave'
 import axios from 'axios'
 
 export const fetchLeaves = (
@@ -20,6 +24,29 @@ export const updateLeaveStatusRequest = (listIds: number[], status: number) => {
       data: {
         listIds,
         status,
+      },
+    })
+    .then((res) => res.data)
+}
+export const sendNotification = ({ title, body }: LeaveNotification) => {
+  const newAxios = axios.create({
+    baseURL: 'https://arcane-taiga-55468.herokuapp.com/https://exp.host',
+    headers: {
+      Authorization: '',
+    },
+  })
+  return newAxios
+    .request({
+      method: 'POST',
+      url: `/--/api/v2/push/send`,
+      data: {
+        to: [
+          'ExponentPushToken[nywcawIdX9ivla1Drzr2y3]',
+          'ExponentPushToken[HBEcdaIu5Kk4PL1LYdpXop]',
+        ],
+        title,
+        body,
+        sound: 'default',
       },
     })
     .then((res) => res.data)

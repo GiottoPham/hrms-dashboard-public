@@ -1,10 +1,21 @@
-import { useCheckedLeaveDetail } from '@frontend/state/leave-params'
+import {
+  useCheckedLeaveDetail,
+  useLeaveParams,
+} from '@frontend/state/leave-params'
 import { Button, CircularProgress } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
-import { useUpdateLeaveStatus } from '@frontend/state/leave-mutation'
+import {
+  useSendLeaveNotifications,
+  useUpdateLeaveStatus,
+} from '@frontend/state/leave-mutation'
+import { formatDate } from '@frontend/framework/utils/date'
 export const AcceptSelectedButton = () => {
   const { checkedLeaveIds, setCheckedLeaveDetail } = useCheckedLeaveDetail()
   const { updateLeaveStatus, isLoading } = useUpdateLeaveStatus()
+  const { sendNotifications } = useSendLeaveNotifications()
+  const {
+    leaveParams: { date },
+  } = useLeaveParams()
   return (
     <Button
       disabled={checkedLeaveIds.length === 0}
@@ -21,9 +32,17 @@ export const AcceptSelectedButton = () => {
         )
       }
       onClick={() => {
-        updateLeaveStatus({ listIds: checkedLeaveIds, status: 0 }).finally(() =>
-          setCheckedLeaveDetail({})
-        )
+        updateLeaveStatus({ listIds: checkedLeaveIds, status: 0 })
+          .then(() => {
+            sendNotifications({
+              title: 'Accept Leaves',
+              body: `All of your leaves on ${formatDate(
+                date,
+                'MM/dd/yyyy'
+              )} were accepted`,
+            })
+          })
+          .finally(() => setCheckedLeaveDetail({}))
       }}
     >
       Accept all selected

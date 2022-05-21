@@ -25,3 +25,7 @@ export type LeaveDetails = {
   last: boolean
   leaveEmployeeList: LeaveDetail[]
 }
+export type LeaveNotification = {
+  title: string
+  body: string
+}
