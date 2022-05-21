@@ -174,10 +174,13 @@ export const PayrollTable = () => {
 
       <div className="flex space-x-10">
         <div
-          className={cx('overflow-auto flex flex-col', {
-            'w-2/5': showPayroll,
-            'w-full': !showPayroll,
-          })}
+          className={cx(
+            'overflow-auto flex flex-col transition-width duration-300 ease-in-out flex-shrink-0',
+            {
+              'w-2/5': showPayroll,
+              'w-full': !showPayroll,
+            }
+          )}
         >
           <Table<PartialDeep<Employee>>
             data={employees as Employee[]}

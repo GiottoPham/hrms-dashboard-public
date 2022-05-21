@@ -22,11 +22,17 @@ export const EmployeePayroll = () => {
   const [showBonus, setShowBonus] = useState(false)
   const [showTax, setShowTax] = useState(false)
   const { payroll } = usePayroll(payrollParams)
+  const { showPayroll } = useShowPayroll()
   if (!payroll) return null
   return (
-    <div className="flex-grow relative h-full font-nunito text-sm font-semibold">
+    <div
+      className={cx(
+        'relative font-nunito text-sm font-semibold transition-width duration-300 ease-in-out',
+        { 'w-0': !showPayroll, 'w-full h-full': showPayroll }
+      )}
+    >
       <div className="absolute left-0 top-0 -mt-5 -mr-2">
-        Payroll of employee {payrollParams?.employeeId}
+        Payroll of employee {payrollParams?.employeeId} {}
       </div>
       <div className="absolute right-0 top-0 -mt-5 -mr-2">
         <IconButton className="bg-white" onClick={() => setShowPayroll(false)}>
