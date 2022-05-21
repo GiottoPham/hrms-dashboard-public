@@ -2,7 +2,7 @@ import {
   createEmployeeRequest,
   editEmployeeRequest,
 } from '@frontend/state/employee-api'
-import { EMPLOYEES } from '@frontend/state/query-keys'
+import { ATTENDANCES, EMPLOYEES, USERS } from '@frontend/state/query-keys'
 import type {
   EmployeeParams,
   InsuranceInputParams,
@@ -17,6 +17,8 @@ export const useCreateEmployee = () => {
       createEmployeeRequest(employeeParams),
     onSuccess: () => {
       queryClient.refetchQueries([EMPLOYEES])
+      queryClient.refetchQueries([USERS])
+      queryClient.refetchQueries([ATTENDANCES])
     },
     retry: false,
   })
