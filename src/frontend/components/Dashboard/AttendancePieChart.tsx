@@ -13,8 +13,6 @@ import {
   RadialLinearScale,
   ArcElement,
 } from 'chart.js'
-import { useEmployees } from '@frontend/state/employee-queries'
-import { useEmployeeParams } from '@frontend/state/employee-params'
 
 export const AttendancePieChart = () => {
   ChartJS.register(
@@ -30,17 +28,11 @@ export const AttendancePieChart = () => {
   )
   const { chartParamsNumber } = useChatParamsNumber()
   const { chartNumber } = useChartNumber(chartParamsNumber)
-  const { employeeParams } = useEmployeeParams()
-  const { employees } = useEmployees(employeeParams)
   const labels = ['On Time', 'Late/Early', 'Off']
-  const onTimeValue = chartNumber?.onTime.reduce((a, b) => a + b)
-  const lateEarlyValue = chartNumber?.lateEarly.reduce((a, b) => a + b)
-  const leaveValue = chartNumber?.off.reduce((a, b) => a + b)
-  const values = [
-    onTimeValue ? onTimeValue : employees?.length || 0,
-    lateEarlyValue ? lateEarlyValue : employees?.length || 0,
-    leaveValue ? leaveValue : 1,
-  ]
+  const onTimeValue = chartNumber?.onTime.reduce((a, b) => a + b) || 0
+  const lateEarlyValue = chartNumber?.lateEarly.reduce((a, b) => a + b) || 0
+  const leaveValue = chartNumber?.off.reduce((a, b) => a + b) || 0
+  const values = [onTimeValue, lateEarlyValue, leaveValue]
   const options = {
     responsive: true,
     plugins: {

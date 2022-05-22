@@ -4,7 +4,8 @@ import { Avatar, Button } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useLogout } from '@frontend/state/auth-mutation'
-
+import { roleFake } from '@components/UserManagementPage/UserManagementTable'
+import cx from 'classnames'
 type AppBarContentProps = {
   renderHeader?: () => JSX.Element
 }
@@ -18,8 +19,23 @@ export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
       <div className="w-1/3"></div>
       {currentUser ? (
         <div className="flex items-center">
-          <p className="font-bold text-secondary-600">{currentUser.username}</p>
-
+          <div className="flex flex-col">
+            <p className="font-bold text-secondary-600">
+              {currentUser.username}
+            </p>
+            <p
+              className={cx(
+                'font-bold font-nunito bg-white py-1 rounded-lg text-xs text-center',
+                {
+                  'text-info': currentUser.roleid === 1,
+                  'text-primary': currentUser.roleid === 2,
+                  'text-danger': currentUser.roleid === 3,
+                }
+              )}
+            >
+              {roleFake.find((role) => role.id === currentUser.roleid)?.name}
+            </p>
+          </div>
           <ButtonWithPopover
             renderButton={({ openPopover }) => (
               <Button
@@ -30,6 +46,7 @@ export const AppBarContent = ({ renderHeader }: AppBarContentProps) => {
                 <Avatar classes={{ root: 'h-9 w-9 font-nunito bg-secondary' }}>
                   {currentUser.username[0]}
                 </Avatar>
+
                 <ExpandMoreIcon className="w-4 h-4 ml-2" />
               </Button>
             )}

@@ -61,23 +61,23 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 
   return Header
 }
-
+export const roleFake = [
+  {
+    id: 1,
+    name: 'User',
+  },
+  {
+    id: 2,
+    name: 'Super User',
+  },
+  {
+    id: 3,
+    name: 'Admin',
+  },
+]
 export const UserManagementTable = () => {
   const { userParams } = useUserParams()
-  const roleFake = [
-    {
-      id: 1,
-      name: 'User',
-    },
-    {
-      id: 2,
-      name: 'Super User',
-    },
-    {
-      id: 3,
-      name: 'Admin',
-    },
-  ]
+
   const columns: Column<UserDetail>[] = [
     {
       Header: createHeader({ headerText: 'ID', sortBy: 'id' }),

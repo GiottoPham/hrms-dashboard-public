@@ -77,9 +77,7 @@ export const AttendanceChart = () => {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     datasets: [
       {
-        data: chartHour?.every((v) => v === 0)
-          ? [6.5, 6, 7, 6, 5, 7.5]
-          : chartHour,
+        data: chartHour,
         fill: true,
         backgroundColor: '#FFAC2F',
         borderColor: '#212936',

@@ -11,9 +11,6 @@ import {
 import { Bar } from 'react-chartjs-2'
 import { useChartNumber } from '@frontend/state/chart-queries'
 import { useChatParamsNumber } from '@frontend/state/chart-params'
-import { useEmployeeParams } from '@frontend/state/employee-params'
-import { useEmployees } from '@frontend/state/employee-queries'
-import { randomNumbersWithFixedSum } from '@components/Dashboard/utils'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -62,33 +59,22 @@ const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 export const AttendanceColumnChart = () => {
   const { chartParamsNumber } = useChatParamsNumber()
   const { chartNumber } = useChartNumber(chartParamsNumber)
-  const { employeeParams } = useEmployeeParams()
-  const { employees } = useEmployees(employeeParams)
-  const randomInteger1 = randomNumbersWithFixedSum(7, employees?.length || 0)
-  const randomInteger2 = randomNumbersWithFixedSum(7, employees?.length || 0)
-  const randomInteger3 = randomNumbersWithFixedSum(7, employees?.length || 0)
   const data = {
     labels,
     datasets: [
       {
         label: 'Ontime',
-        data: chartNumber?.onTime.every((v) => v === 0)
-          ? randomInteger1
-          : chartNumber?.onTime,
+        data: chartNumber?.onTime,
         backgroundColor: '#FFAC2F',
       },
       {
         label: 'Late/Early',
-        data: chartNumber?.lateEarly.every((v) => v === 0)
-          ? randomInteger2
-          : chartNumber?.lateEarly,
+        data: chartNumber?.lateEarly,
         backgroundColor: '#fef6e7',
       },
       {
         label: 'Off',
-        data: chartNumber?.off.every((v) => v === 0)
-          ? randomInteger3
-          : chartNumber?.off,
+        data: chartNumber?.off,
         backgroundColor: '#FFBE5C',
       },
     ],
