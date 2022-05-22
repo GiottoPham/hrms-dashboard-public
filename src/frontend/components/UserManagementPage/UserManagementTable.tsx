@@ -11,6 +11,7 @@ import type { UserDetail } from '@frontend/types/user'
 import { capitalize } from 'lodash'
 import { useUserParams } from '@frontend/state/user-params'
 import { useUsers } from '@frontend/state/user-queries'
+import cx from 'classnames'
 type CreateHeaderInput = {
   headerText: string
   sortBy: keyof UserDetail
@@ -100,14 +101,31 @@ export const UserManagementTable = () => {
       Header: createHeader({ headerText: 'Role', sortBy: 'roleid' }),
       accessor: 'roleid',
       Cell: ({ value }) => (
-        <p>{roleFake.find((role) => role.id === value)?.name}</p>
+        <p
+          className={cx('font-bold font-nunito', {
+            'text-info': value === 1,
+            'text-primary': value === 2,
+            'text-danger': value === 3,
+          })}
+        >
+          {roleFake.find((role) => role.id === value)?.name}
+        </p>
       ),
       width: 'w-[150px]',
     },
     {
       Header: createHeader({ headerText: 'Status', sortBy: 'status' }),
       accessor: 'status',
-      Cell: ({ value }) => <p>{capitalize(value)}</p>,
+      Cell: ({ value }) => (
+        <p
+          className={cx('font-bold', {
+            'text-success': capitalize(value) === 'Enable',
+            'text-danger': capitalize(value) === 'Disable',
+          })}
+        >
+          {capitalize(value)}
+        </p>
+      ),
       width: 'w-[150px]',
     },
     {
