@@ -9,6 +9,7 @@ import { ButtonWithPopover } from '@frontend/framework/ButtonWithPopover'
 import { AddUnitButton } from '@components/OrganizationPage/AddUnitButton'
 import { DeleteUnitButton } from '@components/OrganizationPage/DeleteUnitButton'
 import { EditUnitButton } from '@components/OrganizationPage/EditUnitButton'
+import { DepartmentEmployeeButton } from '@components/OrganizationPage/DepartmentEmployeeButton'
 export const UnitCard = ({
   id,
   name,
@@ -37,7 +38,14 @@ export const UnitCard = ({
 
       <div className="absolute right-4 flex items-center space-x-4">
         <div className="flex items-center space-x-4">
-          <RecruitmentIcon className="w-5 h-5 text-primary" />
+          <DepartmentEmployeeButton
+            renderButton={({ openModal }) => (
+              <IconButton onClick={openModal}>
+                <RecruitmentIcon className="w-5 h-5 text-primary" />
+              </IconButton>
+            )}
+            id={id}
+          />
           <p className="font-nunito text-sm">{peopleNumber || 0} people</p>
         </div>
         <ButtonWithPopover

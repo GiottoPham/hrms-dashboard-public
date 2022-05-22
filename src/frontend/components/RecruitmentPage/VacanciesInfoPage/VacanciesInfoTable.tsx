@@ -180,7 +180,6 @@ export const VacanciesInfoTable = () => {
       accessor: 'id',
       Cell: ({ value, row }) => (
         <div className="flex">
-          {' '}
           <CandidateVacanciesButton
             id={value}
             renderButton={({ openModal }) => (
