@@ -39,6 +39,7 @@ export const AddUserButton = ({
         : UserStatus.Disable
       : UserStatus.Enable,
     roleid: userDetail?.roleid,
+    eid: userDetail?.eid,
   }
   const [edit, setEdit] = useState(isEdit)
   const { openToast } = useToast()

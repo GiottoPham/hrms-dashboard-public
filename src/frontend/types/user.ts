@@ -7,8 +7,9 @@ export type UserInputParams = {
   roleid: number
   password: string
   status: UserStatus
+  eid: number
 }
-export type UserDetail = UserInputParams & { id: number; eid: number }
+export type UserDetail = UserInputParams & { id: number }
 
 export type UserDetailParams = {
   pagination?: number // 1 page = 10 item
