@@ -99,7 +99,7 @@ export const AddJobButton = ({
             >
               <div className="flex flex-col font-nunito bg-white h-full w-full px-8 py-6 md:w-8/12 lg:w-7/12 xl:w-6/12 md:h-5/6 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl md:overflow-y-auto">
                 <div className="border-b border-gray-500 text-gray-500 text-xl">
-                  Add New Job
+                  {isEdit ? 'Edit Job' : 'Add New Job'}
                 </div>
                 <div className="border-b border-gray-500 py-4 flex-grow">
                   <div className="w-full">
