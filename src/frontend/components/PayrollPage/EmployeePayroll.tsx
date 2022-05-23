@@ -196,7 +196,7 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payroll?.totalBonus) || '0 VND'}
+                  {currencyFormatter(payroll?.anotherIncome) || '0 VND'}
                 </div>
               </div>
             </CardActionArea>
