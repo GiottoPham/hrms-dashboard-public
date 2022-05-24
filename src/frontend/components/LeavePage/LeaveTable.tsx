@@ -127,6 +127,16 @@ export const LeaveTable = () => {
       width: 'w-[120px]',
     },
     {
+      id: 'TypeCell',
+      Header: createHeader({
+        headerText: 'Leave Type',
+        sortBy: 'id',
+      }),
+      accessor: 'id',
+      Cell: () => <p className="leading-loose">Annual</p>,
+      width: 'w-[100px]',
+    },
+    {
       id: 'DateCell',
       Header: createHeader({
         headerText: 'Date of application',
