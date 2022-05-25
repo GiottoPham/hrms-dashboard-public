@@ -14,7 +14,8 @@ import { useJobs } from '@frontend/state/job-queries'
 import { useJobParams } from '@frontend/state/job-params'
 import { useUnits } from '@frontend/state/unit-queries'
 import { formatPhoneNumberIntl } from 'react-phone-number-input'
-
+import { EmployeeQR } from '@components/PIMPage/EmployeesInfoPage/EmployeeQR'
+import QrCodeIcon from '@mui/icons-material/QrCode'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -159,9 +160,17 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
                   </IconButton>
                 )}
               ></EditEmployeeButton>
+              <EmployeeQR
+                id={row.original.id}
+                renderButton={({ openModal }) => (
+                  <IconButton onClick={openModal}>
+                    <QrCodeIcon className="w-5 h-5" />
+                  </IconButton>
+                )}
+              />
             </div>
           ),
-          width: 'w-[50px]',
+          width: 'w-[80px]',
         },
       ]
     : [
