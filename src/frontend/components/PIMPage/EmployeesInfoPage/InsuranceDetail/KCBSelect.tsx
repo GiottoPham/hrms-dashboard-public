@@ -25,7 +25,7 @@ export const KCBSelect = ({ disabled = false }: { disabled?: boolean }) => {
   return (
     <>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
-        KCB Ban đầu
+        PHSE
       </InputLabel>
       <Autocomplete
         disabled={disabled}
