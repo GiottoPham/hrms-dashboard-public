@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@mui/material'
+import { Button, CircularProgress, IconButton } from '@mui/material'
 import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
@@ -10,6 +10,8 @@ import { useCandidates } from '@frontend/state/candidate-queries'
 import { useCandidateParams } from '@frontend/state/candidate-params'
 import LinkIcon from '@mui/icons-material/Link'
 import { formatPhoneNumberIntl } from 'react-phone-number-input'
+import { usePromoteCandidate } from '@frontend/state/candidate-mutation'
+import { useState } from 'react'
 
 type CreateHeaderInput = {
   headerText: string
@@ -63,6 +65,8 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
     jobRecruitmentId: vacanciesId,
   })
   const candidates = candidateList?.candidates || []
+  const { promoteCandidate, isLoading: promoteLoading } = usePromoteCandidate()
+  const [promoteId, setPromoteId] = useState<number>()
   const columns: Column<Candidate>[] = [
     {
       accessor: 'id',
@@ -151,6 +155,35 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
           <p>No Link</p>
         ),
       width: 'w-[50px]',
+    },
+    {
+      id: 'promote',
+      Header: createHeader({
+        headerText: 'Promote',
+        sortBy: 'id',
+      }),
+      accessor: 'id',
+      Cell: ({ value }) => (
+        <Button
+          onClick={() => {
+            setPromoteId(value)
+            promoteCandidate(value)
+          }}
+          variant="outlined"
+          className="text-sm rounded-full font-nunito normal-case font-bold shadow-none mr-5 bg-white border-2"
+        >
+          {promoteLoading && promoteId === value && (
+            <CircularProgress
+              color="primary"
+              size={20}
+              thickness={5}
+              className="mr-2"
+            />
+          )}
+          Promote
+        </Button>
+      ),
+      width: 'w-[80px]',
     },
   ]
   const columnsWithId: Column<Candidate>[] = [

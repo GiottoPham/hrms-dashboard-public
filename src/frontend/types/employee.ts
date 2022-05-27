@@ -27,6 +27,7 @@ export type JobDetailInputParams = {
   salaryGroup: number
   salary: number
   bonus: Bonus[]
+  shiftId: number
 }
 export type AssignAccountInputParams = {
   type: 'available' | 'new'

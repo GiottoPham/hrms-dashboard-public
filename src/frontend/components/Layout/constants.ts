@@ -70,7 +70,8 @@ export const SIDEBAR_NAVIGATIONS = [
     href: '',
     subNavs: [
       { label: 'Location', href: '/setting/location' },
-      { label: 'Time', href: '/setting/time' },
+      { label: 'Shift', href: '/setting/shift' },
+      { label: 'QR Code', href: '/qr' },
     ],
   },
 ]

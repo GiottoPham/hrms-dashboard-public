@@ -14,6 +14,7 @@ type TableProps<T extends Record<string, unknown>> = TableOptions<T> & {
   rowCount?: number
   renderRow?: (inputs: { row: Row<T>; rowHeight: number }) => JSX.Element
   isLoading?: boolean
+  onClickRow?: () => void
 }
 
 export const Table = <T extends Record<string, unknown>>({
@@ -26,6 +27,7 @@ export const Table = <T extends Record<string, unknown>>({
   rowCount = 12,
   renderRow,
   isLoading,
+  onClickRow,
 }: TableProps<T>) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ data, columns })
@@ -89,10 +91,13 @@ export const Table = <T extends Record<string, unknown>>({
                         {...row.getRowProps()}
                         className={cx({
                           'bg-blue-100': checkedRowIndices.includes(row.index),
-                          'border-r-4 border-r-primary':
-                            selectedRowIndex === row.index,
+                          ' bg-primary-300': selectedRowIndex === row.index,
                           'bg-primary-100': row.index % 2 === 0,
+                          'cursor-pointer': onClickRow,
                         })}
+                        onClick={() => {
+                          if (onClickRow) onClickRow()
+                        }}
                       >
                         {row.cells.map((cell) => (
                           // eslint-disable-next-line react/jsx-key

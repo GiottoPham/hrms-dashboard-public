@@ -27,3 +27,14 @@ export const fetchAttendStatus = (
     })
     .then((res) => res.data)
 }
+export const fetchPaymentMonth = (year: string) => {
+  return axios
+    .request({
+      method: 'GET',
+      url: '/api/v1/chart/totalPaymentValues',
+      params: {
+        year,
+      },
+    })
+    .then((res) => res.data)
+}

@@ -48,3 +48,4 @@ type DateFormat =
   | 'MMM yyyy'
   | 'EEE, MMM dd'
   | 'EEEE' // Monday
+  | 'hh:mm:ss'

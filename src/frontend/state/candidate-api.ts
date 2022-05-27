@@ -33,3 +33,12 @@ export const createCandidatesRequest = (
     })
     .then((res) => res.data)
 }
+export const promoteCandidate = (candidateId: number): Promise<void> => {
+  return axios
+    .request({
+      method: 'POST',
+      url: '/api/v1/promote',
+      data: { candidateId },
+    })
+    .then((res) => res.data)
+}

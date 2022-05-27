@@ -1,5 +1,13 @@
-import { fetchAttendStatus, fetchAverage } from '@frontend/state/chart-api'
-import { CHART_HOUR, CHART_NUMBER } from '@frontend/state/query-keys'
+import {
+  fetchAttendStatus,
+  fetchAverage,
+  fetchPaymentMonth,
+} from '@frontend/state/chart-api'
+import {
+  CHART_HOUR,
+  CHART_NUMBER,
+  PAYMENT_MONTH_CHART,
+} from '@frontend/state/query-keys'
 import type {
   AttendStatus,
   AverageWorkingHour,
@@ -27,4 +35,13 @@ export const useChartNumber = (chartParamsNumber: ChartParams) => {
   })
 
   return { chartNumber, ...rest }
+}
+export const usePaymentMonth = (year: string) => {
+  const { data: paymentMonth, ...rest } = useQuery<AttendStatus, AxiosError>({
+    queryKey: [PAYMENT_MONTH_CHART, year],
+    queryFn: () => fetchPaymentMonth(year),
+    retry: false,
+  })
+
+  return { paymentMonth, ...rest }
 }

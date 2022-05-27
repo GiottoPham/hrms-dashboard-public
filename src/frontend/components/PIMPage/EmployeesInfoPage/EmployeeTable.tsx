@@ -14,8 +14,10 @@ import { useJobs } from '@frontend/state/job-queries'
 import { useJobParams } from '@frontend/state/job-params'
 import { useUnits } from '@frontend/state/unit-queries'
 import { formatPhoneNumberIntl } from 'react-phone-number-input'
-import { EmployeeQR } from '@components/PIMPage/EmployeesInfoPage/EmployeeQR'
-import QrCodeIcon from '@mui/icons-material/QrCode'
+import { useState } from 'react'
+import { TextInput } from '@frontend/framework/TextInput'
+import { SearchOutlined } from '@mui/icons-material'
+import { useShifts } from '@frontend/state/shift-queries'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -71,12 +73,14 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
 }
 
 export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
+  const [empName, setEmpName] = useState('')
   const { employeeParams } = useEmployeeParams()
   const { employees = [], isLoading: employeeLoading } =
     useEmployees(employeeParams)
   const { jobParams } = useJobParams()
   const { jobs = [], isLoading: jobLoading } = useJobs(jobParams)
   const { units, isLoading: unitLoading } = useUnits(false)
+  const { shifts } = useShifts()
   const columns: Column<PartialDeep<Employee>>[] = !departmentId
     ? [
         {
@@ -107,7 +111,7 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
               {value?.firstName || ''} {value?.lastName || ''}
             </p>
           ),
-          width: 'w-[250px]',
+          width: 'w-[200px]',
         },
         {
           id: 'jobTitle',
@@ -118,18 +122,18 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
               {jobs.find((job) => job.id === value?.jobId)?.title}
             </p>
           ),
-          width: 'w-[250px]',
+          width: 'w-[200px]',
         },
         {
           id: 'Unit',
           Header: createHeader({ headerText: 'Unit', sortBy: 'departmentId' }),
           accessor: 'jobDetail',
           Cell: ({ value }) => (
-            <p>
+            <p className="truncate">
               {units?.find((unit) => unit.id === value?.departmentId)?.name}
             </p>
           ),
-          width: 'w-[250px]',
+          width: 'w-[200px]',
         },
         {
           id: 'email',
@@ -148,6 +152,17 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
           width: 'w-[150px]',
         },
         {
+          id: 'shift',
+          Header: createHeader({ headerText: 'Shift', sortBy: 'shiftId' }),
+          accessor: 'jobDetail',
+          Cell: ({ value }) => (
+            <p className="truncate">
+              {shifts?.find((shift) => shift.id === value?.shiftId)?.name}
+            </p>
+          ),
+          width: 'w-[100px]',
+        },
+        {
           id: 'actionCell',
           accessor: 'id',
           Cell: ({ row }) => (
@@ -160,17 +175,9 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
                   </IconButton>
                 )}
               ></EditEmployeeButton>
-              <EmployeeQR
-                id={row.original.id}
-                renderButton={({ openModal }) => (
-                  <IconButton onClick={openModal}>
-                    <QrCodeIcon className="w-5 h-5" />
-                  </IconButton>
-                )}
-              />
             </div>
           ),
-          width: 'w-[80px]',
+          width: 'w-[50px]',
         },
       ]
     : [
@@ -234,13 +241,40 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
       ]
   return (
     <div className="rounded px-10 py-10 flex flex-col">
+      <TextInput
+        id="empName"
+        variant="outlined"
+        placeholder="Employee name, email or contact"
+        InputProps={{
+          classes: {
+            root: 'h-10 rounded-lg font-nunito bg-white text-sm w-1/4 mb-5',
+          },
+          startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
+        }}
+        value={empName}
+        onChange={(e) => setEmpName(e.target.value)}
+      />
       <Table<PartialDeep<Employee>>
         data={
           !departmentId
-            ? employees
-            : employees.filter(
-                (emp) => emp.jobDetail.departmentId === departmentId
+            ? employees.filter((emp) =>
+                (
+                  emp.personalDetail.firstName +
+                  emp.personalDetail.lastName +
+                  emp.personalDetail.email +
+                  emp.personalDetail.phone
+                ).includes(empName)
               )
+            : employees
+                .filter((emp) => emp.jobDetail.departmentId === departmentId)
+                .filter((emp) =>
+                  (
+                    emp.personalDetail.firstName +
+                    emp.personalDetail.lastName +
+                    emp.personalDetail.email +
+                    emp.personalDetail.phone
+                  ).includes(empName)
+                )
         }
         columns={columns}
         rowCount={5}

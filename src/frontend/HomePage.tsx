@@ -1,6 +1,7 @@
 import { AttendanceChart } from '@components/Dashboard/AttendanceChart'
 import { AttendanceColumnChart } from '@components/Dashboard/AttendanceColumnChart'
 import { AttendancePieChart } from '@components/Dashboard/AttendancePieChart'
+import { PaymentMonthChart } from '@components/Dashboard/PaymentMonthChart'
 import { WeekSelect } from '@components/Dashboard/WeekSelect'
 import { Layout } from '@components/Layout/Layout'
 import { AuthGuard } from '@frontend/framework/AuthGuard'
@@ -40,8 +41,8 @@ export const HomePage = () => {
               <AttendancePieChart />
             </div>
           </div>
-          <div className="flex justify-center">
-            <div className="w-7/12">
+          <div className="flex justify-between space-x-10">
+            <div className="w-2/5">
               <div className="bg-white p-5 rounded-lg border-primary border mb-5">
                 <h1 className="text-2xl font-bold">Working Hours Line Chart</h1>
                 <p className="font-nunito">
@@ -50,6 +51,16 @@ export const HomePage = () => {
                 </p>
               </div>
               <AttendanceChart />
+            </div>
+            <div className="w-3/5">
+              <div className="bg-white p-5 rounded-lg border-primary border mb-5">
+                <h1 className="text-2xl font-bold">Working Hours Line Chart</h1>
+                <p className="font-nunito">
+                  This chart is used to compare payment of organization paid for
+                  all employees each month
+                </p>
+              </div>
+              <PaymentMonthChart />
             </div>
           </div>
         </div>

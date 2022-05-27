@@ -1,5 +1,6 @@
 import { PAYROLL_PARAMS } from '@frontend/state/query-keys'
 import type { PayrollParams } from '@frontend/types/payroll-params'
+import { endOfMonth } from 'date-fns'
 import { useCallback } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import type { Updater } from 'react-query/types/core/utils'
@@ -33,6 +34,6 @@ export const usePayrollParams = () => {
 const now = new Date()
 now.setMonth(now.getMonth() - 1)
 const defaultPayrollParams: PayrollParams = {
-  month: now.toISOString(),
+  month: endOfMonth(now).toISOString(),
   employeeId: 1,
 }

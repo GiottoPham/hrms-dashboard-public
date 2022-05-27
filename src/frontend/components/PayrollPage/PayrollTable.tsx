@@ -187,6 +187,9 @@ export const PayrollTable = () => {
             columns={columns}
             rowCount={5}
             isLoading={employeeLoading || unitLoading}
+            selectedRowIndex={employees.findIndex(
+              (item) => item.id === payrollParams.employeeId && showPayroll
+            )}
           />
           <div className="self-end mt-5">
             <Button

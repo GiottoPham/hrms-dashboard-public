@@ -4,7 +4,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { DesktopDatePicker } from '@mui/lab'
 import { InputLabel } from '@mui/material'
 import { usePayrollParams } from '@frontend/state/payroll-params'
-
+import { endOfMonth } from 'date-fns'
 export const MonthPayrollFilter = () => {
   const { setPayrollParams, payrollParams } = usePayrollParams()
   const now = new Date()
@@ -17,15 +17,15 @@ export const MonthPayrollFilter = () => {
       <DesktopDatePicker
         views={['month', 'year']}
         autoFocus={false}
-        value={payrollParams?.month || new Date().toISOString()}
+        value={payrollParams?.month}
         onChange={(newValue) => {
           if (newValue)
             setPayrollParams((prev) => ({
               ...prev!,
-              month: newValue.toISOString(),
+              month: endOfMonth(newValue).toISOString(),
             }))
         }}
-        maxDate={now}
+        maxDate={endOfMonth(now)}
         inputFormat="MMMM yyyy"
         renderInput={(params) => (
           <TextField

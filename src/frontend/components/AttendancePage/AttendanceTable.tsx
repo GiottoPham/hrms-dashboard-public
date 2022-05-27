@@ -10,6 +10,7 @@ import cx from 'classnames'
 import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import { changeTime } from '@frontend/framework/utils/time'
 export const AttendanceTable = () => {
   const getRandomColor = () =>
     '#' +
@@ -28,10 +29,6 @@ export const AttendanceTable = () => {
     attendances && attendances.length > 0
       ? attendances[0].checkins.map((attendance) => attendance.date)
       : dateArray.slice(0, 6).map((d) => d.toISOString())
-  const splitSecond = (time: string) => {
-    const timeArr = time.split(':')
-    return `${timeArr[0]}:${timeArr[1]}`
-  }
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="mb-5 flex self-start space-x-10 ml-36 w-1/2">
@@ -107,13 +104,20 @@ export const AttendanceTable = () => {
                       'bg-ontime/[0.1] border-ontime': checkin.status === 0,
                       'bg-late/[0.1] border-late': checkin.status === 1,
                       'bg-leave/[0.1] border-leave': checkin.status === 2,
+                      'bg-info/[0.1] border-info': checkin.status === 3,
+                      'bg-danger/[0.1] border-danger': checkin.status === 4,
                     }
                   )}
                 >
                   <p className="text-black text-sm">Ca hành chính</p>
                   <p className="text-black text-sm">
-                    {checkin.time_in ? splitSecond(checkin.time_in) : '-:- '} -{' '}
-                    {checkin.time_out ? splitSecond(checkin.time_out) : ' -:-'}
+                    {checkin.time_in
+                      ? formatDate(changeTime(checkin.time_in), 'HH:mm')
+                      : '-:- '}{' '}
+                    -{' '}
+                    {checkin.time_out
+                      ? formatDate(changeTime(checkin.time_out), 'HH:mm')
+                      : ' -:-'}
                   </p>
                 </div>
               </div>

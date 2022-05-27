@@ -12,6 +12,7 @@ import { SalaryGroupSelect } from '@components/PIMPage/AddEmployeePage/JobDetail
 import { BonusInfo } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/BonusInfo'
 import { isEqual } from 'lodash'
 import { NumberDetailInput } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/NumberDetailInput'
+import { ShiftSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/ShiftSelect'
 
 const bonusSchema = object().shape({
   bonusName: string(),
@@ -20,6 +21,7 @@ const bonusSchema = object().shape({
 const newJobDetailValidationSchema = object().shape({
   joinDate: string().required('Join Date is required'),
   jobId: number().required('Select a job title'),
+  shiftId: number().required('Select a shift'),
   pit: string().required('PIT is required'),
   departmentId: number().required('Select one of the units'),
   salaryGroup: number().required('Select one of the salary group'),
@@ -45,6 +47,7 @@ export const JobDetailsStep = ({
     salaryGroup: jobDetail?.salaryGroup,
     salary: jobDetail?.salary,
     bonus: jobDetail?.bonus || [{ bonusName: '', bonusAmount: 0 }],
+    shiftId: jobDetail?.shiftId,
   }
   return (
     <Formik
@@ -70,7 +73,7 @@ export const JobDetailsStep = ({
               Job Details
             </div>
             <div className="mt-2 py-5 overflow-y-auto space-y-2">
-              <div className="flex space-x-10">
+              <div className="flex space-x-5">
                 <div className="w-1/3">
                   <JoinDatePicker label="Join Date" />
                 </div>
@@ -81,7 +84,7 @@ export const JobDetailsStep = ({
                   <JobDetailsInput fieldName="pit" label="PIT" />
                 </div>
               </div>
-              <div className="flex space-x-10">
+              <div className="flex space-x-5">
                 <div className="w-1/3">
                   <UnitSelect />
                 </div>
@@ -91,6 +94,13 @@ export const JobDetailsStep = ({
                 <div className="w-1/3">
                   <NumberDetailInput fieldName="salary" />
                 </div>
+              </div>
+              <div className="flex space-x-5">
+                <div className="w-1/3">
+                  <ShiftSelect />
+                </div>
+                <div className="w-1/3"></div>
+                <div className="w-1/3"></div>
               </div>
             </div>
             <div className="border-b border-gray-500 text-gray-500 text-xl">

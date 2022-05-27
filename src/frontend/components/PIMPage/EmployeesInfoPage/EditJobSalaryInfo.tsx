@@ -18,6 +18,7 @@ import { JobTitleSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsSt
 import { useToast } from '@frontend/framework/Toast'
 import { useEditEmployee } from '@frontend/state/employee-mutation'
 import { NumberDetailInput } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/NumberDetailInput'
+import { ShiftSelect } from '@components/PIMPage/AddEmployeePage/JobDetailsStep/ShiftSelect'
 export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
   const { editEmployee } = useEditEmployee()
   const [edit, setEdit] = useState(true)
@@ -29,6 +30,7 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
   const newJobDetailValidationSchema = object().shape({
     joinDate: string().required('Join Date is required'),
     jobId: number().required('Select a job title'),
+    shiftId: number().required('Select a shift'),
     pit: string().required('PIT is required'),
     departmentId: number().required('Select one of the units'),
     salaryGroup: number().required('Select one of the salary group'),
@@ -43,6 +45,7 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
     salaryGroup: employee.jobDetail?.salaryGroup,
     salary: employee.jobDetail?.salary,
     bonus: employee.jobDetail?.bonus || [{ bonusName: '', bonusAmount: 0 }],
+    shiftId: employee.jobDetail.shiftId,
   }
   return (
     <Formik
@@ -78,8 +81,8 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
       {({ isSubmitting, isValid, submitForm, setFieldTouched }) => {
         return (
           <div className="flex flex-col h-full">
-            <div className="pt-3 overflow-y-auto h-1/3 space-y-2">
-              <div className="flex space-x-10">
+            <div className="pt-3 overflow-y-auto h-1/2 space-y-2">
+              <div className="flex space-x-5">
                 <div className="w-1/3">
                   <JoinDatePicker label="Join Date" disabled={edit} />
                 </div>
@@ -94,7 +97,7 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
                   />
                 </div>
               </div>
-              <div className="flex space-x-10">
+              <div className="flex space-x-5">
                 <div className="w-1/3">
                   <UnitSelect disabled={edit} />
                 </div>
@@ -104,6 +107,13 @@ export const EditJobSalaryInfo = ({ employee }: { employee: Employee }) => {
                 <div className="w-1/3">
                   <NumberDetailInput fieldName="salary" disabled={edit} />
                 </div>
+              </div>
+              <div className="flex space-x-5">
+                <div className="w-1/3">
+                  <ShiftSelect disabled={edit} />
+                </div>
+                <div className="w-1/3"></div>
+                <div className="w-1/3"></div>
               </div>
             </div>
             <div className="border-b border-gray-500 text-gray-500 text-xl">
