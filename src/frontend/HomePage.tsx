@@ -55,7 +55,7 @@ export const HomePage = () => {
             <div className="w-3/5">
               <div className="bg-white p-5 rounded-lg border-primary border mb-5">
                 <h1 className="text-2xl font-bold">
-                  Payment For Employee Chart
+                  Payment For Employees Chart
                 </h1>
                 <p className="font-nunito">
                   This chart is used to compare payment of organization paid for

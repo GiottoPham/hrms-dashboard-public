@@ -1,6 +1,7 @@
 import {
   createCandidatesRequest,
   promoteCandidate,
+  rejectCandidate,
 } from '@frontend/state/candidate-api'
 import { CANDIDATES } from '@frontend/state/query-keys'
 import type { CandidateInputParams } from '@frontend/types/candidate'
@@ -32,4 +33,17 @@ export const usePromoteCandidate = () => {
   })
 
   return { promoteCandidate: mutateAsync, ...rest }
+}
+export const useRejectCandidate = () => {
+  const queryClient = useQueryClient()
+
+  const { mutateAsync, ...rest } = useMutation({
+    mutationFn: (candidateId: number) => rejectCandidate(candidateId),
+    onSuccess: () => {
+      queryClient.refetchQueries([CANDIDATES])
+    },
+    retry: false,
+  })
+
+  return { rejectCandidate: mutateAsync, ...rest }
 }

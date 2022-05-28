@@ -41,3 +41,11 @@ export const promoteCandidate = (candidateId: number): Promise<void> => {
     })
     .then((res) => res.data)
 }
+export const rejectCandidate = (candidateId: number): Promise<void> => {
+  return axios
+    .request({
+      method: 'POST',
+      url: `/api/v1/reject/${candidateId}`,
+    })
+    .then((res) => res.data)
+}

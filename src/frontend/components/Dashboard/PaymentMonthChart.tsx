@@ -57,7 +57,7 @@ export const PaymentMonthChart = () => {
               label += ': '
             }
             if (parsed.y !== null) {
-              label += currencyFormatter(parsed.y)
+              label += currencyFormatter(parsed.y) || '0 VND'
             }
             return label
           },
@@ -91,6 +91,7 @@ export const PaymentMonthChart = () => {
   const { paymentMonth } = usePaymentMonth(
     endOfYear(new Date(chartParamsNumber.week)).toISOString()
   )
+  const now = new Date().getMonth()
   const data = {
     labels: [
       'January',
@@ -108,7 +109,7 @@ export const PaymentMonthChart = () => {
     ],
     datasets: [
       {
-        data: paymentMonth,
+        data: paymentMonth?.map((item, index) => (index <= now ? item : 0)),
         borderColor: '#FFAC2F',
         color: '#FFAC2F',
       },

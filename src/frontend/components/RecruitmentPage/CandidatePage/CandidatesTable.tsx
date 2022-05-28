@@ -10,7 +10,10 @@ import { useCandidates } from '@frontend/state/candidate-queries'
 import { useCandidateParams } from '@frontend/state/candidate-params'
 import LinkIcon from '@mui/icons-material/Link'
 import { formatPhoneNumberIntl } from 'react-phone-number-input'
-import { usePromoteCandidate } from '@frontend/state/candidate-mutation'
+import {
+  usePromoteCandidate,
+  useRejectCandidate,
+} from '@frontend/state/candidate-mutation'
 import { useState } from 'react'
 
 type CreateHeaderInput = {
@@ -26,31 +29,36 @@ const createHeader = ({ headerText, sortBy }: CreateHeaderInput) => {
     return (
       <header className="flex items-center">
         {headerText}
-        <IconButton
-          classes={{ root: 'p-1 w-8 h-8' }}
-          onClick={() => {
-            if (sortByParams === sortBy) {
-              if (sortOrder === 'asc')
-                setCandidateParams((prev) => ({ ...prev!, sortOrder: 'desc' }))
-              else
-                setCandidateParams((prev) => ({ ...prev!, sortOrder: 'asc' }))
-            } else {
-              setCandidateParams((prev) => ({
-                ...prev!,
-                sortBy: sortBy || 'id',
-                sortOrder: 'desc',
-              }))
-            }
-          }}
-        >
-          {sortBy !== sortByParams && <UpDownIcon />}
-          {sortBy === sortByParams && sortOrder === 'asc' && (
-            <UpDownIcon isUp={true} />
-          )}
-          {sortBy === sortByParams && sortOrder === 'desc' && (
-            <UpDownIcon isUp={false} />
-          )}
-        </IconButton>
+        {sortBy && (
+          <IconButton
+            classes={{ root: 'p-1 w-8 h-8' }}
+            onClick={() => {
+              if (sortByParams === sortBy) {
+                if (sortOrder === 'asc')
+                  setCandidateParams((prev) => ({
+                    ...prev!,
+                    sortOrder: 'desc',
+                  }))
+                else
+                  setCandidateParams((prev) => ({ ...prev!, sortOrder: 'asc' }))
+              } else {
+                setCandidateParams((prev) => ({
+                  ...prev!,
+                  sortBy: sortBy || 'id',
+                  sortOrder: 'desc',
+                }))
+              }
+            }}
+          >
+            {sortBy !== sortByParams && <UpDownIcon />}
+            {sortBy === sortByParams && sortOrder === 'asc' && (
+              <UpDownIcon isUp={true} />
+            )}
+            {sortBy === sortByParams && sortOrder === 'desc' && (
+              <UpDownIcon isUp={false} />
+            )}
+          </IconButton>
+        )}
       </header>
     )
   }
@@ -66,7 +74,10 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
   })
   const candidates = candidateList?.candidates || []
   const { promoteCandidate, isLoading: promoteLoading } = usePromoteCandidate()
+  const { rejectCandidate, isLoading: rejectLoading } = useRejectCandidate()
   const [promoteId, setPromoteId] = useState<number>()
+  const [rejectId, setRejectId] = useState<number>()
+
   const columns: Column<Candidate>[] = [
     {
       accessor: 'id',
@@ -160,7 +171,6 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
       id: 'promote',
       Header: createHeader({
         headerText: 'Promote',
-        sortBy: 'id',
       }),
       accessor: 'id',
       Cell: ({ value }) => (
@@ -170,7 +180,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
             promoteCandidate(value)
           }}
           variant="outlined"
-          className="text-sm rounded-full font-nunito normal-case font-bold shadow-none mr-5 bg-white border-2"
+          className="text-sm rounded-full font-nunito normal-case font-bold shadow-none mr-5 bg-white border-2 -ml-2"
         >
           {promoteLoading && promoteId === value && (
             <CircularProgress
@@ -181,6 +191,35 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
             />
           )}
           Promote
+        </Button>
+      ),
+      width: 'w-[80px]',
+    },
+    {
+      id: 'reject',
+      Header: createHeader({
+        headerText: 'Reject',
+      }),
+      accessor: 'id',
+      Cell: ({ value }) => (
+        <Button
+          onClick={() => {
+            setRejectId(value)
+            rejectCandidate(value)
+          }}
+          variant="outlined"
+          className="text-sm rounded-full font-nunito normal-case font-bold shadow-none mr-5 bg-white border-2 -ml-2"
+          color="error"
+        >
+          {rejectLoading && rejectId === value && (
+            <CircularProgress
+              color="error"
+              size={20}
+              thickness={5}
+              className="mr-2"
+            />
+          )}
+          Reject
         </Button>
       ),
       width: 'w-[80px]',
