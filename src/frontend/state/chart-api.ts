@@ -27,7 +27,7 @@ export const fetchAttendStatus = (
     })
     .then((res) => res.data)
 }
-export const fetchPaymentMonth = (year: string) => {
+export const fetchPaymentMonth = (year: string): Promise<number[]> => {
   return axios
     .request({
       method: 'GET',

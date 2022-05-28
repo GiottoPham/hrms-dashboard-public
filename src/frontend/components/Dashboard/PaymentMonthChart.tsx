@@ -14,6 +14,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import { usePaymentMonth } from '@frontend/state/chart-queries'
 import { currencyFormatter } from '@frontend/framework/utils/currency'
+import { useAttendanceParams } from '@frontend/state/attendance-params'
 
 ChartJS.register(
   CategoryScale,
@@ -85,8 +86,8 @@ export const PaymentMonthChart = () => {
       },
     },
   }
-
-  const { paymentMonth } = usePaymentMonth(new Date().toISOString())
+  const { attendanceParams } = useAttendanceParams()
+  const { paymentMonth } = usePaymentMonth(attendanceParams.week)
   const data = {
     labels: [
       'January',
@@ -104,10 +105,7 @@ export const PaymentMonthChart = () => {
     ],
     datasets: [
       {
-        data: paymentMonth || [
-          100000, 200000, 300000, 100000, 200000, 300000, 100000, 200000,
-          300000, 100000, 200000, 300000,
-        ],
+        data: paymentMonth,
         borderColor: '#FFAC2F',
         color: '#FFAC2F',
       },

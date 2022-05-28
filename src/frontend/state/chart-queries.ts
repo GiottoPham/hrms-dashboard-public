@@ -37,7 +37,7 @@ export const useChartNumber = (chartParamsNumber: ChartParams) => {
   return { chartNumber, ...rest }
 }
 export const usePaymentMonth = (year: string) => {
-  const { data: paymentMonth, ...rest } = useQuery<AttendStatus, AxiosError>({
+  const { data: paymentMonth, ...rest } = useQuery<number[], AxiosError>({
     queryKey: [PAYMENT_MONTH_CHART, year],
     queryFn: () => fetchPaymentMonth(year),
     retry: false,
