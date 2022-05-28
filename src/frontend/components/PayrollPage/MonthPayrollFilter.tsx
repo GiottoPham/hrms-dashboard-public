@@ -8,7 +8,6 @@ import { endOfMonth } from 'date-fns'
 export const MonthPayrollFilter = () => {
   const { setPayrollParams, payrollParams } = usePayrollParams()
   const now = new Date()
-  now.setMonth(now.getMonth() - 1)
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <InputLabel className="text-sm font-nunito font-bold text-black mb-1">

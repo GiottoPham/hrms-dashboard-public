@@ -6,6 +6,7 @@ import { AttendanceIcon } from '@frontend/framework/icons/AttendanceIcon'
 import { RecruitmentIcon } from '@frontend/framework/icons/RecruitmentIcon'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { SettingIcon } from '@frontend/framework/icons/SettingIcon'
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled'
 /**
  * Layout Component
  */
@@ -59,6 +60,12 @@ export const SIDEBAR_NAVIGATIONS = [
     ],
   },
   {
+    Icon: AccessTimeFilledIcon,
+    href: '/shift',
+    label: 'Shift',
+    subNavs: [{ label: 'Shift', href: '/shift' }],
+  },
+  {
     Icon: AttachMoneyIcon,
     href: '/payroll',
     label: 'Payroll',
@@ -70,8 +77,7 @@ export const SIDEBAR_NAVIGATIONS = [
     href: '',
     subNavs: [
       { label: 'Location', href: '/setting/location' },
-      { label: 'Shift', href: '/setting/shift' },
-      { label: 'QR Code', href: '/qr' },
+      { label: 'QR Code', href: '/setting/qr' },
     ],
   },
 ]

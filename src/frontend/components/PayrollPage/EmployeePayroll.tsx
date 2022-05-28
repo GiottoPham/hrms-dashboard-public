@@ -14,6 +14,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import { useState } from 'react'
 import { currencyFormatter } from '@frontend/framework/utils/currency'
 import { usePayroll } from '@frontend/state/payroll-queries'
+import { isAfter } from 'date-fns'
 
 export const EmployeePayroll = () => {
   const { payrollParams } = usePayrollParams()
@@ -31,8 +32,18 @@ export const EmployeePayroll = () => {
         { 'w-0': !showPayroll, 'w-full h-full': showPayroll }
       )}
     >
-      <div className="absolute left-0 top-0 -mt-5 -mr-2">
-        Payroll of employee {payrollParams?.employeeId} {}
+      <div
+        className={cx('absolute left-0 top-0 -mr-2', {
+          '-mt-12': isAfter(new Date(), new Date(payrollParams.month)),
+          '-mt-5': !isAfter(new Date(), new Date(payrollParams.month)),
+        })}
+      >
+        <p>Payroll of employee {payrollParams?.employeeId}</p>
+        {isAfter(new Date(), new Date(payrollParams.month)) && (
+          <p className="font-bold text-lg uppercase">
+            This month&rsquo;s payment had been closed
+          </p>
+        )}
       </div>
       <div className="absolute right-0 top-0 -mt-5 -mr-2">
         <IconButton className="bg-white" onClick={() => setShowPayroll(false)}>
