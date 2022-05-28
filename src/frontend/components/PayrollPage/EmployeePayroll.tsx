@@ -249,11 +249,11 @@ export const EmployeePayroll = () => {
         <div className="w-full h-12 flex bg-primary">
           <div className="w-1/4 flex flex-col h-full px-5 justify-center">
             <p>A. Mandatory Insurance</p>
-            <p className="w-80">8% Social, 1.5% Health, 2% Unemployed</p>
+            <p className="w-80">8% Social, 1.5% Health, 1% Unemployed</p>
           </div>
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            (I)*11.5/100
+            (I)*10.5/100
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
             {currencyFormatter(payroll?.mandatoryInsurance) || '0 VND'}
