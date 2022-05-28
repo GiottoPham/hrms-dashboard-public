@@ -32,7 +32,6 @@ export const usePayrollParams = () => {
   }
 }
 const now = new Date()
-now.setMonth(now.getMonth() - 1)
 const defaultPayrollParams: PayrollParams = {
   month: endOfMonth(now).toISOString(),
   employeeId: 1,
