@@ -8,19 +8,15 @@ import {
   useSendLeaveNotifications,
   useUpdateLeaveStatus,
 } from '@frontend/state/leave-mutation'
-import { useLeaveParams } from '@frontend/state/leave-params'
 import { formatDate } from '@frontend/framework/utils/date'
 type LeaveActionProps = PropsWithChildren<
   CellProps<LeaveDetail, LeaveDetail['id']>
 >
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const LeaveActionButton = ({ value: id }: LeaveActionProps) => {
+export const LeaveActionButton = ({ value: id, row }: LeaveActionProps) => {
   const { updateLeaveStatus, isLoading } = useUpdateLeaveStatus()
   const { sendNotifications } = useSendLeaveNotifications()
-  const {
-    leaveParams: { date },
-  } = useLeaveParams()
   return (
     <div className="h-12 flex items-center flex-row -ml-5">
       <IconButton
@@ -29,7 +25,7 @@ export const LeaveActionButton = ({ value: id }: LeaveActionProps) => {
             sendNotifications({
               title: 'Accept Leave',
               body: `Your leave on ${formatDate(
-                date,
+                new Date(row.original.fromDate),
                 'MM/dd/yyyy'
               )} was accepted`,
             })
@@ -45,7 +41,7 @@ export const LeaveActionButton = ({ value: id }: LeaveActionProps) => {
             sendNotifications({
               title: 'Ignore Leave',
               body: `Your leave on ${formatDate(
-                date,
+                new Date(row.original.fromDate),
                 'MM/dd/yyyy'
               )} was ignored`,
             })

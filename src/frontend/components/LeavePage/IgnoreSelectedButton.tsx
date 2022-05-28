@@ -36,7 +36,7 @@ export const IgnoreSelectedButton = () => {
           .then(() => {
             sendNotifications({
               title: 'Ignore Leaves',
-              body: `All of your leaves on ${formatDate(
+              body: `All of your leaves created on ${formatDate(
                 date,
                 'MM/dd/yyyy'
               )} were ignored`,

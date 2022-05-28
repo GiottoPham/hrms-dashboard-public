@@ -55,7 +55,6 @@ export const AttendanceWeek = () => {
               week: newValue.toISOString(),
             }))
         }}
-        maxDate={new Date()}
         renderDay={renderWeekPickerDay}
         renderInput={(params) => (
           <TextField
