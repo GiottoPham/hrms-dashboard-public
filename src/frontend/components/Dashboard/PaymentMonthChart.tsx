@@ -15,6 +15,7 @@ import { Line } from 'react-chartjs-2'
 import { usePaymentMonth } from '@frontend/state/chart-queries'
 import { currencyFormatter } from '@frontend/framework/utils/currency'
 import { endOfYear } from 'date-fns'
+import { useChatParamsNumber } from '@frontend/state/chart-params'
 
 ChartJS.register(
   CategoryScale,
@@ -86,7 +87,10 @@ export const PaymentMonthChart = () => {
       },
     },
   }
-  const { paymentMonth } = usePaymentMonth(endOfYear(new Date()).toISOString())
+  const { chartParamsNumber } = useChatParamsNumber()
+  const { paymentMonth } = usePaymentMonth(
+    endOfYear(new Date(chartParamsNumber.week)).toISOString()
+  )
   const data = {
     labels: [
       'January',
