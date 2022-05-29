@@ -21,4 +21,5 @@ export type Payroll = {
   allowanceNotSubjectedToTax: number
   anotherIncome: number
   personalRelief: number
+  bonus_v: number
 }

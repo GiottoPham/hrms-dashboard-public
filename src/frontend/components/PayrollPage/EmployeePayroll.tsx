@@ -86,7 +86,9 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>0 VND</p>
+            <p>
+              {payroll.bonus_v ? currencyFormatter(payroll.bonus_v) : '0 VND'}
+            </p>
           </div>
         </div>
         <Accordion
