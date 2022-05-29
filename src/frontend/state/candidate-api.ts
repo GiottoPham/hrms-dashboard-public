@@ -44,7 +44,7 @@ export const promoteCandidate = (candidateId: number): Promise<void> => {
 export const rejectCandidate = (candidateId: number): Promise<void> => {
   return axios
     .request({
-      method: 'POST',
+      method: 'DELETE',
       url: `/api/v1/reject/${candidateId}`,
     })
     .then((res) => res.data)
