@@ -3,7 +3,7 @@ import {
   promoteCandidate,
   rejectCandidate,
 } from '@frontend/state/candidate-api'
-import { CANDIDATES } from '@frontend/state/query-keys'
+import { CANDIDATES, EMPLOYEES, VACANCIES } from '@frontend/state/query-keys'
 import type { CandidateInputParams } from '@frontend/types/candidate'
 import { useMutation, useQueryClient } from 'react-query'
 
@@ -15,6 +15,7 @@ export const useCreateCandidate = () => {
       createCandidatesRequest(candidateParams),
     onSuccess: () => {
       queryClient.refetchQueries([CANDIDATES])
+      queryClient.refetchQueries([VACANCIES])
     },
     retry: false,
   })
@@ -28,6 +29,8 @@ export const usePromoteCandidate = () => {
     mutationFn: (candidateId: number) => promoteCandidate(candidateId),
     onSuccess: () => {
       queryClient.refetchQueries([CANDIDATES])
+      queryClient.refetchQueries([EMPLOYEES])
+      queryClient.refetchQueries([VACANCIES])
     },
     retry: false,
   })
@@ -41,6 +44,8 @@ export const useRejectCandidate = () => {
     mutationFn: (candidateId: number) => rejectCandidate(candidateId),
     onSuccess: () => {
       queryClient.refetchQueries([CANDIDATES])
+      queryClient.refetchQueries([EMPLOYEES])
+      queryClient.refetchQueries([VACANCIES])
     },
     retry: false,
   })
