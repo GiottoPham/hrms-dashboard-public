@@ -8,7 +8,7 @@ export type LeaveDetail = {
   toDate: string
   total: number
   status: number
-  leaveType: number
+  typeName: string
 }
 export type CheckedLeaveDetail = Record<RowIndex, id>
 type RowIndex = number
