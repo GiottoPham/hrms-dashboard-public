@@ -2,7 +2,7 @@ import {
   sendNotification,
   updateLeaveStatusRequest,
 } from '@frontend/state/leave-api'
-import { LEAVES } from '@frontend/state/query-keys'
+import { ATTENDANCES, LEAVES, PAYROLL } from '@frontend/state/query-keys'
 import type { LeaveNotification } from '@frontend/types/leave'
 import { useMutation, useQueryClient } from 'react-query'
 export const useUpdateLeaveStatus = () => {
@@ -13,6 +13,8 @@ export const useUpdateLeaveStatus = () => {
       updateLeaveStatusRequest(listIds, status),
     onSuccess: () => {
       queryClient.refetchQueries([LEAVES])
+      queryClient.refetchQueries([PAYROLL])
+      queryClient.refetchQueries([ATTENDANCES])
     },
     retry: false,
   })
