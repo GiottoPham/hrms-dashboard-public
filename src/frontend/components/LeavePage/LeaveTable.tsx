@@ -130,10 +130,12 @@ export const LeaveTable = () => {
       id: 'TypeCell',
       Header: createHeader({
         headerText: 'Leave Type',
-        sortBy: 'id',
+        sortBy: 'leaveType',
       }),
-      accessor: 'id',
-      Cell: () => <p className="leading-loose">Annual</p>,
+      accessor: 'leaveType',
+      Cell: ({ value }) => (
+        <p className="leading-loose">{value === 1 ? 'Unpaid' : 'Annual'}</p>
+      ),
       width: 'w-[100px]',
     },
     {
