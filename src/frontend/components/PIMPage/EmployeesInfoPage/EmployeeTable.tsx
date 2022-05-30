@@ -262,8 +262,11 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
             ? employees.filter((emp) =>
                 (
                   emp.personalDetail.firstName +
+                  ' ' +
                   emp.personalDetail.lastName +
+                  ' ' +
                   emp.personalDetail.email +
+                  ' ' +
                   emp.personalDetail.phone
                 )
                   .toLowerCase()
@@ -274,8 +277,11 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
                 .filter((emp) =>
                   (
                     emp.personalDetail.firstName +
+                    ' ' +
                     emp.personalDetail.lastName +
+                    ' ' +
                     emp.personalDetail.email +
+                    ' ' +
                     emp.personalDetail.phone
                   )
                     .toLowerCase()
