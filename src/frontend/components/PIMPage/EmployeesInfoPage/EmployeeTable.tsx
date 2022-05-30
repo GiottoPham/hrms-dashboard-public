@@ -241,7 +241,7 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
       ]
   return (
     <div className="rounded px-10 py-10 flex flex-col">
-      {departmentId && (
+      {!departmentId && (
         <TextInput
           id="empName"
           variant="outlined"
