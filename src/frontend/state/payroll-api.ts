@@ -13,14 +13,12 @@ export const fetchPayroll = (
     })
     .then((res) => res.data)
 }
-export const fetchPayrollPdf = (
-  payrollParams: PayrollParams
-): Promise<string> => {
+export const fetchPayrollPdf = (month: string): Promise<string> => {
   return axios
     .request({
       method: 'GET',
       url: '/api/v1/link',
-      params: { month: payrollParams.month },
+      params: { month },
     })
     .then((res) => res.data.contentLink)
 }

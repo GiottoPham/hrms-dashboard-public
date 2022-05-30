@@ -14,11 +14,12 @@ export const usePayroll = (payrollParams: PayrollParams) => {
 
   return { payroll, ...rest }
 }
-export const usePayrollPdf = (payrollParams: PayrollParams) => {
+export const usePayrollPdf = (month: string) => {
   const { data: payrollPdf, ...rest } = useQuery<string, AxiosError>({
-    queryKey: [PAYROLLPDF, payrollParams],
-    queryFn: () => fetchPayrollPdf(payrollParams),
+    queryKey: [PAYROLLPDF, month],
+    queryFn: () => fetchPayrollPdf(month),
     retry: false,
+    keepPreviousData: true,
   })
 
   return { payrollPdf, ...rest }

@@ -156,7 +156,9 @@ export const PayrollTable = () => {
       width: 'w-[50px]',
     },
   ]
-  const { payrollPdf } = usePayrollPdf(payrollParams)
+  const { payrollPdf, isLoading: pdfLoading } = usePayrollPdf(
+    payrollParams.month
+  )
   const [empName, setEmpName] = useState('')
   return (
     <div className="rounded px-10 py-5 flex flex-col w-full justify-center">
@@ -190,7 +192,7 @@ export const PayrollTable = () => {
           }}
           variant="outlined"
           startIcon={<DownloadIcon className="w-5 h-5" />}
-          disabled={!payrollPdf}
+          disabled={pdfLoading}
         >
           PDF
         </Button>
