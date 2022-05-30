@@ -1,4 +1,4 @@
-import { Button, CircularProgress, IconButton } from '@mui/material'
+import { Button, CircularProgress, IconButton, InputLabel } from '@mui/material'
 import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
@@ -14,7 +14,9 @@ import {
   usePromoteCandidate,
   useRejectCandidate,
 } from '@frontend/state/candidate-mutation'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
+import { TextInput } from '@frontend/framework/TextInput'
+import { SearchOutlined } from '@mui/icons-material'
 
 type CreateHeaderInput = {
   headerText: string
@@ -77,7 +79,7 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
   const { rejectCandidate, isLoading: rejectLoading } = useRejectCandidate()
   const [promoteId, setPromoteId] = useState<number>()
   const [rejectId, setRejectId] = useState<number>()
-
+  const [canName, setCanName] = useState('')
   const columns: Column<Candidate>[] = [
     {
       accessor: 'id',
@@ -300,8 +302,32 @@ export const CandidatesTable = ({ vacanciesId }: { vacanciesId?: number }) => {
   ]
   return (
     <div className="rounded px-10 py-5 flex flex-col">
+      {!vacanciesId && (
+        <Fragment>
+          <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
+            Search Candidate
+          </InputLabel>
+          <TextInput
+            id="canName"
+            variant="outlined"
+            placeholder="Employee name, email or contact"
+            InputProps={{
+              classes: {
+                root: 'h-10 rounded-lg font-nunito bg-white text-sm w-1/4 mb-5',
+              },
+              startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
+            }}
+            value={canName}
+            onChange={(e) => setCanName(e.target.value)}
+          />
+        </Fragment>
+      )}
       <Table<Candidate>
-        data={candidates}
+        data={candidates.filter((can) =>
+          (can.name + ' ' + can.email + ' ' + can.contact)
+            .toLowerCase()
+            .includes(canName.toLowerCase())
+        )}
         columns={vacanciesId ? columnsWithId : columns}
         rowCount={5}
         isLoading={isLoading}

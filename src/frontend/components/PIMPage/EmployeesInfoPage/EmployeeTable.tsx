@@ -1,4 +1,4 @@
-import { Button, IconButton, Avatar } from '@mui/material'
+import { Button, IconButton, Avatar, InputLabel } from '@mui/material'
 import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import EditIcon from '@mui/icons-material/Edit'
@@ -14,7 +14,7 @@ import { useJobs } from '@frontend/state/job-queries'
 import { useJobParams } from '@frontend/state/job-params'
 import { useUnits } from '@frontend/state/unit-queries'
 import { formatPhoneNumberIntl } from 'react-phone-number-input'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { TextInput } from '@frontend/framework/TextInput'
 import { SearchOutlined } from '@mui/icons-material'
 import { useShifts } from '@frontend/state/shift-queries'
@@ -242,19 +242,24 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
   return (
     <div className="rounded px-10 py-10 flex flex-col">
       {!departmentId && (
-        <TextInput
-          id="empName"
-          variant="outlined"
-          placeholder="Employee name, email or contact"
-          InputProps={{
-            classes: {
-              root: 'h-10 rounded-lg font-nunito bg-white text-sm w-1/4 mb-5',
-            },
-            startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
-          }}
-          value={empName}
-          onChange={(e) => setEmpName(e.target.value)}
-        />
+        <Fragment>
+          <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
+            Search Employee
+          </InputLabel>
+          <TextInput
+            id="empName"
+            variant="outlined"
+            placeholder="Employee name, email or contact"
+            InputProps={{
+              classes: {
+                root: 'h-10 rounded-lg font-nunito bg-white text-sm w-1/4 mb-5',
+              },
+              startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
+            }}
+            value={empName}
+            onChange={(e) => setEmpName(e.target.value)}
+          />
+        </Fragment>
       )}
       <Table<PartialDeep<Employee>>
         data={
