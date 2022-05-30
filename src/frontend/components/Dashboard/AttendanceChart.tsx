@@ -77,7 +77,7 @@ export const AttendanceChart = () => {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     datasets: [
       {
-        data: chartHour,
+        data: chartHour?.map((item) => Math.abs(item)),
         fill: true,
         backgroundColor: '#FFAC2F',
         borderColor: '#212936',

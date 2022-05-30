@@ -1,4 +1,4 @@
-import { Button, IconButton, Avatar } from '@mui/material'
+import { Button, IconButton, Avatar, InputLabel } from '@mui/material'
 import type { Column } from 'react-table'
 import { Table } from '@frontend/framework/Table'
 import { UpDownIcon } from '@frontend/framework/icons/UpDownIcon'
@@ -18,7 +18,9 @@ import { useEmployees } from '@frontend/state/employee-queries'
 import { useUnits } from '@frontend/state/unit-queries'
 import { usePayrollPdf } from '@frontend/state/payroll-queries'
 import { formatPhoneNumberIntl } from 'react-phone-number-input'
-
+import DownloadIcon from '@mui/icons-material/Download'
+import { TextInput } from '@frontend/framework/TextInput'
+import { SearchOutlined } from '@mui/icons-material'
 type CreateHeaderInput = {
   headerText: string
   sortBy?: keyof Employee['personalDetail'] | 'id' | keyof Employee['jobDetail']
@@ -155,41 +157,90 @@ export const PayrollTable = () => {
     },
   ]
   const { payrollPdf } = usePayrollPdf(payrollParams)
+  const [empName, setEmpName] = useState('')
   return (
     <div className="rounded px-10 py-5 flex flex-col w-full justify-center">
-      <div className="flex space-x-3 items-center">
-        <div className="w-60 mb-5">
+      <div className="flex space-x-3 items-end mb-5">
+        <div className="w-50">
           <MonthPayrollFilter />
+        </div>
+        <div className="w-50 flex flex-col">
+          <InputLabel className="text-sm font-nunito font-bold text-black mb-1">
+            Search Employee
+          </InputLabel>
+          <TextInput
+            fullWidth
+            id="empName"
+            variant="outlined"
+            placeholder="Employee name, email or contact"
+            InputProps={{
+              classes: {
+                root: 'h-10 rounded-lg font-nunito bg-white text-sm',
+              },
+              startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
+            }}
+            value={empName}
+            onChange={(e) => setEmpName(e.target.value)}
+          />
         </div>
         <Button
           href={payrollPdf}
           classes={{
-            root: 'bg-white h-10 normal-case font-bold rounded-lg border-2',
+            root: 'bg-white h-10 normal-case font-bold rounded-lg border-2 w-20',
           }}
           variant="outlined"
+          startIcon={<DownloadIcon className="text-primary w-5 h-5" />}
         >
-          Download PDF
+          PDF
         </Button>
       </div>
 
-      <div className="flex space-x-10">
+      <div className="flex space-x-5">
         <div
           className={cx(
             'overflow-auto flex flex-col transition-width duration-300 ease-in-out flex-shrink-0',
             {
-              'w-2/5': showPayroll,
+              'w-5/12': showPayroll,
               'w-full': !showPayroll,
             }
           )}
         >
           <Table<PartialDeep<Employee>>
-            data={employees as Employee[]}
+            data={
+              employees?.filter((emp) =>
+                (
+                  emp.personalDetail.firstName +
+                  ' ' +
+                  emp.personalDetail.lastName +
+                  ' ' +
+                  emp.personalDetail.email +
+                  ' ' +
+                  emp.personalDetail.phone
+                )
+                  .toLowerCase()
+                  .includes(empName.toLowerCase())
+              ) as Employee[]
+            }
             columns={columns}
             rowCount={5}
             isLoading={employeeLoading || unitLoading}
-            selectedRowIndex={employees.findIndex(
-              (item) => item.id === payrollParams.employeeId && showPayroll
-            )}
+            selectedRowIndex={employees
+              ?.filter((emp) =>
+                (
+                  emp.personalDetail.firstName +
+                  ' ' +
+                  emp.personalDetail.lastName +
+                  ' ' +
+                  emp.personalDetail.email +
+                  ' ' +
+                  emp.personalDetail.phone
+                )
+                  .toLowerCase()
+                  .includes(empName.toLowerCase())
+              )
+              .findIndex(
+                (item) => item.id === payrollParams.employeeId && showPayroll
+              )}
           />
           <div className="self-end mt-5">
             <Button

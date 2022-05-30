@@ -260,7 +260,7 @@ export const EmployeePayroll = () => {
         <div className="w-full h-12 flex bg-primary">
           <div className="w-1/4 flex flex-col h-full px-5 justify-center">
             <p>A. Mandatory Insurance</p>
-            <p className="w-80">8% Social, 1.5% Health, 1% Unemployed</p>
+            <p className="w-[400px]">8% Social, 1.5% Health, 1% Unemployed</p>
           </div>
           <div className="w-1/4 flex px-10 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
