@@ -189,7 +189,8 @@ export const PayrollTable = () => {
             root: 'bg-white h-10 normal-case font-bold rounded-lg border-2 w-20',
           }}
           variant="outlined"
-          startIcon={<DownloadIcon className="text-primary w-5 h-5" />}
+          startIcon={<DownloadIcon className="w-5 h-5" />}
+          disabled={!payrollPdf}
         >
           PDF
         </Button>
