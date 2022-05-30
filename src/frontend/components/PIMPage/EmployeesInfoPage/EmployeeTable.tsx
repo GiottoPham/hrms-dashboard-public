@@ -241,19 +241,21 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
       ]
   return (
     <div className="rounded px-10 py-10 flex flex-col">
-      <TextInput
-        id="empName"
-        variant="outlined"
-        placeholder="Employee name, email or contact"
-        InputProps={{
-          classes: {
-            root: 'h-10 rounded-lg font-nunito bg-white text-sm w-1/4 mb-5',
-          },
-          startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
-        }}
-        value={empName}
-        onChange={(e) => setEmpName(e.target.value)}
-      />
+      {departmentId && (
+        <TextInput
+          id="empName"
+          variant="outlined"
+          placeholder="Employee name, email or contact"
+          InputProps={{
+            classes: {
+              root: 'h-10 rounded-lg font-nunito bg-white text-sm w-1/4 mb-5',
+            },
+            startAdornment: <SearchOutlined className="mr-2 text-gray-500" />,
+          }}
+          value={empName}
+          onChange={(e) => setEmpName(e.target.value)}
+        />
+      )}
       <Table<PartialDeep<Employee>>
         data={
           !departmentId
@@ -263,7 +265,9 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
                   emp.personalDetail.lastName +
                   emp.personalDetail.email +
                   emp.personalDetail.phone
-                ).includes(empName)
+                )
+                  .toLowerCase()
+                  .includes(empName.toLowerCase())
               )
             : employees
                 .filter((emp) => emp.jobDetail.departmentId === departmentId)
@@ -273,7 +277,9 @@ export const EmployeeTable = ({ departmentId }: { departmentId?: number }) => {
                     emp.personalDetail.lastName +
                     emp.personalDetail.email +
                     emp.personalDetail.phone
-                  ).includes(empName)
+                  )
+                    .toLowerCase()
+                    .includes(empName.toLowerCase())
                 )
         }
         columns={columns}
