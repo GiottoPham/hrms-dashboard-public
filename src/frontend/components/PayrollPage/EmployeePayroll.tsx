@@ -74,7 +74,10 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            <p>{currencyFormatter(payroll?.basicSalary) || '--'}</p>
+            <p>
+              {currencyFormatter(Number(payroll?.basicSalary.toFixed())) ||
+                '--'}
+            </p>
           </div>
         </div>
         <div className="w-full h-12 flex bg-primary-200">
@@ -87,7 +90,9 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-5 items-center h-full"></div>
           <div className="w-1/4 flex px-5 items-center h-full">
             <p>
-              {payroll.bonus_v ? currencyFormatter(payroll.bonus_v) : '0 VND'}
+              {payroll.bonus_v
+                ? currencyFormatter(Number(payroll.bonus_v.toFixed()))
+                : '0 VND'}
             </p>
           </div>
         </div>
@@ -168,7 +173,7 @@ export const EmployeePayroll = () => {
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
             {payroll.totalDerivedIncome
-              ? currencyFormatter(payroll.totalDerivedIncome)
+              ? currencyFormatter(Number(payroll.totalDerivedIncome.toFixed()))
               : '0 VND'}
           </div>
         </div>
@@ -182,7 +187,8 @@ export const EmployeePayroll = () => {
             ((1) + (2))*((5) + (7))/(4)
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.derivedSalary) || '0 VND'}
+            {currencyFormatter(Number(payroll?.derivedSalary.toFixed())) ||
+              '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -209,7 +215,9 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(payroll?.anotherIncome) || '0 VND'}
+                  {currencyFormatter(
+                    Number(payroll?.anotherIncome.toFixed())
+                  ) || '0 VND'}
                 </div>
               </div>
             </CardActionArea>
@@ -229,7 +237,7 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-10 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
-                  {currencyFormatter(item.bonusAmount)}
+                  {currencyFormatter(Number(item.bonusAmount.toFixed()))}
                 </div>
               </div>
             ))}
@@ -244,7 +252,8 @@ export const EmployeePayroll = () => {
             (II.A) + (II.B)
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.totalDeduction) || '0 VND'}
+            {currencyFormatter(Number(payroll?.totalDeduction.toFixed())) ||
+              '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -258,7 +267,8 @@ export const EmployeePayroll = () => {
             (I)*10.5/100
           </div>
           <div className="w-1/4 flex px-5 items-center h-full">
-            {currencyFormatter(payroll?.mandatoryInsurance) || '0 VND'}
+            {currencyFormatter(Number(payroll?.mandatoryInsurance.toFixed())) ||
+              '0 VND'}
           </div>
         </div>
         <div className="bg-white h-2"></div>
@@ -286,7 +296,9 @@ export const EmployeePayroll = () => {
                 <div className="w-1/4 flex px-5 items-center h-full"></div>
                 <div className="w-1/4 flex px-5 items-center h-full">
                   {payroll.personalIncomeTax
-                    ? currencyFormatter(payroll.personalIncomeTax)
+                    ? currencyFormatter(
+                        Number(payroll.personalIncomeTax.toFixed())
+                      )
                     : '0 VND'}
                 </div>
               </div>
@@ -301,7 +313,9 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
                 {payroll?.allowanceNotSubjectedToTax
-                  ? currencyFormatter(payroll.allowanceNotSubjectedToTax)
+                  ? currencyFormatter(
+                      Number(payroll.allowanceNotSubjectedToTax.toFixed())
+                    )
                   : '0 VND'}
               </div>
             </div>
@@ -313,7 +327,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
                 {payroll?.personalRelief
-                  ? currencyFormatter(payroll.personalRelief)
+                  ? currencyFormatter(Number(payroll.personalRelief.toFixed()))
                   : '0 VND'}
               </div>
             </div>
@@ -325,7 +339,7 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
                 {payroll.dependentRelief
-                  ? currencyFormatter(payroll.dependentRelief)
+                  ? currencyFormatter(Number(payroll.dependentRelief.toFixed()))
                   : '0 VND'}
               </div>
             </div>
@@ -339,7 +353,7 @@ export const EmployeePayroll = () => {
               </div>
               <div className="w-1/4 flex px-5 items-center h-full">
                 {payroll.taxableIncome
-                  ? currencyFormatter(payroll?.taxableIncome)
+                  ? currencyFormatter(Number(payroll?.taxableIncome.toFixed()))
                   : '0 VND'}
               </div>
             </div>
@@ -351,7 +365,9 @@ export const EmployeePayroll = () => {
               <div className="w-1/4 flex px-5 items-center h-full"></div>
               <div className="w-1/4 flex px-5 items-center h-full">
                 {payroll.personalIncomeTax
-                  ? currencyFormatter(payroll.personalIncomeTax)
+                  ? currencyFormatter(
+                      Number(payroll.personalIncomeTax.toFixed())
+                    )
                   : '0 VND'}
               </div>
             </div>
@@ -365,7 +381,7 @@ export const EmployeePayroll = () => {
           <div className="w-1/4 flex px-5 items-center h-full">(I)-(II)</div>
           <div className="w-1/4 flex px-5 items-center h-full">
             {payroll?.netIncome
-              ? currencyFormatter(payroll.netIncome)
+              ? currencyFormatter(Number(payroll.netIncome.toFixed()))
               : '0 VND'}
           </div>
         </div>
