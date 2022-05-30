@@ -3,7 +3,12 @@ import {
   promoteCandidate,
   rejectCandidate,
 } from '@frontend/state/candidate-api'
-import { CANDIDATES, EMPLOYEES, VACANCIES } from '@frontend/state/query-keys'
+import {
+  CANDIDATES,
+  EMPLOYEES,
+  USERS,
+  VACANCIES,
+} from '@frontend/state/query-keys'
 import type { CandidateInputParams } from '@frontend/types/candidate'
 import { useMutation, useQueryClient } from 'react-query'
 
@@ -31,6 +36,7 @@ export const usePromoteCandidate = () => {
       queryClient.refetchQueries([CANDIDATES])
       queryClient.refetchQueries([EMPLOYEES])
       queryClient.refetchQueries([VACANCIES])
+      queryClient.refetchQueries([USERS])
     },
     retry: false,
   })
